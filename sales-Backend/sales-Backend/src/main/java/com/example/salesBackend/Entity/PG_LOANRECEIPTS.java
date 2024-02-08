@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 @Getter
@@ -23,7 +24,7 @@ public class PG_LOANRECEIPTS {
     private String RECEIPT_NO;
     private String LOAN_NO;
     private Date RECEIPT_DATE;
-    private Long AMOUNT;
+    private BigDecimal AMOUNT;
 
 
 }

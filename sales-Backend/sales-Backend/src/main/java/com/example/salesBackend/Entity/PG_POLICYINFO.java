@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,27 +20,26 @@ public class PG_POLICYINFO {
     @Id
     @Column(name = "POLICY_NO")
     private String POLICY_NO;
-
     private String CLIENT_NO;
     private String NAME;
     private String PLAN_NAME;
     private String PAYMENT_MODE;
-    private Long SUM_ASSURED;
+    private BigDecimal SUM_ASSURED;
     private Date RISK_DATE;
     private Date PAIDUP_DATE;
     private Date PREM_CESS_DATE;
-    private Long TERM;
+    private BigDecimal TERM;
     private String BRANCH;
-    private Long PREMIUM;
-    private Long PREMIUM_DUE;
-    private Long INTEREST;
-    private Long SUNDRY_BALANCE;
-    private Long TOTAL_DUE;
+    private BigDecimal PREMIUM;
+    private BigDecimal PREMIUM_DUE;
+    private BigDecimal INTEREST;
+    private BigDecimal SUNDRY_BALANCE;
+    private BigDecimal TOTAL_DUE;
     private String POLICY_STATUS;
-    private Long ACCOUNT_BALANCE;
+    private BigDecimal ACCOUNT_BALANCE;
 
-    @ManyToOne
-    @MapsId("CLIENT_NO")
-    @JoinColumn(name = "CLIENT_NO")
-    private PG_POLICYINFO PG_POLICYINFO;
+//    @ManyToOne
+//    @MapsId("CLIENT_NO")
+//    @JoinColumn(name = "CLIENT_NO")
+//    private PG_POLICYINFO PG_POLICYINFO;
 }
