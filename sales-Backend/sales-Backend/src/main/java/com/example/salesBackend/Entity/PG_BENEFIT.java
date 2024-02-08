@@ -3,6 +3,7 @@ package com.example.salesBackend.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,7 +24,7 @@ public class PG_BENEFIT {
     @Id
     private String BENEFIT_CODE;
 
-    private Long COVER_AMOUNT;
+    private BigDecimal COVER_AMOUNT;
 
 
 }

@@ -29,6 +29,8 @@ public class PG_CLIENTINFO {
     private String TEL_1;
     private String TEL_2;
 
-    @OneToMany(mappedBy = "CLIENT_NO")
-    private Set<PG_POLICYINFO> PG_POLICYINFO = new HashSet<>();
+//    @OneToMany(mappedBy = "CLIENT_NO")
+//    private Set<PG_POLICYINFO> PG_POLICYINFO = new HashSet<>();
+
+
 }

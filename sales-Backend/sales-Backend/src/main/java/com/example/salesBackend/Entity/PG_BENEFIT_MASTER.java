@@ -20,6 +20,6 @@ public class PG_BENEFIT_MASTER {
 
     private String DESCRIPTION;
     private String REMARKS;
-    private Long VIEW_ORDER;
+    private int VIEW_ORDER;
 
 }
