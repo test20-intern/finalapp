@@ -4,8 +4,12 @@ import com.example.salesBackend.Service.POLICYINFOSERVICE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
+
 
 @RestController
 @CrossOrigin
@@ -15,26 +19,34 @@ public class POLICYINFOCONTROLLER {
     @Autowired
     private POLICYINFOSERVICE policyInfoService;
 
-    // In POLICYINFOCONTROLLER class
     @GetMapping("/policy-details")
-    public List<Object[]> getPolicyDetailsWithSearchParams(
+    public List<Map<String, Object>> getPolicyDetailsWithSearchParams(
             @RequestParam(required = false) String policyNo,
             @RequestParam(required = false) String nic,
             @RequestParam(required = false) String clientName,
             @RequestParam(required = false) String clientId
     ) {
+        List<Object[]> result;
+
         if (policyNo == null && nic == null && clientName == null && clientId == null) {
             // If no search parameters provided, return all details
-            List<Object[]> result = policyInfoService.getPolicyDetailsWithClientName();
-            // Set temporaryId for each result item
-            IntStream.range(0, result.size()).forEach(i -> {
-                Object[] item = result.get(i);
-                item[0] = (long) i + 1; // Set temporaryId
-            });
-            return result;
+            result = policyInfoService.getPolicyDetailsWithClientName();
         } else {
             // If search parameters provided, return results based on search
-            return policyInfoService.getPolicyDetailsWithSearchParams(policyNo, nic, clientName, clientId);
+            result = policyInfoService.getPolicyDetailsWithSearchParams(policyNo, nic, clientName, clientId);
         }
-    }}
 
+        // Convert the result to the desired format
+        List<Map<String, Object>> formattedResult = new ArrayList<>();
+        IntStream.range(0, result.size()).forEach(i -> {
+            Object[] item = result.get(i);
+            Map<String, Object> formattedItem = new HashMap<>();
+            formattedItem.put("id", (long) i + 1);
+            formattedItem.put("name", item[1]);
+            formattedItem.put("premium", item[2]);
+            formattedItem.put("status", item[3]);
+            formattedResult.add(formattedItem);
+        });
+        return formattedResult;
+    }
+}
