@@ -3,8 +3,6 @@ package com.example.salesBackend.Controller;
 import com.example.salesBackend.Entity.PG_CLIENTINFO;
 import com.example.salesBackend.Service.CLIENTINFOSERVICE;
 import com.example.salesBackend.Service.POLICYINFOSERVICE;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

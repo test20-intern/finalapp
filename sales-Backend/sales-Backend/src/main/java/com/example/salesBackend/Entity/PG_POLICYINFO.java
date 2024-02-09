@@ -38,8 +38,8 @@ public class PG_POLICYINFO {
     private String POLICY_STATUS;
     private BigDecimal ACCOUNT_BALANCE;
 
-//    @ManyToOne
-//    @MapsId("CLIENT_NO")
-//    @JoinColumn(name = "CLIENT_NO")
-//    private PG_POLICYINFO PG_POLICYINFO;
+    @Transient
+    private Long temporaryId;
+
+
 }

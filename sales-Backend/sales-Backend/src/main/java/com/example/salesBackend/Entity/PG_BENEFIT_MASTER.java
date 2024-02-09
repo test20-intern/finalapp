@@ -1,6 +1,6 @@
 package com.example.salesBackend.Entity;
 
-
+/* Benefit details table*/
 import jakarta.persistence.*;
 import lombok.*;
 

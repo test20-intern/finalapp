@@ -5,6 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 
+/* Agent details table*/
 @Getter
 @Setter
 @Entity

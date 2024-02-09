@@ -10,6 +10,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+
+/* Entity to Many to many relation"*/
 public class BENEFITPK implements Serializable {
     private String POLICY_NO;
     private String LIFENO;
