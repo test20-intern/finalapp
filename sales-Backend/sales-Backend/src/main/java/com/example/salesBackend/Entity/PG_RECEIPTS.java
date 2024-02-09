@@ -19,7 +19,6 @@ public class PG_RECEIPTS {
     @Id
     @Column(name = "POLICY_NO")
     private String POLICY_NO;
-
     private String RECEIPT_NO;
     private Date RECEIPT_DATE;
     private BigDecimal AMOUNT;
