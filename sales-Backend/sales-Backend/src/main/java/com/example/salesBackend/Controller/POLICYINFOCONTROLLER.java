@@ -29,22 +29,25 @@ public class POLICYINFOCONTROLLER {
         List<Object[]> result;
 
         if (policyNo == null && nic == null && clientName == null && clientId == null) {
-            // If no search parameters provided, return all details
+            System.out.println("No search parameters provided. Returning all details.");
             result = policyInfoService.getPolicyDetailsWithClientName();
         } else {
-            // If search parameters provided, return results based on search
+            System.out.println("Search parameters provided. Returning results based on search.");
             result = policyInfoService.getPolicyDetailsWithSearchParams(policyNo, nic, clientName, clientId);
         }
 
-        // Convert the result to the desired format
+        // Convert the result to pass with field names.
         List<Map<String, Object>> formattedResult = new ArrayList<>();
         IntStream.range(0, result.size()).forEach(i -> {
             Object[] item = result.get(i);
             Map<String, Object> formattedItem = new HashMap<>();
             formattedItem.put("id", (long) i + 1);
+//            formattedItem.put("policyNo", item[0]);
             formattedItem.put("name", item[1]);
             formattedItem.put("premium", item[2]);
             formattedItem.put("status", item[3]);
+
+
             formattedResult.add(formattedItem);
         });
         return formattedResult;

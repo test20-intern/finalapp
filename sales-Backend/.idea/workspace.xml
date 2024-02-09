@@ -7,13 +7,7 @@
     <list default="true" id="4cf6a352-b1d1-4594-bac9-f5ba83ba1802" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Controller/POLICYINFOCONTROLLER.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Controller/POLICYINFOCONTROLLER.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Entity/BENEFITPK.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Entity/PG_BENEFIT.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Entity/PG_BENEFIT.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Entity/PG_POLICYINFO.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Entity/PG_POLICYINFO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Repo/PG_CLIENTINFOREPO.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Repo/PG_CLIENTINFOREPO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Service/CLIENTINFOSERVICE.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Service/CLIENTINFOSERVICE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Service/POLICYINFOSERVICE.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Service/POLICYINFOSERVICE.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sales-Backend/target/classes/com/example/salesBackend/Entity/PG_BENEFIT.class" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/target/classes/com/example/salesBackend/Entity/PG_BENEFIT.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Repo/PG_POLICYINFOREPO.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Repo/PG_POLICYINFOREPO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
