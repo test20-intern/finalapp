@@ -14,7 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "PG_BENEFIT")
-@IdClass(BENEFITPK.class)
+
 public class PG_BENEFIT {
 
     @Id

@@ -39,7 +39,8 @@ public class PG_POLICYINFO {
     private BigDecimal ACCOUNT_BALANCE;
 
     @Transient
-    private Long temporaryId;
+    private Long temporaryId; /*pass the data with a temporary id.(frontend can't retrive data without id
+     when using MUI data grid.*/
 
 
 }

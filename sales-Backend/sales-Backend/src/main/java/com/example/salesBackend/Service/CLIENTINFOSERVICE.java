@@ -24,7 +24,7 @@ public class CLIENTINFOSERVICE {
             resultWithId.setId(temporaryIdCounter++);
             resultWithId.setNIC(clientDetail.getNIC());
             resultWithId.setNAME(clientDetail.getNAME());
-            // Add other properties as needed
+
             resultsWithTemporaryId.add(resultWithId);
         }
         return resultsWithTemporaryId;
