@@ -30,6 +30,12 @@ List<Object[]> getPolicyDetailsWithSearchParams(
         @Param("CLIENT_NO") String CLIENT_NO,
         @Param("AGNTNUM") String AGNTNUM);
 
+    @Query("SELECT p.POLICY_NO, p.PREMIUM, p.TOTAL_DUE, p.SUNDRY_BALANCE, p.PAIDUP_DATE, " +
+            "p.PLAN_NAME, p.PAYMENT_MODE, p.SUM_ASSURED, p.RISK_DATE, p.TERM " +
+            "FROM PG_POLICYINFO p " +
+            "WHERE (?1 IS NULL OR p.POLICY_NO = ?1)")
+    List<Object[]> getPolicyColumns(@Param("POLICY_NO") String POLICY_NO);
+
 
 
     /* Query for when user want to see all the policy details. By directly clicking "Search"*/

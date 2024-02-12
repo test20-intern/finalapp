@@ -35,5 +35,9 @@ public class POLICYINFOSERVICE {
 
     }
 
+    public List<Object[]> getPolicyColumns(String POLICY_NO) {
+        return pgPolicyInfoRepo.getPolicyColumns(POLICY_NO);
+    }
+
 }
 

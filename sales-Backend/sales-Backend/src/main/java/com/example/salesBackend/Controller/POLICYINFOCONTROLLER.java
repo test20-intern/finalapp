@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 
@@ -55,5 +56,31 @@ public class POLICYINFOCONTROLLER {
             formattedResult.add(formattedItem);
         });
         return formattedResult;
+    }
+
+    @GetMapping("/policy-columns")
+    public List<Map<String, Object>> getPolicyColumns(
+            @RequestParam(required = true) String POLICY_NO
+    ) {
+        List<Object[]> result = policyInfoService.getPolicyColumns(POLICY_NO);
+
+        // Convert the result to pass with field names.
+        return result.stream()
+                .map(item -> {
+                    Map<String, Object> formattedItem = Map.of(
+                            "POLICY_NO", item[0],
+                            "PREMIUM", item[1],
+                            "TOTAL_DUE", item[2],
+                            "SUNDRY_BALANCE", item[3],
+                            "PAIDUP_DATE", item[4],
+                            "PLAN_NAME", item[5],
+                            "PAYMENT_MODE", item[6],
+                            "SUM_ASSURED", item[7],
+                            "RISK_DATE", item[8],
+                            "TERM", item[9]
+                    );
+                    return formattedItem;
+                })
+                .collect(Collectors.toList());
     }
 }
