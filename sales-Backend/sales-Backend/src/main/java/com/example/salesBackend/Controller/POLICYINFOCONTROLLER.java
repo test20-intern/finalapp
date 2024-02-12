@@ -21,21 +21,21 @@ public class POLICYINFOCONTROLLER {
 
     @GetMapping("/policy-details")
     public List<Map<String, Object>> getPolicyDetailsWithSearchParams(
-            @RequestParam(required = false) String policyNo,
-            @RequestParam(required = false) String nic,
-            @RequestParam(required = false) String clientName,
-            @RequestParam(required = false) String clientId,
-            @RequestParam(required = false) String agntnum
+            @RequestParam(required = false) String POLICY_NO,
+            @RequestParam(required = false) String NIC,
+            @RequestParam(required = false) String NAME,
+            @RequestParam(required = false) String CLIENT_NO,
+            @RequestParam(required = false) String AGNTNUM
 
     ) {
         List<Object[]> result;
 
-        if (policyNo == null && nic == null && clientName == null && clientId == null && agntnum == null) {
+        if (POLICY_NO == null && NIC == null && NAME == null && CLIENT_NO == null && AGNTNUM == null) {
             System.out.println("No search parameters provided. Returning all details.");
             result = policyInfoService.getPolicyDetailsWithClientName();
         } else {
             System.out.println("Search parameters provided. Returning results based on search.");
-            result = policyInfoService.getPolicyDetailsWithSearchParams(policyNo, nic, clientName, clientId,agntnum);
+            result = policyInfoService.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO,AGNTNUM);
         }
 
         // Convert the result to pass with field names.

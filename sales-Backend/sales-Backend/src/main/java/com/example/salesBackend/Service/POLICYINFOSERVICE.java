@@ -27,8 +27,8 @@ public class POLICYINFOSERVICE {
     }
 
 
-    public List<Object[]> getPolicyDetailsWithSearchParams(String policyNo, String nic, String clientName, String clientId,String AGNTNUM) {
-        List<Object[]> result = pgPolicyInfoRepo.getPolicyDetailsWithSearchParams(policyNo, nic, clientName, clientId, AGNTNUM);
+    public List<Object[]> getPolicyDetailsWithSearchParams(String POLICY_NO, String NIC, String NAME, String CLIENT_NO,String AGNTNUM) {
+        List<Object[]> result = pgPolicyInfoRepo.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO, AGNTNUM);
 
 
         return result;

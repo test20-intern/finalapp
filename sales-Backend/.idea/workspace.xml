@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4cf6a352-b1d1-4594-bac9-f5ba83ba1802" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Controller/POLICYINFOCONTROLLER.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Controller/POLICYINFOCONTROLLER.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Entity/PG_Agentdel.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Entity/PG_Agentdtl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Entity/PG_POLICYINFO.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Entity/PG_POLICYINFO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Repo/PG_POLICYINFOREPO.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Repo/PG_POLICYINFOREPO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Service/POLICYINFOSERVICE.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Service/POLICYINFOSERVICE.java" afterDir="false" />
     </list>
