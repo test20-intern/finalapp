@@ -7,7 +7,10 @@
     <list default="true" id="4cf6a352-b1d1-4594-bac9-f5ba83ba1802" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Controller/POLICYINFOCONTROLLER.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Controller/POLICYINFOCONTROLLER.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Entity/PG_Agentdel.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Entity/PG_Agentdtl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Entity/PG_POLICYINFO.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Entity/PG_POLICYINFO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Repo/PG_POLICYINFOREPO.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Repo/PG_POLICYINFOREPO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Service/POLICYINFOSERVICE.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Service/POLICYINFOSERVICE.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,17 +39,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.SalesBackendApplication.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "back__end",
-    "jdk.selected.JAVA_MODULE": "openjdk-21",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/springboot-first-app"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.SalesBackendApplication.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;back__end&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/springboot-first-app&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="SalesBackendApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.salesBackend.SalesBackendApplication" />
@@ -95,5 +98,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Controller/POLICYINFOCONTROLLER.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

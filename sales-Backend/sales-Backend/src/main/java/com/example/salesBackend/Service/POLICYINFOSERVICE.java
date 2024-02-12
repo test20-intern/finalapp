@@ -11,6 +11,7 @@ import java.util.stream.IntStream;
 @Service
 public class POLICYINFOSERVICE {
 
+
     private static int temporaryIdCounter = 1;
 
     @Autowired
@@ -26,15 +27,12 @@ public class POLICYINFOSERVICE {
     }
 
 
-    public List<Object[]> getPolicyDetailsWithSearchParams(String policyNo, String nic, String clientName, String clientId) {
-        List<Object[]> result = pgPolicyInfoRepo.getPolicyDetailsWithSearchParams(policyNo, nic, clientName, clientId);
-        // Set temporaryId for each result item
-        IntStream.range(0, result.size()).forEach(i -> {
-            Object[] item = result.get(i);
-            item[0] = (long) i + 1; // Set temporaryId
-        });
+    public List<Object[]> getPolicyDetailsWithSearchParams(String policyNo, String nic, String clientName, String clientId,String AGNTNUM) {
+        List<Object[]> result = pgPolicyInfoRepo.getPolicyDetailsWithSearchParams(policyNo, nic, clientName, clientId, AGNTNUM);
+
+
         return result;
-        // Created the auto incrementing temporary ID to pass dta for frontend.
+
     }
 
 }

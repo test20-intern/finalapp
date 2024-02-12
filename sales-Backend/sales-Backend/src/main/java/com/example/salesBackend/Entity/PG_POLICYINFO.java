@@ -37,10 +37,9 @@ public class PG_POLICYINFO {
     private BigDecimal TOTAL_DUE;
     private String POLICY_STATUS;
     private BigDecimal ACCOUNT_BALANCE;
+    private String AGNTNUM;
 
-    @Transient
-    private Long temporaryId; /*pass the data with a temporary id.(frontend can't retrive data without id
-     when using MUI data grid.*/
-
-
+//    @Transient
+//    private Long temporaryId; /*pass the data with a temporary id.(frontend can't retrive data without id
+//     when using MUI data grid.*/
 }

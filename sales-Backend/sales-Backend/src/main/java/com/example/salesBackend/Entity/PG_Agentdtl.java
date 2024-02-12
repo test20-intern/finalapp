@@ -12,8 +12,8 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="PG_Agentdel ")
-public class PG_Agentdel {
+@Table(name="PG_Agentdtl ")
+public class PG_Agentdtl {
     @Id
     private String SoCode;
     private String Soname;
