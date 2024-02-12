@@ -24,11 +24,11 @@ public interface PG_POLICYINFOREPO extends JpaRepository<PG_POLICYINFO, String> 
 )
 
 List<Object[]> getPolicyDetailsWithSearchParams(
-        @Param("policyNo") String policyNo,
-        @Param("nic") String nic,
-        @Param("clientName") String clientName,
-        @Param("clientId") String clientId,
-        @Param("AgentNo") String agentNo);
+        @Param("POLICY_NO") String POLICY_NO,
+        @Param("NIC") String NIC,
+        @Param("NAME") String NAME,
+        @Param("CLIENT_NO") String CLIENT_NO,
+        @Param("AGNTNUM") String AGNTNUM);
 
 
 
