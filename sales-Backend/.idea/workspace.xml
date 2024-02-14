@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4cf6a352-b1d1-4594-bac9-f5ba83ba1802" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Dto/Request/CLIENTINFOREQUEST.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Controller/LoginController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Dto/Request/BENEFITREQUEST.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Dto/Request/LoginRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Dto/Request/POLICYINFOREQUEST.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Controller/POLICYINFOCONTROLLER.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Controller/POLICYINFOCONTROLLER.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Repo/PG_POLICYINFOREPO.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Repo/PG_POLICYINFOREPO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Service/POLICYINFOSERVICE.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Service/POLICYINFOSERVICE.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Dto/Request/CLIENTINFOREQUEST.java" beforeDir="false" afterPath="$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Dto/Request/CLIENTINFOREQUEST.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +46,7 @@
     &quot;Application.SalesBackendApplication.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;back__end&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
@@ -103,7 +107,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/sales-Backend/src/main/java/com/example/salesBackend/Controller/POLICYINFOCONTROLLER.java</url>
-          <line>47</line>
+          <line>43</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
