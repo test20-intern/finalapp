@@ -26,5 +26,4 @@ public class PG_BENEFIT {
 
     private BigDecimal COVER_AMOUNT;
 
-
 }

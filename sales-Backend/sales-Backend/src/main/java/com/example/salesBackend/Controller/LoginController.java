@@ -11,7 +11,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        // Check if the password matches
+        // Check if the password matches the Hardcoded password , just to check.
         if ("000019".equals(loginRequest.getPassword())) {
             return ResponseEntity.ok("Login successful");
         } else {
