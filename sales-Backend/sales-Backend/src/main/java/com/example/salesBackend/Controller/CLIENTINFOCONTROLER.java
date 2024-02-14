@@ -6,6 +6,7 @@ import com.example.salesBackend.Service.POLICYINFOSERVICE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,22 +28,31 @@ public class CLIENTINFOCONTROLER {
     ) {
         List<PG_CLIENTINFO> clientDetails = clientInfoService.getClientDetailsByPolicyNo(POLICY_NO);
 
-        // Convert the result to pass with field names.
+        // Convert the result to pass with field names and an incrementing "id".
         return clientDetails.stream()
                 .map(item -> {
-                    Map<String, Object> formattedItem = Map.of(
-                            "CLIENT_NO", item.getCLIENT_NO(),
-                            "NIC", item.getNIC(),
-                            "FULL_NAME", item.getFULL_NAME(),
-                            "ADD_1", item.getADD_1(),
-                            "ADD_2", item.getADD_2(),
-                            "ADD_CITY", item.getADD_CITY(),
-                            "PCODE", item.getPCODE(),
-                            "TEL_1", item.getTEL_1(),
-                            "TEL_2", item.getTEL_2()
-                    );
+                    Map<String, Object> formattedItem = new HashMap<>();
+                    formattedItem.put("id", generateIncrementingId()); // Incrementing "id"
+                    formattedItem.put("CLIENT_NO", item.getCLIENT_NO());
+                    formattedItem.put("NIC", item.getNIC());
+                    formattedItem.put("FULL_NAME", item.getFULL_NAME());
+                    formattedItem.put("ADD_1", item.getADD_1());
+                    formattedItem.put("ADD_2", item.getADD_2());
+                    formattedItem.put("ADD_CITY", item.getADD_CITY());
+                    formattedItem.put("PCODE", item.getPCODE());
+                    formattedItem.put("TEL_1", item.getTEL_1());
+                    formattedItem.put("TEL_2", item.getTEL_2());
                     return formattedItem;
                 })
                 .collect(Collectors.toList());
     }
+    private static long idCounter = 1;
+    private synchronized long generateIncrementingId() {
+        return idCounter++;
+    }
+
+
+
+
+
 }
