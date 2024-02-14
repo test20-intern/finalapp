@@ -1,9 +1,7 @@
 package com.example.salesBackend.Dto.Request;
 
-import lombok.*;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import lombok.*;
 
 @Setter
 @Getter
@@ -11,25 +9,16 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class CLIENTINFOREQUEST {
-    private String POLICY_NO;
+
     private String CLIENT_NO;
+
+    private String NIC;
 //    private String NAME;
-    private String PLAN_NAME;
-    private String PAYMENT_MODE;
-    private BigDecimal SUM_ASSURED;
-    private Date RISK_DATE;
-    private Date PAIDUP_DATE;
-//    private Date PREM_CESS_DATE;
-    private BigDecimal TERM;
-//    private String BRANCH;
-    private BigDecimal PREMIUM;
-//    private BigDecimal PREMIUM_DUE;
-//    private BigDecimal INTEREST;
-    private BigDecimal SUNDRY_BALANCE;
-    private BigDecimal TOTAL_DUE;
-//    private String POLICY_STATUS;
-//    private BigDecimal ACCOUNT_BALANCE;
-    private String AGNTNUM;
-
-
+    private String FULL_NAME;
+    private String ADD_1;
+    private String ADD_2;
+    private String ADD_CITY;
+    private String PCODE;
+    private String TEL_1;
+    private String TEL_2;
 }
