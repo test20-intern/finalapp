@@ -16,12 +16,12 @@ public interface PG_POLICYINFOREPO extends JpaRepository<PG_POLICYINFO, String> 
         "FROM PG_POLICYINFO p " +
         "JOIN PG_CLIENTINFO c ON p.CLIENT_NO = c.CLIENT_NO " +
         "WHERE (?1 IS NULL OR p.POLICY_NO = ?1) " +
-        "AND (?2 IS NULL OR c.NIC LIKE %?2%) " +
+        "AND (?2 IS NULL OR c.NIC LIKE CONCAT(?2, '%')) " +
         "AND (?3 IS NULL OR c.NAME LIKE %?3%) " +
         "AND (?4 IS NULL OR p.CLIENT_NO LIKE %?4%)"+
         "AND (?5 IS NULL OR p.AGNTNUM LIKE %?5%)"
-
 )
+
 
 List<Object[]> getPolicyDetailsWithSearchParams(
         @Param("POLICY_NO") String POLICY_NO,
@@ -43,6 +43,16 @@ List<Object[]> getPolicyDetailsWithSearchParams(
             "FROM PG_POLICYINFO p " +
             "JOIN PG_CLIENTINFO c ON p.CLIENT_NO = c.CLIENT_NO")
     List<Object[]> getPolicyDetailsWithClientName();
+
+    @Query("SELECT b.BENEFIT_CODE, p.SUM_ASSURED, p.TERM, p.PREMIUM " +
+            "FROM PG_POLICYINFO p " +
+            "JOIN PG_BENEFIT b ON p.POLICY_NO = b.POLICY_NO " +
+            "WHERE p.POLICY_NO = :POLICY_NO")
+    List<Object[]> getPolicyBenefitDetailsByPolicyNo(@Param("POLICY_NO") String POLICY_NO);
+
 }
+
+
+
 
 
