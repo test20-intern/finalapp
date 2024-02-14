@@ -17,7 +17,7 @@ public class POLICYINFOCONTROLLER {
     @Autowired
     private POLICYINFOSERVICE policyInfoService;
 
-    @GetMapping("/policy-details")
+    @GetMapping("/policy-details") // pass policy and client details to the first table.
     public List<Map<String, Object>> getPolicyDetailsWithSearchParams(
             @RequestParam(required = false) String POLICY_NO,
             @RequestParam(required = false) String NIC,
@@ -49,7 +49,7 @@ public class POLICYINFOCONTROLLER {
                 })
                 .collect(Collectors.toList());
     }
-
+    // pass the policy details
     @GetMapping("/policy-columns")
     public List<Map<String, Object>> getPolicyColumns(
             @RequestParam(required = true) String POLICY_NO
@@ -76,9 +76,10 @@ public class POLICYINFOCONTROLLER {
                 .collect(Collectors.toList());
     }
 
-    // Helper method to generate an incrementing "id"
-    private static long idCounter = 1;
 
+    //Created an auto incrementing counter to pass an id to frontend. not useful,
+    // but essential to load data to frontend components.
+    private static long idCounter = 1;
     private synchronized long generateIncrementingId() {
         return idCounter++;
     }

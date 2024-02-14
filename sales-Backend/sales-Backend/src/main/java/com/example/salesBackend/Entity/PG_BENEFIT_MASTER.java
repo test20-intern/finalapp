@@ -14,10 +14,9 @@ import lombok.*;
 public class PG_BENEFIT_MASTER {
 
     @Id
-//    @GeneratedValue(strategy= GenerationType.UUID)
+
     @Column(name = "BENEFIT_CODE")
     private  String BENEFIT_CODE;
-
     private String DESCRIPTION;
     private String REMARKS;
     private int VIEW_ORDER;
