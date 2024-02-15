@@ -16,10 +16,10 @@ import java.util.Date;
 @NoArgsConstructor
 @Table(name="PG_RECEIPTS")
 public class PG_RECEIPTS {
-    @Id
-    @Column(name = "POLICY_NO")
-    private String POLICY_NO;
-    private String RECEIPT_NO;
+    @EmbeddedId
+    private PG_RECEIPTSId RID;
+
     private Date RECEIPT_DATE;
-    private BigDecimal AMOUNT;
 }
+
+
