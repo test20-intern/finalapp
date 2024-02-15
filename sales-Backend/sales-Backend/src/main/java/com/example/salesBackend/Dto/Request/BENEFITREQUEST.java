@@ -9,4 +9,5 @@ import lombok.*;
 @Data
 public class BENEFITREQUEST {
     private String BENEFIT_CODE;
+
 }

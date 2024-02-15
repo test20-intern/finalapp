@@ -10,7 +10,7 @@ import java.util.List;
 public interface PG_POLICYINFOREPO extends JpaRepository<PG_POLICYINFO, String> {
 
 
-/*Query to search the policy details when search by Policy number, NIC,Client Name( Name in ClientInfo table)
+/*Query to search the policy details when search by Policy number, NIC, Name( Name in ClientInfo table)
    Or client Number */
 @Query("SELECT p.POLICY_NO, c.NAME, p.PREMIUM, p.POLICY_STATUS, p.AGNTNUM " +
         "FROM PG_POLICYINFO p " +
