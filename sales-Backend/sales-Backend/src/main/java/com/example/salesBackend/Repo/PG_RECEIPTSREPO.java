@@ -16,3 +16,4 @@ public interface PG_RECEIPTSREPO extends JpaRepository<PG_RECEIPTS, PG_RECEIPTSI
             "ORDER BY r.RECEIPT_DATE DESC")
     List<RECEIPTREQUEST> findReceiptByPolicyNo(String POLICY_NO);
 }
+
