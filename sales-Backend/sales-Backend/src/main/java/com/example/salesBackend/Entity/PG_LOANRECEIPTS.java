@@ -16,13 +16,8 @@ import java.sql.Date;
 @NoArgsConstructor
 @Table(name="PG_LOANRECEIPTS")
 public class PG_LOANRECEIPTS {
-    @Id
-//    @GeneratedValue(strategy=GenerationType.UUID)
-    @Column(name = "POLICY_NO")
-    private String POLICY_NO;
-
-    private String RECEIPT_NO;
-    private String LOAN_NO;
+    @EmbeddedId
+    private LoanReceiptsId LRID;
     private Date RECEIPT_DATE;
     private BigDecimal AMOUNT;
 
