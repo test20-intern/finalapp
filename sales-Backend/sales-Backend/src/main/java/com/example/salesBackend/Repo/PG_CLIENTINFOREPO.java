@@ -4,9 +4,10 @@ import com.example.salesBackend.Entity.PG_CLIENTINFO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface PG_CLIENTINFOREPO extends JpaRepository<PG_CLIENTINFO, String> {
 
     // Query to get client details based on the POLICY_NO

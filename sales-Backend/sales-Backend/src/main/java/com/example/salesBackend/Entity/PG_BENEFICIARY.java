@@ -25,4 +25,5 @@ public class PG_BENEFICIARY {
     private BigDecimal PERCENTAGE;
     private Date LASTUPDATED;
 
+
 }
