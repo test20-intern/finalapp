@@ -16,3 +16,4 @@ public interface PG_CLIENTINFOREPO extends JpaRepository<PG_CLIENTINFO, String> 
             "WHERE p.POLICY_NO = :POLICY_NO")
     List<PG_CLIENTINFO> getClientDetailsByPolicyNo(@Param("POLICY_NO") String POLICY_NO);
 }
+
