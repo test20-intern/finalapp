@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin
 @RequestMapping("/api/v1/policyinfo")
-public class POLICYINFOCONTROLLER {
+public class PolicyInfoController {
 
     @Autowired
     private POLICYINFOSERVICE policyInfoService;
