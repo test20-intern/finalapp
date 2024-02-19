@@ -1,13 +1,15 @@
 package com.example.salesBackend.Controller;
 
 import com.example.salesBackend.Entity.PG_CLIENTINFO;
+import com.example.salesBackend.Exceptions.BadRequestRuntimeException;
+import com.example.salesBackend.Exceptions.ValueNotExistException;
 import com.example.salesBackend.Service.CLIENTINFOSERVICE;
-import com.example.salesBackend.Service.POLICYINFOSERVICE;
+import com.example.salesBackend.util.AppResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,18 +23,18 @@ public class CLIENTINFOCONTROLER {
     @Autowired
     private CLIENTINFOSERVICE clientInfoService;
 
-    @Autowired
-    private POLICYINFOSERVICE policyInfoService;
+    // auto incrementing id function
+    private static long idCounter = 1;
 
     @GetMapping("/client-details")
-    public List<Map<String, Object>> getClientDetailsByPolicyNo(
+    public ResponseEntity<AppResponse<List<Map<String, Object>>>> getClientDetailsByPolicyNo(
             @RequestParam(required = true) String POLICY_NO
     ) {
         try {
             List<PG_CLIENTINFO> clientDetails = clientInfoService.getClientDetailsByPolicyNo(POLICY_NO);
 
             // Convert the result to pass with field names and an incrementing "id".
-            return clientDetails.stream()
+            List<Map<String, Object>> formattedResult = clientDetails.stream()
                     .map(item -> {
                         Map<String, Object> formattedItem = new HashMap<>();
                         formattedItem.put("id", generateIncrementingId()); // Incrementing "id"
@@ -48,17 +50,22 @@ public class CLIENTINFOCONTROLER {
                         return formattedItem;
                     })
                     .collect(Collectors.toList());
-        } catch (Exception e) {
 
-            e.printStackTrace();
-            return Collections.emptyList();
+            return new ResponseEntity<>(AppResponse.ok(formattedResult), HttpStatus.OK);
+        } catch (ValueNotExistException e) {
+            return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "ClientDetailsNotFound",
+                    "Client details not found for policy number: " + POLICY_NO), HttpStatus.NOT_FOUND);
+        } catch (BadRequestRuntimeException e) {
+            return new ResponseEntity<>(AppResponse.error(null, "400", "Bad Request", "BadRequest",
+                    "Bad request received: " + e.getMessage()), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(AppResponse.error(null, "500", "Internal Server Error", "GetClientDetailsOperationFailed",
+                    "Error getting client details: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // auto incrementing id function
-    private static long idCounter = 1;
+    // Incrementing "id" method
     private synchronized long generateIncrementingId() {
         return idCounter++;
     }
 }
-

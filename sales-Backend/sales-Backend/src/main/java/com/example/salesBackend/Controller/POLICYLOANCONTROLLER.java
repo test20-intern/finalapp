@@ -1,39 +1,38 @@
-package com.example.salesBackend.Controller;
-
-import com.example.salesBackend.Entity.PG_CLIENTINFO;
 import com.example.salesBackend.Entity.PG_POLICYLOAN;
-import com.example.salesBackend.Service.CLIENTINFOSERVICE;
-import com.example.salesBackend.Service.POLICYINFOSERVICE;
+import com.example.salesBackend.Exceptions.BadRequestRuntimeException;
+import com.example.salesBackend.Exceptions.ValueNotExistException;
 import com.example.salesBackend.Service.POLICYLOANSERVICE;
+import com.example.salesBackend.util.AppResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
 @RestController
 @CrossOrigin
 @RequestMapping("/api/v1/loans")
 public class POLICYLOANCONTROLLER {
+
     @Autowired
     private POLICYLOANSERVICE policyloanservice;
 
-    @Autowired
-    private POLICYINFOSERVICE policyInfoService;
+    // auto incrementing id function
+    private static long idCounter = 1;
 
     @GetMapping("/loan-details")
-    public List<Map<String, Object>> getLoanDetailsByPolicyNo(
+    public ResponseEntity<AppResponse<List<Map<String, Object>>>> getLoanDetailsByPolicyNo(
             @RequestParam(required = true) String POLICY_NO
     ) {
         try {
             List<PG_POLICYLOAN> loanDetails = policyloanservice.getLoanDetailsByPolicyNo(POLICY_NO);
 
             // Convert the result to pass with field names and an incrementing "id".
-            return loanDetails.stream()
+            List<Map<String, Object>> formattedResult = loanDetails.stream()
                     .map(item -> {
                         Map<String, Object> formattedItem = new HashMap<>();
                         formattedItem.put("id", generateIncrementingId()); // Incrementing "id"
@@ -46,15 +45,21 @@ public class POLICYLOANCONTROLLER {
                         return formattedItem;
                     })
                     .collect(Collectors.toList());
-        } catch (Exception e) {
 
-            e.printStackTrace();
-            return Collections.emptyList();
+            return new ResponseEntity<>(AppResponse.ok(formattedResult), HttpStatus.OK);
+        } catch (ValueNotExistException e) {
+            return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "LoanDetailsNotFound",
+                    "Loan details not found for policy number: " + POLICY_NO), HttpStatus.NOT_FOUND);
+        } catch (BadRequestRuntimeException e) {
+            return new ResponseEntity<>(AppResponse.error(null, "400", "Bad Request", "BadRequest",
+                    "Bad request received: " + e.getMessage()), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(AppResponse.error(null, "500", "Internal Server Error", "GetLoanDetailsOperationFailed",
+                    "Error getting loan details: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // auto incrementing id function
-    private static long idCounter = 1;
+    // Incrementing "id" method
     private synchronized long generateIncrementingId() {
         return idCounter++;
     }

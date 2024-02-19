@@ -1,9 +1,7 @@
 package com.example.salesBackend.Entity;
 
 
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -15,7 +13,8 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "PG_BENEFICIARY")
+
+
 public class PG_BENEFICIARY {
 
     @EmbeddedId

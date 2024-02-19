@@ -2,11 +2,16 @@ package com.example.salesBackend.Controller;
 
 import com.example.salesBackend.Dto.Request.BENEFICIARYREQUEST;
 import com.example.salesBackend.Entity.PG_BENEFICIARY;
+import com.example.salesBackend.Exceptions.BadRequestRuntimeException;
+import com.example.salesBackend.Exceptions.ValueNotExistException;
 import com.example.salesBackend.Service.BENEFICIARYSERVICE;
+import com.example.salesBackend.util.AppResponse;
+import jakarta.persistence.NamedStoredProcedureQuery;
+import jakarta.persistence.ParameterMode;
+import jakarta.persistence.StoredProcedureParameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,20 +20,28 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin
 @RequestMapping("/api/v1/beneficiary")
+@NamedStoredProcedureQuery(
+        name = "PG_BENEFICIARY.findByPolicyNo",
+        procedureName = "GetBeneficiariesByPolicy",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "PolicyNo", type = String.class)
+        },
+        resultClasses = PG_BENEFICIARY.class
+)
 public class BENEFICIARYCONTROLLER {
 
     @Autowired
     private BENEFICIARYSERVICE beneficiaryService;
 
     @GetMapping("/beneficiary-details")
-    public List<Map<String, Object>> getBeneficiaryDetailsByPolicyNo(
+    public AppResponse<List<Map<String, Object>>> getBeneficiaryDetailsByPolicyNo(
             @RequestParam(required = true) String policyNo
     ) {
         try {
             List<BENEFICIARYREQUEST> beneficiaryDetails = beneficiaryService.getBeneficiaryDetailsByPolicyNo(policyNo);
 
             // Convert the result to pass with field names and an incrementing "id".
-            return beneficiaryDetails.stream()
+            List<Map<String, Object>> response = beneficiaryDetails.stream()
                     .map(item -> {
                         Map<String, Object> formattedItem = new HashMap<>();
                         formattedItem.put("id", generateIncrementingId()); // Incrementing "id"
@@ -39,9 +52,17 @@ public class BENEFICIARYCONTROLLER {
                         return formattedItem;
                     })
                     .collect(Collectors.toList());
+            return AppResponse.ok(response);
+
+        } catch (ValueNotExistException e) {
+            return AppResponse.error(null, "404", "Not Found", "BeneficiaryDetailsNotFound",
+                    "Beneficiary details not found for policy number: " + policyNo);
+        } catch (BadRequestRuntimeException e) {
+            return AppResponse.error(null, "400", "Bad Request", "BadRequest",
+                    "Bad request received: " + e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
-            return Collections.emptyList();
+            return AppResponse.error(null, "500", "Internal Server Error", "GetBeneficiaryDetailsOperationFailed",
+                    "Error getting beneficiary details: " + e.getMessage());
         }
     }
 

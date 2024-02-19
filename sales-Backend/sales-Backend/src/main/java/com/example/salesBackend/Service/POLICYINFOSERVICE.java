@@ -16,7 +16,7 @@ public class POLICYINFOSERVICE {
         try {
             return pgPolicyInfoRepo.getPolicyDetailsWithClientName();
         } catch (Exception e) {
-
+            // Handle exceptions here
             throw new RuntimeException("Error retrieving policy details with client name", e);
         }
     }
@@ -25,7 +25,7 @@ public class POLICYINFOSERVICE {
         try {
             return pgPolicyInfoRepo.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO, AGNTNUM);
         } catch (Exception e) {
-
+            // Handle exceptions here
             throw new RuntimeException("Error retrieving policy details with search parameters", e);
         }
     }
@@ -34,7 +34,7 @@ public class POLICYINFOSERVICE {
         try {
             return pgPolicyInfoRepo.getPolicyBenefitDetailsByPolicyNo(POLICY_NO);
         } catch (Exception e) {
-
+            // Handle exceptions here
             throw new RuntimeException("Error retrieving policy benefit details by policy number", e);
         }
     }
@@ -43,7 +43,7 @@ public class POLICYINFOSERVICE {
         try {
             return pgPolicyInfoRepo.getPolicyColumns(POLICY_NO);
         } catch (Exception e) {
-
+            // Handle exceptions here
             throw new RuntimeException("Error retrieving policy columns by policy number", e);
         }
     }
