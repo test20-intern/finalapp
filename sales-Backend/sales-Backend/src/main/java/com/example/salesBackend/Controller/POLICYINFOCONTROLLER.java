@@ -54,6 +54,8 @@ public class POLICYINFOCONTROLLER {
 
             return new ResponseEntity<>(formattedResult, HttpStatus.OK);
         } catch (Exception e) {
+            // Handle exceptions here
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -86,6 +88,8 @@ public class POLICYINFOCONTROLLER {
 
             return new ResponseEntity<>(formattedResult, HttpStatus.OK);
         } catch (Exception e) {
+            // Handle exceptions here
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -112,6 +116,8 @@ public class POLICYINFOCONTROLLER {
 
             return new ResponseEntity<>(formattedResult, HttpStatus.OK);
         } catch (Exception e) {
+            // Handle exceptions here
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

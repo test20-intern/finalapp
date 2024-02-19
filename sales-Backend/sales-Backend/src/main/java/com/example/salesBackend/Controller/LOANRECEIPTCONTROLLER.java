@@ -1,11 +1,10 @@
-
 package com.example.salesBackend.Controller;
 
 import com.example.salesBackend.Dto.Request.LOANRECEIPTREQUEST;
-
-import com.example.salesBackend.Entity.PG_LOANRECEIPTS;
+import com.example.salesBackend.Exceptions.BadRequestRuntimeException;
+import com.example.salesBackend.Exceptions.ValueNotExistException;
 import com.example.salesBackend.Service.LOANRECEIPTSSERVICE;
-import com.example.salesBackend.Service.RECEIPTSSERVICE;
+import com.example.salesBackend.util.AppResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +23,11 @@ public class LOANRECEIPTCONTROLLER {
     @Autowired
     private LOANRECEIPTSSERVICE loanReceiptsService;
 
-
-
-
     // Created an auto-incrementing counter to pass an id to the frontend.
     private static long idCounter = 1;
 
     @GetMapping("/details")
-    public ResponseEntity<List<Map<String, Object>>> getloanReceiptDetailsByPolicyNo(
+    public ResponseEntity<AppResponse<List<Map<String, Object>>>> getloanReceiptDetailsByPolicyNo(
             @RequestParam String POLICY_NO
     ) {
         try {
@@ -51,9 +47,16 @@ public class LOANRECEIPTCONTROLLER {
                     })
                     .collect(Collectors.toList());
 
-            return new ResponseEntity<>(formattedResult, HttpStatus.OK);
+            return new ResponseEntity<>(AppResponse.ok(formattedResult), HttpStatus.OK);
+        } catch (ValueNotExistException e) {
+            return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "LoanReceiptDetailsNotFound",
+                    "Loan receipt details not found for policy number: " + POLICY_NO), HttpStatus.NOT_FOUND);
+        } catch (BadRequestRuntimeException e) {
+            return new ResponseEntity<>(AppResponse.error(null, "400", "Bad Request", "BadRequest",
+                    "Bad request received: " + e.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(AppResponse.error(null, "500", "Internal Server Error", "GetLoanReceiptDetailsOperationFailed",
+                    "Error getting loan receipt details: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -61,8 +64,4 @@ public class LOANRECEIPTCONTROLLER {
     private synchronized long generateIncrementingId() {
         return idCounter++;
     }
-
-
-
-
 }
