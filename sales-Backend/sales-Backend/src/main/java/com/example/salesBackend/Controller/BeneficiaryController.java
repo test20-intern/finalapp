@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
         },
         resultClasses = PG_BENEFICIARY.class
 )
-public class BENEFICIARYCONTROLLER {
+public class BeneficiaryController {
 
     @Autowired
     private BENEFICIARYSERVICE beneficiaryService;

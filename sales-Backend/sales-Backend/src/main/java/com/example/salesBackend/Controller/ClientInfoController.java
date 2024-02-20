@@ -1,9 +1,9 @@
 package com.example.salesBackend.Controller;
 
-import com.example.salesBackend.Entity.PG_POLICYLOAN;
+import com.example.salesBackend.Entity.PG_CLIENTINFO;
 import com.example.salesBackend.Exceptions.BadRequestRuntimeException;
 import com.example.salesBackend.Exceptions.ValueNotExistException;
-import com.example.salesBackend.Service.POLICYLOANSERVICE;
+import com.example.salesBackend.Service.CLIENTINFOSERVICE;
 import com.example.salesBackend.util.AppResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,47 +17,50 @@ import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/v1/loans")
-public class POLICYLOANCONTROLLER {
+@RequestMapping("/api/v1/clientinfo")
+public class ClientInfoController {
 
     @Autowired
-    private POLICYLOANSERVICE policyloanservice;
+    private CLIENTINFOSERVICE clientInfoService;
 
     // auto incrementing id function
     private static long idCounter = 1;
 
-    @GetMapping("/loan-details")
-    public ResponseEntity<AppResponse<List<Map<String, Object>>>> getLoanDetailsByPolicyNo(
+    @GetMapping("/client-details")
+    public ResponseEntity<AppResponse<List<Map<String, Object>>>> getClientDetailsByPolicyNo(
             @RequestParam(required = true) String POLICY_NO
     ) {
         try {
-            List<PG_POLICYLOAN> loanDetails = policyloanservice.getLoanDetailsByPolicyNo(POLICY_NO);
+            List<PG_CLIENTINFO> clientDetails = clientInfoService.getClientDetailsByPolicyNo(POLICY_NO);
 
             // Convert the result to pass with field names and an incrementing "id".
-            List<Map<String, Object>> formattedResult = loanDetails.stream()
+            List<Map<String, Object>> formattedResult = clientDetails.stream()
                     .map(item -> {
                         Map<String, Object> formattedItem = new HashMap<>();
                         formattedItem.put("id", generateIncrementingId()); // Incrementing "id"
-                        formattedItem.put("POLICY_NO", item.getPOLICY_NO());
-                        formattedItem.put("LAST_CAPITALIZED_DATE", item.getLAST_CAPITALIZED_DATE());
-                        formattedItem.put("LOAN_BALANCE", item.getLOAN_BALANCE());
-                        formattedItem.put("LOAN_DATE", item.getLOAN_DATE());
-                        formattedItem.put("LOAN_NO", item.getLOAN_NO());
-
+                        formattedItem.put("CLIENT_NO", item.getCLIENT_NO());
+                        formattedItem.put("NIC", item.getNIC());
+                        formattedItem.put("FULL_NAME", item.getFULL_NAME());
+                        formattedItem.put("ADD_1", item.getADD_1());
+                        formattedItem.put("ADD_2", item.getADD_2());
+                        formattedItem.put("ADD_CITY", item.getADD_CITY());
+                        formattedItem.put("PCODE", item.getPCODE());
+                        formattedItem.put("TEL_1", item.getTEL_1());
+                        formattedItem.put("TEL_2", item.getTEL_2());
                         return formattedItem;
                     })
                     .collect(Collectors.toList());
 
             return new ResponseEntity<>(AppResponse.ok(formattedResult), HttpStatus.OK);
         } catch (ValueNotExistException e) {
-            return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "LoanDetailsNotFound",
-                    "Loan details not found for policy number: " + POLICY_NO), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "ClientDetailsNotFound",
+                    "Client details not found for policy number: " + POLICY_NO), HttpStatus.NOT_FOUND);
         } catch (BadRequestRuntimeException e) {
             return new ResponseEntity<>(AppResponse.error(null, "400", "Bad Request", "BadRequest",
                     "Bad request received: " + e.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return new ResponseEntity<>(AppResponse.error(null, "500", "Internal Server Error", "GetLoanDetailsOperationFailed",
-                    "Error getting loan details: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(AppResponse.error(null, "500", "Internal Server Error", "GetClientDetailsOperationFailed",
+                    "Error getting client details: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
