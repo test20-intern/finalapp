@@ -40,7 +40,7 @@ public class ClientInfoController {
                         formattedItem.put("id", generateIncrementingId()); // Incrementing "id"
                         formattedItem.put("CLIENT_NO", item.getCLIENT_NO());
                         formattedItem.put("NIC", item.getNIC());
-                        formattedItem.put("FULL_NAME", item.getFULL_NAME());
+                        formattedItem.put("NAME", item.getNAME());
                         formattedItem.put("ADD_1", item.getADD_1());
                         formattedItem.put("ADD_2", item.getADD_2());
                         formattedItem.put("ADD_CITY", item.getADD_CITY());
