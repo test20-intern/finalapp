@@ -52,6 +52,20 @@ List<Object[]> getPolicyDetailsWithSearchParams(
             @Param("startDate") Date startDate,
             @Param("endDate") Date endDate
     );
+
+    @Query("SELECT p FROM PG_POLICYINFO p WHERE p.AGNTNUM = :agntnum AND p.PAIDUP_DATE BETWEEN :startDate AND :endDate")
+    List<PG_POLICYINFO> findOverduePoliciesByAgntnumAndPaidupDateBetween(
+            @Param("agntnum") String agntnum,
+            @Param("startDate") Date startDate,
+            @Param("endDate") Date endDate
+    );
+
+    @Query("SELECT p FROM PG_POLICYINFO p WHERE p.AGNTNUM = :agntnum AND p.PAIDUP_DATE BETWEEN :startDate AND :endDate")
+    List<PG_POLICYINFO> findLapsedPoliciesByAgntnumAndPaidupDateBetween(
+            @Param("agntnum") String agntnum,
+            @Param("startDate") Date startDate,
+            @Param("endDate") Date endDate
+    );
 }
 
 
