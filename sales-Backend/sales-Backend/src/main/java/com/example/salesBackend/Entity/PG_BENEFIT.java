@@ -3,6 +3,7 @@ package com.example.salesBackend.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "PG_BENEFIT")
-
+@IdClass(PG_BENEFIT.PK.class)
 public class PG_BENEFIT {
 
     @Id
@@ -26,4 +27,11 @@ public class PG_BENEFIT {
 
     private BigDecimal COVER_AMOUNT;
 
+
+    @Data
+    public static class PK implements Serializable {
+        private String POLICY_NO;
+        private String LIFENO;
+        private String BENEFIT_CODE;
+    }
 }

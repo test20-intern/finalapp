@@ -30,14 +30,7 @@ public class POLICYINFOSERVICE {
         }
     }
 
-    public List<Object[]> getPolicyBenefitDetailsByPolicyNo(String POLICY_NO) {
-        try {
-            return pgPolicyInfoRepo.getPolicyBenefitDetailsByPolicyNo(POLICY_NO);
-        } catch (Exception e) {
-            // Handle exceptions here
-            throw new RuntimeException("Error retrieving policy benefit details by policy number", e);
-        }
-    }
+
 
     public List<Object[]> getPolicyColumns(String POLICY_NO) {
         try {
