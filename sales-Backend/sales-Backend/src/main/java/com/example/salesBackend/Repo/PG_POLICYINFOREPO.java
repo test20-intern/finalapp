@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface PG_POLICYINFOREPO extends JpaRepository<PG_POLICYINFO, String> {
@@ -45,8 +46,16 @@ List<Object[]> getPolicyDetailsWithSearchParams(
     List<Object[]> getPolicyDetailsWithClientName();
 
 
-
+    @Query("SELECT p FROM PG_POLICYINFO p WHERE p.AGNTNUM = :agntnum AND p.PAIDUP_DATE BETWEEN :startDate AND :endDate")
+    List<PG_POLICYINFO> findDuePoliciesByAgntnumAndPaidupDateBetween(
+            @Param("agntnum") String agntnum,
+            @Param("startDate") Date startDate,
+            @Param("endDate") Date endDate
+    );
 }
+
+
+
 
 
 

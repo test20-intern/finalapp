@@ -1,9 +1,14 @@
 package com.example.salesBackend.Service;
 
+import com.example.salesBackend.Entity.PG_POLICYINFO;
 import com.example.salesBackend.Repo.PG_POLICYINFOREPO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -11,6 +16,7 @@ public class POLICYINFOSERVICE {
 
     @Autowired
     private PG_POLICYINFOREPO pgPolicyInfoRepo;
+
 
     public List<Object[]> getPolicyDetailsWithClientName() {
         try {
@@ -39,5 +45,18 @@ public class POLICYINFOSERVICE {
             // Handle exceptions here
             throw new RuntimeException("Error retrieving policy columns by policy number", e);
         }
+    }
+
+
+
+    public List<PG_POLICYINFO> getDuePolicies(String agntnum, Date inputDate) {
+        Date endDate = calculateEndDate(inputDate);
+        return pgPolicyInfoRepo.findDuePoliciesByAgntnumAndPaidupDateBetween(agntnum, inputDate, endDate);
+    }
+
+    private Date calculateEndDate(Date inputDate) {
+        LocalDate localInputDate = inputDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate endDate = ((LocalDate) localInputDate).plusMonths(1);
+        return Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 }

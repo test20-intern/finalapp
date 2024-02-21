@@ -26,6 +26,7 @@ public class PG_POLICYINFO {
     private String PAYMENT_MODE;
     private BigDecimal SUM_ASSURED;
     private Date RISK_DATE;
+    @Column(name = "PAIDUP_DATE")
     private Date PAIDUP_DATE;
     private Date PREM_CESS_DATE;
     private BigDecimal TERM;
@@ -37,9 +38,12 @@ public class PG_POLICYINFO {
     private BigDecimal TOTAL_DUE;
     private String POLICY_STATUS;
     private BigDecimal ACCOUNT_BALANCE;
+
+
+    @Column(name = "AGNTNUM")
     private String AGNTNUM;
 
-//    @Transient
-//    private Long temporaryId; /*pass the data with a temporary id.(frontend can't retrive data without id
-//     when using MUI data grid.*/
+
+
+
 }
