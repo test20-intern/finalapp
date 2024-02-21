@@ -44,11 +44,7 @@ List<Object[]> getPolicyDetailsWithSearchParams(
             "JOIN PG_CLIENTINFO c ON p.CLIENT_NO = c.CLIENT_NO")
     List<Object[]> getPolicyDetailsWithClientName();
 
-    @Query("SELECT b.BENEFIT_CODE, p.SUM_ASSURED, p.TERM, p.PREMIUM " +
-            "FROM PG_POLICYINFO p " +
-            "JOIN PG_BENEFIT b ON p.POLICY_NO = b.POLICY_NO " +
-            "WHERE p.POLICY_NO = :POLICY_NO")
-    List<Object[]> getPolicyBenefitDetailsByPolicyNo(@Param("POLICY_NO") String POLICY_NO);
+
 
 }
 

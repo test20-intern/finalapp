@@ -118,43 +118,6 @@ public class PolicyInfoController {
 
 
 
-    @GetMapping("/policy-benefit-details")
-    public ResponseEntity<AppResponse<List<Map<String, Object>>>> getPolicyBenefitDetailsByPolicyNo(
-            @RequestParam(required = true) String POLICY_NO
-    ) {
-        try {
-            List<Object[]> result = policyInfoService.getPolicyBenefitDetailsByPolicyNo(POLICY_NO);
-
-            // If no data is found for the given POLICY_NO, throw ValueNotExistException
-            if (result == null || result.isEmpty()) {
-                throw new ValueNotExistException("No policy benefit details found for the provided POLICY_NO: " + POLICY_NO);
-            }
-
-            // Convert the result to pass with field names and an incrementing "id".
-            List<Map<String, Object>> formattedResult = result.stream()
-                    .map(item -> {
-                        Map<String, Object> formattedItem = new HashMap<>();
-                        formattedItem.put("id", generateIncrementingId());
-                        formattedItem.put("BENEFIT_CODE", item[0]);
-                        formattedItem.put("SUM_ASSURED", item[1]);
-                        formattedItem.put("TERM", item[2]);
-                        formattedItem.put("PREMIUM", item[3]);
-                        return formattedItem;
-                    })
-                    .collect(Collectors.toList());
-
-            return new ResponseEntity<>(AppResponse.ok(formattedResult), HttpStatus.OK);
-        } catch (ValueNotExistException e) {
-            return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "PolicyBenefitDetailsNotFound",
-                    "Policy benefit details not found for the provided POLICY_NO: " + POLICY_NO), HttpStatus.NOT_FOUND);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(AppResponse.error(null, "400", "Bad Request", "BadRequest",
-                    "Bad request received: " + e.getMessage()), HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            return new ResponseEntity<>(AppResponse.error(null, "500", "Internal Server Error", "GetPolicyBenefitDetailsOperationFailed",
-                    "Error getting policy benefit details: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
     // Created an auto-incrementing counter to pass an id to the frontend.
     private static long idCounter = 1;
