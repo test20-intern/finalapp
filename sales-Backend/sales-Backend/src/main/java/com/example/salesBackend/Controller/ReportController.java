@@ -52,27 +52,41 @@ public class ReportController {
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getOverduePolicies(
             @RequestParam String agntnum,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate
-    ) {
+    ) throws ValueNotExistException {
         try {
             List<PG_POLICYINFO> overduePolicies = pgPolicyInfoService.getOverduePolicies(agntnum, inputDate);
+
+            if (overduePolicies.isEmpty()) {
+                return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "OverduePoliciesNotFound",
+                        "No overdue policies found for agent number: " + agntnum + " and input date: " + inputDate), HttpStatus.NOT_FOUND);
+            }
+
             return new ResponseEntity<>(AppResponse.ok(overduePolicies), HttpStatus.OK);
         } catch (Exception e) {
             return handleException(e, "Error getting overdue policies");
         }
     }
 
+
     @GetMapping("/lapsedPolicies")
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getLapsedPolicies(
             @RequestParam String agntnum,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate
-    ) {
+    ) throws ValueNotExistException {
         try {
             List<PG_POLICYINFO> lapsedPolicies = pgPolicyInfoService.getLapsedPolicies(agntnum, inputDate);
+
+            if (lapsedPolicies.isEmpty()) {
+                return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "LapsedPoliciesNotFound",
+                        "No lapsed policies found for agent number: " + agntnum + " and input date: " + inputDate), HttpStatus.NOT_FOUND);
+            }
+
             return new ResponseEntity<>(AppResponse.ok(lapsedPolicies), HttpStatus.OK);
         } catch (Exception e) {
             return handleException(e, "Error getting lapsed policies");
         }
     }
+
 
     private ResponseEntity<AppResponse<List<PG_POLICYINFO>>> handleException(Exception e, String errorMessage) {
         if (e instanceof ValueNotExistException) {
