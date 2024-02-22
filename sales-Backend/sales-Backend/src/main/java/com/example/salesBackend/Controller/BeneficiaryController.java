@@ -20,14 +20,7 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin
 @RequestMapping("/api/v1/beneficiary")
-@NamedStoredProcedureQuery(
-        name = "PG_BENEFICIARY.findByPolicyNo",
-        procedureName = "GetBeneficiariesByPolicy",
-        parameters = {
-                @StoredProcedureParameter(mode = ParameterMode.IN, name = "PolicyNo", type = String.class)
-        },
-        resultClasses = PG_BENEFICIARY.class
-)
+
 public class BeneficiaryController {
 
     @Autowired
