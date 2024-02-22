@@ -46,7 +46,7 @@ public class LoanReceiptController {
                         return formattedItem;
                     })
                     .collect(Collectors.toList());
-
+// Handling exceptions
             return new ResponseEntity<>(AppResponse.ok(formattedResult), HttpStatus.OK);
         } catch (ValueNotExistException e) {
             return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "LoanReceiptDetailsNotFound",

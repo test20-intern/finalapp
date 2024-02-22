@@ -22,6 +22,8 @@ public class PolicyInfoController {
     @Autowired
     private POLICYINFOSERVICE policyInfoService;
 
+
+    // API for  search policy details using client details.
     @GetMapping("/policy-details")
     public ResponseEntity<AppResponse<List<Map<String, Object>>>> getPolicyDetailsWithSearchParams(
             @RequestParam(required = false) String POLICY_NO,
@@ -71,6 +73,7 @@ public class PolicyInfoController {
     }
 
 
+    // API to show policy details.
     @GetMapping("/policy-columns")
     public ResponseEntity<AppResponse<List<Map<String, Object>>>> getPolicyColumns(
             @RequestParam(required = true) String POLICY_NO
