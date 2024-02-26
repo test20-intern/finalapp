@@ -49,25 +49,14 @@ public class POLICYINFOSERVICE {
 
 
 
-    public List<PG_POLICYINFO> getDuePolicies(String agntnum, Date inputDate) {
-        Date endDate = calculateEndDate(inputDate);
+    public List<PG_POLICYINFO> getDuePolicies(String agntnum, Date inputDate, Date endDate) {
         return pgPolicyInfoRepo.findDuePoliciesByAgntnumAndPaidupDateBetween(agntnum, inputDate, endDate);
     }
 
-    private Date calculateEndDate(Date inputDate) {
-        LocalDate localInputDate = inputDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate endDate = ((LocalDate) localInputDate).plusMonths(1);
-        return Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-    }
 
     public List<PG_POLICYINFO> getOverduePolicies(String agntnum, Date inputDate) {
         Date startDate = calculateStartDateForOverdue(inputDate);
         return pgPolicyInfoRepo.findOverduePoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, inputDate);
-    }
-
-    public List<PG_POLICYINFO> getLapsedPolicies(String agntnum, Date inputDate) {
-        Date startDate = calculateStartDateForLapsed(inputDate);
-        return pgPolicyInfoRepo.findLapsedPoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, inputDate);
     }
 
     private Date calculateStartDateForOverdue(Date inputDate) {
@@ -76,9 +65,17 @@ public class POLICYINFOSERVICE {
         return Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
+    public List<PG_POLICYINFO> getLapsedPolicies(String agntnum, Date inputDate) {
+        Date startDate = calculateStartDateForLapsed(inputDate);
+        return pgPolicyInfoRepo.findLapsedPoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, inputDate);
+    }
     private Date calculateStartDateForLapsed(Date inputDate) {
         LocalDate localInputDate = inputDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate startDate = localInputDate.minusYears(1); // Assuming a 1-year lapsed period
         return Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
+
+
+
+    
 }

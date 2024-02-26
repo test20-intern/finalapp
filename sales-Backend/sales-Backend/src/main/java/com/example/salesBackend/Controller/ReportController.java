@@ -31,14 +31,16 @@ public class ReportController {
     @GetMapping("/duePolicies")
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getDuePolicies(
             @RequestParam String agntnum,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
     ) {
         try {
-            List<PG_POLICYINFO> duePolicies = pgPolicyInfoRepo.getDuePolicies(agntnum, inputDate);
+            List<PG_POLICYINFO> duePolicies = pgPolicyInfoService.getDuePolicies(agntnum, inputDate, endDate);
 
             if (duePolicies.isEmpty()) {
                 return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "DuePoliciesNotFound",
-                        "No due policies found for agent number: " + agntnum + " and input date: " + inputDate), HttpStatus.NOT_FOUND);
+                        "No due policies found for agent number: " + agntnum + ", input date: " + inputDate + ", and end date: " + endDate),
+                        HttpStatus.NOT_FOUND);
             }
 
             return new ResponseEntity<>(AppResponse.ok(duePolicies), HttpStatus.OK);
@@ -47,6 +49,7 @@ public class ReportController {
                     "Error getting due policies: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @GetMapping("/overduePolicies")
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getOverduePolicies(
