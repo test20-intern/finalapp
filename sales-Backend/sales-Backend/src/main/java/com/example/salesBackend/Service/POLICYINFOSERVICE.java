@@ -65,17 +65,19 @@ public class POLICYINFOSERVICE {
         return Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
-    public List<PG_POLICYINFO> getLapsedPolicies(String agntnum, Date inputDate) {
-        Date startDate = calculateStartDateForLapsed(inputDate);
-        return pgPolicyInfoRepo.findLapsedPoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, inputDate);
+    public List<PG_POLICYINFO> getLapsedPolicies(String agntnum, Date startDate, Date inputDate) {
+        Date endDate = calculateEndDateForLapsed(inputDate);
+        return pgPolicyInfoRepo.findLapsedPoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, endDate);
     }
-    private Date calculateStartDateForLapsed(Date inputDate) {
+
+    private Date calculateEndDateForLapsed(Date inputDate) {
         LocalDate localInputDate = inputDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate startDate = localInputDate.minusYears(1); // Assuming a 1-year lapsed period
-        return Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        LocalDate endDate = localInputDate.minusMonths(1); // Subtracting a month for the lapsed period
+        return Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
 
 
-    
+
+
 }
