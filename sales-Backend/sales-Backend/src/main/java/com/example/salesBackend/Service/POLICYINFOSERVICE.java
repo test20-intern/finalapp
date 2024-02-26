@@ -72,7 +72,7 @@ public class POLICYINFOSERVICE {
 
     private Date calculateStartDateForOverdue(Date inputDate) {
         LocalDate localInputDate = inputDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate startDate = localInputDate.minusDays(30); // Assuming a 30-day overdue period
+        LocalDate startDate = localInputDate.minusMonths(1); // Subtracting 1 month
         return Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
