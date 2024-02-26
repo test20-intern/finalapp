@@ -15,4 +15,5 @@ public class SalesBackendApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SalesBackendApplication.class, args);
 	}
+
 }
