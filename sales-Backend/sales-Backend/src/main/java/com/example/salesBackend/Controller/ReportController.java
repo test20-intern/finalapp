@@ -74,14 +74,18 @@ public class ReportController {
     @GetMapping("/lapsedPolicies")
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getLapsedPolicies(
             @RequestParam String agntnum,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate
-    ) throws ValueNotExistException {
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate
+    ) {
         try {
-            List<PG_POLICYINFO> lapsedPolicies = pgPolicyInfoService.getLapsedPolicies(agntnum, inputDate);
+            validateDates(inputDate, startDate);
+
+            List<PG_POLICYINFO> lapsedPolicies = pgPolicyInfoService.getLapsedPolicies(agntnum, startDate, inputDate);
 
             if (lapsedPolicies.isEmpty()) {
                 return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "LapsedPoliciesNotFound",
-                        "No lapsed policies found for agent number: " + agntnum + " and input date: " + inputDate), HttpStatus.NOT_FOUND);
+                        "No lapsed policies found for agent number: " + agntnum + ", input date: " + inputDate + ", and start date: " + startDate),
+                        HttpStatus.NOT_FOUND);
             }
 
             return new ResponseEntity<>(AppResponse.ok(lapsedPolicies), HttpStatus.OK);
@@ -90,6 +94,13 @@ public class ReportController {
         }
     }
 
+    // ... (Other APIs)
+
+    private void validateDates(Date inputDate, Date startDate) throws BadRequestRuntimeException {
+        if (startDate.after(inputDate)) {
+            throw new BadRequestRuntimeException("Start date should be before or equal to the input date.");
+        }
+    }
 
     private ResponseEntity<AppResponse<List<PG_POLICYINFO>>> handleException(Exception e, String errorMessage) {
         if (e instanceof ValueNotExistException) {
