@@ -48,28 +48,32 @@ public class POLICYINFOSERVICE {
     }
 
 
-
+// service to get Due policy details.
     public List<PG_POLICYINFO> getDuePolicies(String agntnum, Date inputDate, Date endDate) {
         return pgPolicyInfoRepo.findDuePoliciesByAgntnumAndPaidupDateBetween(agntnum, inputDate, endDate);
     }
 
-
+// service to get the over due policies.
     public List<PG_POLICYINFO> getOverduePolicies(String agntnum, Date inputDate) {
         Date startDate = calculateStartDateForOverdue(inputDate);
         return pgPolicyInfoRepo.findOverduePoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, inputDate);
     }
-
+ //here we have to calculate the start date of overdue period. ( start date = One month before the input date)
     private Date calculateStartDateForOverdue(Date inputDate) {
         LocalDate localInputDate = inputDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate startDate = localInputDate.minusMonths(1); // Subtracting 1 month
         return Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
+
+    // service to get lapsed policies.
     public List<PG_POLICYINFO> getLapsedPolicies(String agntnum, Date startDate, Date inputDate) {
         Date endDate = calculateEndDateForLapsed(inputDate);
         return pgPolicyInfoRepo.findLapsedPoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, endDate);
     }
 
+    // here we have to calculate the lapsed policies end date cause we have to avoid the overdue period.
+    // end date = overdue periods start date.
     private Date calculateEndDateForLapsed(Date inputDate) {
         LocalDate localInputDate = inputDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate endDate = localInputDate.minusMonths(1); // Subtracting a month for the lapsed period

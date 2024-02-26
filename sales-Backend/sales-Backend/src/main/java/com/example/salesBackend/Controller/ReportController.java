@@ -29,6 +29,8 @@ public class ReportController {
     private POLICYINFOSERVICE pgPolicyInfoService;
 
     @GetMapping("/duePolicies")
+//     API to get due policies. Due Policies= policies that are due
+//     ( calculate using paidup_date column in policyInfo table) in upcoming days/ months.
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getDuePolicies(
             @RequestParam String agntnum,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate,
@@ -50,7 +52,8 @@ public class ReportController {
         }
     }
 
-
+    //     API to get Overdue policies. Over Due Policies= policies that were due
+//     ( calculate using paidup_date column in policyInfo table) in past  days/ months.
     @GetMapping("/overduePolicies")
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getOverduePolicies(
             @RequestParam String agntnum,
@@ -70,7 +73,8 @@ public class ReportController {
         }
     }
 
-
+    //     API to get Lapsed  policies. Lapsed Policies= policies that were due
+//     ( calculate using paidup_date column in policyInfo table) before overdue period.
     @GetMapping("/lapsedPolicies")
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getLapsedPolicies(
             @RequestParam String agntnum,
@@ -94,8 +98,7 @@ public class ReportController {
         }
     }
 
-    // ... (Other APIs)
-
+ // the user should input a start date that is before date from the input date.
     private void validateDates(Date inputDate, Date startDate) throws BadRequestRuntimeException {
         if (startDate.after(inputDate)) {
             throw new BadRequestRuntimeException("Start date should be before or equal to the input date.");
