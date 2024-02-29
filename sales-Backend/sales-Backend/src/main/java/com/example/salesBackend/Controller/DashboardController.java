@@ -20,7 +20,7 @@ public class DashboardController {
     @Autowired
     private POLICYINFOSERVICE pgPolicyInfoService;
 
-    /* API for graph values*/
+    /* API for graph values for policy details */
     @GetMapping("/policyCounts")
     public ResponseEntity<AppResponse<DashboardCounts>> getPolicyCounts(
             @RequestParam String agntnum

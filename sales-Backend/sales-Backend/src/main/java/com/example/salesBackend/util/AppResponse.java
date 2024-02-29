@@ -40,9 +40,6 @@ public class AppResponse<T> {
     public static <T> AppResponse<T> okList(T dataList, int pageSize, int pageNumber, long totalRecords) {
         MetaDataResponseDto metaDto = MetaDataResponseDto.builder().code(STATUS_CODE_SUCCESS).message(STATUS_SUCCESS)
                 .build();
-
-
-
         return AppResponse.<T>builder().data(dataList).meta(metaDto).build();
     }
 
