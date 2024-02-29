@@ -1,6 +1,8 @@
 package com.example.salesBackend.Service;
 
+import com.example.salesBackend.Dto.Request.DashboardCounts;
 import com.example.salesBackend.Entity.PG_POLICYINFO;
+import com.example.salesBackend.Exceptions.ValueNotExistException;
 import com.example.salesBackend.Repo.PG_POLICYINFOREPO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,6 @@ public class POLICYINFOSERVICE {
     @Autowired
     private PG_POLICYINFOREPO pgPolicyInfoRepo;
 
-
     public List<Object[]> getPolicyDetailsWithClientName() {
         try {
             return pgPolicyInfoRepo.getPolicyDetailsWithClientName();
@@ -31,29 +32,26 @@ public class POLICYINFOSERVICE {
         try {
             return pgPolicyInfoRepo.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO, AGNTNUM);
         } catch (Exception e) {
-            // Handle exceptions here
+
             throw new RuntimeException("Error retrieving policy details with search parameters", e);
         }
     }
-
-
 
     public List<Object[]> getPolicyColumns(String POLICY_NO) {
         try {
             return pgPolicyInfoRepo.getPolicyColumns(POLICY_NO);
         } catch (Exception e) {
-            // Handle exceptions here
+
             throw new RuntimeException("Error retrieving policy columns by policy number", e);
         }
     }
-
 
 // service to get Due policy details.
     public List<PG_POLICYINFO> getDuePolicies(String agntnum, Date inputDate, Date endDate) {
         return pgPolicyInfoRepo.findDuePoliciesByAgntnumAndPaidupDateBetween(agntnum, inputDate, endDate);
     }
 
-// service to get the over due policies.
+// service to get the overdue policies.
     public List<PG_POLICYINFO> getOverduePolicies(String agntnum, Date inputDate) {
         Date startDate = calculateStartDateForOverdue(inputDate);
         return pgPolicyInfoRepo.findOverduePoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, inputDate);
@@ -78,6 +76,28 @@ public class POLICYINFOSERVICE {
         LocalDate localInputDate = inputDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate endDate = localInputDate.minusMonths(1); // Subtracting a month for the lapsed period
         return Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+
+
+    // to get the number of due/overdue/lapsed policies to show in the dashboard (graphs).
+    // we get the current date and calculate the count for each type of policies.
+
+    public DashboardCounts getPolicyCounts(String agntnum) throws ValueNotExistException {
+        LocalDate today = LocalDate.now();
+        Date todayDate = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        LocalDate oneMonthAgo = today.minusMonths(1);
+        Date oneMonthAgoDate = Date.from(oneMonthAgo.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        long numberOfDuePolicies = pgPolicyInfoRepo.countDuePolicies(agntnum, todayDate);
+        long numberOfOverduePolicies = pgPolicyInfoRepo.countOverduePolicies(agntnum, oneMonthAgoDate, todayDate);
+        long numberOfLapsedPolicies = pgPolicyInfoRepo.countLapsedPolicies(agntnum, oneMonthAgoDate);
+
+        if (numberOfDuePolicies == 0 && numberOfOverduePolicies == 0 && numberOfLapsedPolicies == 0) {
+            throw new ValueNotExistException("No policies found for agent number: " + agntnum);
+        }
+
+        return new DashboardCounts(numberOfDuePolicies, numberOfOverduePolicies, numberOfLapsedPolicies);
     }
 
 
