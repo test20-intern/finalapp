@@ -2,6 +2,7 @@ package com.example.salesBackend.Controller;
 
 import com.example.salesBackend.Dto.Response.BirthdaysResponse;
 import com.example.salesBackend.Entity.PG_BENEFICIARY;
+import com.example.salesBackend.Exceptions.ValueNotExistException;
 import com.example.salesBackend.Service.BENEFICIARYSERVICE;
 import com.example.salesBackend.util.AppResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,9 @@ public class BirthdaysController {
         try {
             List<BirthdaysResponse> birthdaysResponseList = beneficiaryService.getBeneficiaryBirthdays(agntnum, startDate, endDate);
             return new ResponseEntity<>(AppResponse.ok(birthdaysResponseList), HttpStatus.OK);
+        } catch (ValueNotExistException e) {
+            return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "BeneficiaryBirthdaysNotFound",
+                    e.getMessage()), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(AppResponse.error(null, "500", "Internal Server Error", "GetBeneficiaryBirthdaysOperationFailed",
                     "Error getting beneficiary birthdays: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
