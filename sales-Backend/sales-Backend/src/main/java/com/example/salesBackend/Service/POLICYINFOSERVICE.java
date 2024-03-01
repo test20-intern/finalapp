@@ -70,7 +70,7 @@ public class POLICYINFOSERVICE {
         return pgPolicyInfoRepo.findLapsedPoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, endDate);
     }
 
-    // here we have to calculate the lapsed policies end date cause we have to avoid the overdue period.
+    // here we have to calculate the lapsed policies end date because we have to avoid the overdue period.
     // end date = overdue periods start date.
     private Date calculateEndDateForLapsed(Date inputDate) {
         LocalDate localInputDate = inputDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -99,6 +99,8 @@ public class POLICYINFOSERVICE {
 
         return new DashboardCounts(numberOfDuePolicies, numberOfOverduePolicies, numberOfLapsedPolicies);
     }
+
+
 
 
 
