@@ -51,18 +51,10 @@ public class BENEFICIARYSERVICE {
 
 
     public List<BirthdaysResponse> getBeneficiaryBirthdays(String agntnum, Date startDate, Date endDate) throws ValueNotExistException {
-        List<Object[]> beneficiaryDataList = beneficiaryRepo.findBirthdaysByAgentNumber(agntnum, startDate, endDate);
-        if (beneficiaryDataList.isEmpty()) {
+        List<BirthdaysResponse> birthdaysResponseList = beneficiaryRepo.findBirthdaysByAgentNumber(agntnum, startDate, endDate);
+        if (birthdaysResponseList.isEmpty()) {
             throw new ValueNotExistException("No beneficiaries found with birthdays between the given date range");
         }
-
-        // Map the Object[] to BirthdaysResponse
-        return beneficiaryDataList.stream()
-                .map(data -> {
-                    PG_BENEFICIARY beneficiary = (PG_BENEFICIARY) data[0];
-                    PG_CLIENTINFO clientInfo = (PG_CLIENTINFO) data[1];
-                    return new BirthdaysResponse(beneficiary, clientInfo);
-                })
-                .collect(Collectors.toList());
+        return birthdaysResponseList;
     }
 }
