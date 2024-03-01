@@ -1,13 +1,17 @@
 package com.example.salesBackend.Service;
 
 import com.example.salesBackend.Dto.Request.BENEFICIARYREQUEST;
+import com.example.salesBackend.Dto.Response.BirthdaysResponse;
 import com.example.salesBackend.Entity.PG_BENEFICIARY;
+import com.example.salesBackend.Entity.PG_CLIENTINFO;
 import com.example.salesBackend.Exceptions.BadRequestRuntimeException;
 import com.example.salesBackend.Exceptions.ValueNotExistException;
 import com.example.salesBackend.Repo.PG_BENEFICIARYREPO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +20,9 @@ public class BENEFICIARYSERVICE {
 
     @Autowired
     private PG_BENEFICIARYREPO beneficiaryRepo;
+
+    @Autowired
+    private POLICYINFOSERVICE pgPolicyInfoService;
 
     public List<BENEFICIARYREQUEST> getBeneficiaryDetailsByPolicyNo(String policyNo) throws ValueNotExistException, BadRequestRuntimeException {
         if (policyNo == null || policyNo.isEmpty()) {
@@ -39,5 +46,15 @@ public class BENEFICIARYSERVICE {
         request.setDOB(beneficiary.getDOB());
         request.setPERCENTAGE(beneficiary.getPERCENTAGE());
         return request;
+    }
+
+
+
+    public List<PG_BENEFICIARY> getBeneficiaryBirthdays(String agntnum, Date startDate, Date endDate) throws ValueNotExistException {
+        List<PG_BENEFICIARY> beneficiaryList = beneficiaryRepo.findBirthdaysByAgentNumber(agntnum, startDate, endDate);
+        if (beneficiaryList.isEmpty()) {
+            throw new ValueNotExistException("No beneficiaries found with birthdays between the given date range");
+        }
+        return beneficiaryList;
     }
 }
