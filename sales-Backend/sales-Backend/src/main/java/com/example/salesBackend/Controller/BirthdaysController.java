@@ -1,5 +1,6 @@
 package com.example.salesBackend.Controller;
 
+import com.example.salesBackend.Dto.Response.BirthdaysResponse;
 import com.example.salesBackend.Entity.PG_BENEFICIARY;
 import com.example.salesBackend.Service.BENEFICIARYSERVICE;
 import com.example.salesBackend.util.AppResponse;
@@ -24,7 +25,7 @@ public class BirthdaysController {
 
 
     @GetMapping("/getBeneficiaryBirthdays")
-    public ResponseEntity<AppResponse<List<PG_BENEFICIARY>>> getBeneficiaryBirthdays(
+    public ResponseEntity<AppResponse<List<BirthdaysResponse>>> getBeneficiaryBirthdays(
             @RequestParam String agntnum,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
@@ -39,8 +40,8 @@ public class BirthdaysController {
         }
 
         try {
-            List<PG_BENEFICIARY> beneficiaryList = beneficiaryService.getBeneficiaryBirthdays(agntnum, startDate, endDate);
-            return new ResponseEntity<>(AppResponse.ok(beneficiaryList), HttpStatus.OK);
+            List<BirthdaysResponse> birthdaysResponseList = beneficiaryService.getBeneficiaryBirthdays(agntnum, startDate, endDate);
+            return new ResponseEntity<>(AppResponse.ok(birthdaysResponseList), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(AppResponse.error(null, "500", "Internal Server Error", "GetBeneficiaryBirthdaysOperationFailed",
                     "Error getting beneficiary birthdays: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

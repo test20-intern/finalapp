@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,6 +29,7 @@ public class PG_CLIENTINFO {
     private String PCODE;
     private String TEL_1;
     private String TEL_2;
+    private Date DOB;
 
 
     public void setId(int i) {
