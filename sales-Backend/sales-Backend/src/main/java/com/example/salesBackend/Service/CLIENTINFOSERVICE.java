@@ -7,6 +7,8 @@ import com.example.salesBackend.Repo.PG_CLIENTINFOREPO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -29,4 +31,22 @@ public class CLIENTINFOSERVICE {
 
         return clientDetails;
     }
+
+    public List<PG_CLIENTINFO> getClientBirthdays(String agntnum, Date startDate, Date endDate) {
+        try {
+            List<PG_CLIENTINFO> clientInfoList = pgClientInfoRepo.findByAgntnumAndDobBetween(agntnum, startDate, endDate);
+
+            if (clientInfoList.isEmpty()) {
+                throw new ValueNotExistException("No client birthdays found for the specified criteria.");
+            }
+
+            return clientInfoList;
+        } catch (Exception e) {
+            throw new RuntimeException("Error fetching client birthdays: " + e.getMessage());
+        }
+    }
+
+
+
+
 }
