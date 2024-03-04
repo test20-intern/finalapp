@@ -52,9 +52,11 @@ public class BENEFICIARYSERVICE {
 
     public List<BirthdaysResponse> getBeneficiaryBirthdays(String agntnum, Date startDate, Date endDate) throws ValueNotExistException {
         List<BirthdaysResponse> birthdaysResponseList = beneficiaryRepo.findBirthdaysByAgentNumber(agntnum, startDate, endDate);
+
         if (birthdaysResponseList.isEmpty()) {
             throw new ValueNotExistException("No beneficiaries found with birthdays between the given date range");
         }
+
         return birthdaysResponseList;
     }
 }

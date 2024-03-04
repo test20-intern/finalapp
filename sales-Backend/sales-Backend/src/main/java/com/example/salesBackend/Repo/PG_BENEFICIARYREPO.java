@@ -20,9 +20,8 @@ public interface PG_BENEFICIARYREPO extends JpaRepository<PG_BENEFICIARY, Benefi
             "JOIN PG_CLIENTINFO c ON b.BID.CUSTOMERID = c.CLIENT_NO " +
             "JOIN PG_POLICYINFO p ON c.CLIENT_NO = p.CLIENT_NO " +
             "WHERE p.AGNTNUM = :agntnum " +
-            "AND MONTH(b.DOB) = MONTH(:startDate) " +
-            "AND DAY(b.DOB) >= DAY(:startDate) " +
-            "AND DAY(b.DOB) <= DAY(:endDate)")
+            "AND FUNCTION('MONTH', b.DOB) * 100 + FUNCTION('DAY', b.DOB) >= FUNCTION('MONTH', :startDate) * 100 + FUNCTION('DAY', :startDate) " +
+            "AND FUNCTION('MONTH', b.DOB) * 100 + FUNCTION('DAY', b.DOB) <= FUNCTION('MONTH', :endDate) * 100 + FUNCTION('DAY', :endDate)")
     List<BirthdaysResponse> findBirthdaysByAgentNumber(
             @Param("agntnum") String agntnum,
             @Param("startDate") Date startDate,
