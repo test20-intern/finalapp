@@ -36,8 +36,8 @@ public class RECEIPTSSERVICE {
 
 
     //code snippet for getAgentReceipts API.
-    public List<Object[]> getAgentReceipts(String agntnum, Date startDate, Date endDate) {
-        return pgReceiptsRepo.getAgentReceipts(agntnum, startDate, endDate);
+    public List<Object[]> getAgentReceipts(String agntnum, String policyNo, Date startDate, Date endDate) {
+        return pgReceiptsRepo.getAgentReceipts(agntnum, policyNo, startDate, endDate);
     }
 
 
