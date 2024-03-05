@@ -6,10 +6,12 @@ import com.example.salesBackend.Exceptions.ValueNotExistException;
 import com.example.salesBackend.Service.RECEIPTSSERVICE;
 import com.example.salesBackend.util.AppResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,4 +65,34 @@ public class ReceiptsController {
     private synchronized long generateIncrementingId() {
         return idCounter++;
     }
+
+
+    // API for get receipt details for a given date range.
+    @GetMapping("/agentReceipts")
+    public ResponseEntity<AppResponse<List<Object[]>>> getAgentReceipts(
+            @RequestParam String agntnum,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
+    ) {
+        try {
+            List<Object[]> agentReceipts = pgReceiptsService.getAgentReceipts(agntnum, startDate, endDate);
+
+            if (agentReceipts.isEmpty()) {
+                return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "AgentReceiptsNotFound",
+                        "No agent receipts found for agent number: " + agntnum), HttpStatus.NOT_FOUND);
+            }
+
+            return new ResponseEntity<>(AppResponse.ok(agentReceipts), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(AppResponse.error(null, "500", "Internal Server Error", "GetAgentReceiptsOperationFailed",
+                    "Error getting agent receipts: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+
+
+
+
 }
