@@ -20,7 +20,7 @@ public interface PG_RECEIPTSREPO extends JpaRepository<PG_RECEIPTS, PG_RECEIPTSI
 
 
     // Query for 'getAgentReceipts
-    @Query("SELECT r, p.NAME " +
+    @Query("SELECT r, p " +
             "FROM PG_RECEIPTS r " +
             "JOIN PG_POLICYINFO p ON r.RID.POLICY_NO = p.POLICY_NO " +
             "WHERE p.AGNTNUM = :agntnum " +
@@ -30,7 +30,6 @@ public interface PG_RECEIPTSREPO extends JpaRepository<PG_RECEIPTS, PG_RECEIPTSI
             @Param("startDate") Date startDate,
             @Param("endDate") Date endDate
     );
-
 
 
 
