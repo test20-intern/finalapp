@@ -71,15 +71,17 @@ public class ReceiptsController {
     @GetMapping("/agentReceipts")
     public ResponseEntity<AppResponse<List<Object[]>>> getAgentReceipts(
             @RequestParam String agntnum,
+            @RequestParam(required = false) String policyNo,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
     ) {
         try {
-            List<Object[]> agentReceipts = pgReceiptsService.getAgentReceipts(agntnum, startDate, endDate);
+            List<Object[]> agentReceipts = pgReceiptsService.getAgentReceipts(agntnum, policyNo, startDate, endDate);
 
             if (agentReceipts.isEmpty()) {
                 return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "AgentReceiptsNotFound",
-                        "No agent receipts found for agent number: " + agntnum), HttpStatus.NOT_FOUND);
+                        "No agent receipts found for agent number: " + agntnum + ", start date: " + startDate + ", end date: " + endDate +
+                                (policyNo != null ? ", and policy number: " + policyNo : "")), HttpStatus.NOT_FOUND);
             }
 
             return new ResponseEntity<>(AppResponse.ok(agentReceipts), HttpStatus.OK);
@@ -88,7 +90,6 @@ public class ReceiptsController {
                     "Error getting agent receipts: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
 
 
