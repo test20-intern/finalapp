@@ -20,6 +20,8 @@ public class PG_RECEIPTS {
     private PG_RECEIPTSId RID;
 
     private Date RECEIPT_DATE;
+
+
 }
 
 
