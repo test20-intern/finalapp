@@ -24,12 +24,14 @@ public interface PG_CLIENTINFOREPO extends JpaRepository<PG_CLIENTINFO, String> 
             "JOIN PG_POLICYINFO p ON c.CLIENT_NO = p.CLIENT_NO " +
             "WHERE p.AGNTNUM = :agntnum " +
             "AND FUNCTION('MONTH', c.DOB) * 100 + FUNCTION('DAY', c.DOB) >= FUNCTION('MONTH', :startDate) * 100 + FUNCTION('DAY', :startDate) " +
-            "AND FUNCTION('MONTH', c.DOB) * 100 + FUNCTION('DAY', c.DOB) <= FUNCTION('MONTH', :endDate) * 100 + FUNCTION('DAY', :endDate)")
+            "AND FUNCTION('MONTH', c.DOB) * 100 + FUNCTION('DAY', c.DOB) <= FUNCTION('MONTH', :endDate) * 100 + FUNCTION('DAY', :endDate) " +
+            "ORDER BY FUNCTION('MONTH', c.DOB) * 100 + FUNCTION('DAY', c.DOB) ASC")
     List<PG_CLIENTINFO> findByAgntnumAndDobBetween(
             @Param("agntnum") String agntnum,
             @Param("startDate") Date startDate,
             @Param("endDate") Date endDate
     );
+
 
 
 
