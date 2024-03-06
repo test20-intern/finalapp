@@ -28,14 +28,15 @@ public class BirthdaysController {
     private CLIENTINFOSERVICE clientInfoService;
 
 
-
+    //API to get beneficiaries birthdays for a given date range.
     @GetMapping("/getBeneficiaryBirthdays")
     public ResponseEntity<AppResponse<List<BirthdaysResponse>>> getBeneficiaryBirthdays(
             @RequestParam String agntnum,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
     ) {
-        // Set default values if startDate or endDate is not provided
+        // Set default values if startDate or endDate is not provided. Default dates are start date = today
+        // end date = today + 7 days.
         if (startDate == null) {
             startDate = new Date(); // Today's date
         }
@@ -43,7 +44,7 @@ public class BirthdaysController {
             // Calculate end date as 7 days after today
             endDate = calculateEndDate(startDate, 7);
         }
-
+        // exception handling part
         try {
             List<BirthdaysResponse> birthdaysResponseList = beneficiaryService.getBeneficiaryBirthdays(agntnum, startDate, endDate);
             return new ResponseEntity<>(AppResponse.ok(birthdaysResponseList), HttpStatus.OK);
@@ -55,6 +56,10 @@ public class BirthdaysController {
                     "Error getting beneficiary birthdays: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+
+    // API to get clients birthdays for a given data range.
     @GetMapping("/getClientBirthdays")
     public ResponseEntity<AppResponse<List<PG_CLIENTINFO>>> getClientBirthdays(
             @RequestParam String agntnum,
@@ -69,7 +74,7 @@ public class BirthdaysController {
             // Calculate end date as 7 days after today
             endDate = calculateEndDate(startDate, 7);
         }
-
+        // exception handling
         try {
             List<PG_CLIENTINFO> clientInfoList = clientInfoService.getClientBirthdays(agntnum, startDate, endDate);
 
