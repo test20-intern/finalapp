@@ -19,9 +19,16 @@ public class PG_BENEFICIARY {
 
     @EmbeddedId
     private BeneficiaryId BID;
+    @Column(name="NAME")
     private String NAME;
+
+    @Column(name="DOB")
     private Date DOB;
+
+    @Column(name="PERCENTAGE")
     private BigDecimal PERCENTAGE;
+
+    @Column(name="LASTUPDATED")
     private Date LASTUPDATED;
 
 

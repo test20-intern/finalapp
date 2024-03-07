@@ -17,8 +17,14 @@ public class PG_BENEFIT_MASTER {
 
     @Column(name = "BENEFIT_CODE")
     private  String BENEFIT_CODE;
+
+    @Column(name = "DESCRIPTION")
     private String DESCRIPTION;
+
+    @Column(name = "REMARKS")
     private String REMARKS;
+
+    @Column(name = "VIEW_ORDER")
     private int VIEW_ORDER;
 
 }

@@ -19,6 +19,7 @@ public class PG_RECEIPTS {
     @EmbeddedId
     private PG_RECEIPTSId RID;
 
+    @Column(name="RECEIPT_DATE")
     private Date RECEIPT_DATE;
 
 

@@ -18,7 +18,11 @@ import java.sql.Date;
 public class PG_LOANRECEIPTS {
     @EmbeddedId
     private LoanReceiptsId LRID;
+
+    @Column(name="RECEIPT_DATE")
     private Date RECEIPT_DATE;
+
+    @Column(name="AMOUNT")
     private BigDecimal AMOUNT;
 
 
