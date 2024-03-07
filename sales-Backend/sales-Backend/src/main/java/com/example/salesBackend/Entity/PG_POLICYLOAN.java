@@ -21,8 +21,15 @@ public class PG_POLICYLOAN {
     @Column(name = "POLICY_NO")
     private String POLICY_NO;
 
+    @Column(name = "LOAN_NO")
     private String LOAN_NO;
+
+    @Column(name = "LOAN_DATE")
     private Date LOAN_DATE;
+
+    @Column(name = "LAST_CAPITALIZED_DATE")
     private Date LAST_CAPITALIZED_DATE;
+
+    @Column(name = "LOAN_BALANCE")
     private BigDecimal LOAN_BALANCE;
 }

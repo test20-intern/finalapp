@@ -20,15 +20,34 @@ public class PG_CLIENTINFO {
     @Column(name = "CLIENT_NO")
     private String CLIENT_NO;
 
+    @Column(name="NIC")
     private String NIC;
+
+    @Column(name="NAME")
     private String NAME;
+
+    @Column(name="FULL_NAME")
     private String FULL_NAME;
+
+    @Column(name="ADD_1")
     private String ADD_1;
+
+    @Column(name="ADD_2;")
     private String ADD_2;
+
+    @Column(name="ADD_CITY")
     private String ADD_CITY;
+
+    @Column(name="PCODE")
     private String PCODE;
+
+    @Column(name="TEL_1")
     private String TEL_1;
+
+    @Column(name="TEL_2")
     private String TEL_2;
+
+    @Column(name="DOB")
     private Date DOB;
 
 

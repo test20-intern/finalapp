@@ -19,12 +19,16 @@ import java.util.Set;
 public class PG_BENEFIT {
 
     @Id
+    @Column(name="POLICY_NO")
     private String POLICY_NO;
     @Id
+    @Column(name="LIFENO")
     private String LIFENO;
     @Id
+    @Column(name="BENEFIT_CODE")
     private String BENEFIT_CODE;
 
+    @Column(name="COVER_AMOUNT")
     private BigDecimal COVER_AMOUNT;
 
 
