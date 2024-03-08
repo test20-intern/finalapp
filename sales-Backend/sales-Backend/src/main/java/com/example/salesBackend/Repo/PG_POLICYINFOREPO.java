@@ -7,6 +7,8 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public interface PG_POLICYINFOREPO extends JpaRepository<PG_POLICYINFO, String> {
 
@@ -93,6 +95,17 @@ List<Object[]> getPolicyDetailsWithSearchParams(
 
     @Query("SELECT COUNT (p) FROM PG_POLICYINFO p WHERE p.AGNTNUM=:agntnum AND PLAN_NAME='CEYLINCO UTHUM'")
     long countCeylincoUthumPolicies (@Param("agntnum")String agntnum );
+
+    @Query("SELECT p.PLAN_NAME, COUNT(p.PLAN_NAME) FROM PG_POLICYINFO p WHERE p.AGNTNUM = :agntnum GROUP BY p.PLAN_NAME")
+    List<Object[]> findPlanTypesCountByAgntnum(@Param("agntnum") String agntnum);
+
+    default Map<String, Long> countPlanTypesByAgntnum(String agntnum) {
+        return findPlanTypesCountByAgntnum(agntnum).stream()
+                .collect(Collectors.toMap(
+                        entry -> (String) entry[0],
+                        entry -> (Long) entry[1]
+                ));
+    }
 
 
 
