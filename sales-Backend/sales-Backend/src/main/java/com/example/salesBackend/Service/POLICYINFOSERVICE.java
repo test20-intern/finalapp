@@ -12,6 +12,7 @@ import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class POLICYINFOSERVICE {
@@ -98,6 +99,10 @@ public class POLICYINFOSERVICE {
         }
 
         return new DashboardCounts(numberOfDuePolicies, numberOfOverduePolicies, numberOfLapsedPolicies);
+    }
+
+    public Map<String, Long> getPlanTypes(String agntnum) {
+        return pgPolicyInfoRepo.countPlanTypesByAgntnum(agntnum);
     }
 
 
