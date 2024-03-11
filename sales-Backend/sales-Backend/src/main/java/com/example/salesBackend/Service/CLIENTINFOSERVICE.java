@@ -32,8 +32,14 @@ public class CLIENTINFOSERVICE {
         return clientDetails;
     }
 
-    public List<PG_CLIENTINFO> getClientInfoByAgentAndDateRange(String agentNumber, Date startDate, Date endDate) {
-        return pgClientInfoRepo.findClientInfoByAgentAndDateRange(agentNumber, startDate, endDate);
+    public List<PG_CLIENTINFO> getClientInfoByAgentAndDateRange(String agentNumber, Date startDate, Date endDate) throws ValueNotExistException {
+        List<PG_CLIENTINFO> clientInfoList = pgClientInfoRepo.findClientInfoByAgentAndDateRange(agentNumber, startDate, endDate);
+
+        if (clientInfoList.isEmpty()) {
+            throw new ValueNotExistException("No client information found for the specified criteria.");
+        }
+
+        return clientInfoList;
     }
 
 

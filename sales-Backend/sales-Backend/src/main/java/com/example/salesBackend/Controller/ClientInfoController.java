@@ -47,6 +47,8 @@ public class ClientInfoController {
                         formattedItem.put("PCODE", item.getPCODE());
                         formattedItem.put("TEL_1", item.getTEL_1());
                         formattedItem.put("TEL_2", item.getTEL_2());
+                        formattedItem.put("DOB", item.getDOB());
+
                         return formattedItem;
                     })
                     .collect(Collectors.toList());

@@ -8,6 +8,7 @@ import com.example.salesBackend.Service.BENEFICIARYSERVICE;
 import com.example.salesBackend.Service.CLIENTINFOSERVICE;
 import com.example.salesBackend.util.AppResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,11 +62,19 @@ public class BirthdaysController {
 
     // API to get clients birthdays for a given data range.
     @GetMapping("/getClientBirthdays")
-    public List<PG_CLIENTINFO> getClientInfo(@RequestParam String agentNumber,
-                                          @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
-                                          @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
-        return clientInfoService.getClientInfoByAgentAndDateRange(agentNumber, startDate, endDate);
+    public ResponseEntity<List<PG_CLIENTINFO>> getClientInfo(@RequestParam String agentNumber,
+                                                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+                                                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
+        try {
+            List<PG_CLIENTINFO> clientInfoList = clientInfoService.getClientInfoByAgentAndDateRange(agentNumber, startDate, endDate);
+            return new ResponseEntity<>(clientInfoList, HttpStatus.OK);
+        } catch (ValueNotExistException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
 
     // Helper method to calculate end date based on start date and daysToAdd
     private Date calculateEndDate(Date startDate, int daysToAdd) {
