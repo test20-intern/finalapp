@@ -1,9 +1,11 @@
 package com.example.salesBackend.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,7 +34,7 @@ public class PG_CLIENTINFO {
     @Column(name="ADD_1")
     private String ADD_1;
 
-    @Column(name="ADD_2;")
+    @Column(name="ADD_2")
     private String ADD_2;
 
     @Column(name="ADD_CITY")
@@ -47,8 +49,9 @@ public class PG_CLIENTINFO {
     @Column(name="TEL_2")
     private String TEL_2;
 
-    @Column(name="DOB")
-    private Date DOB;
+    @Column(name = "DOB")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC")
+    private BigDecimal DOB;
 
 
     public void setId(int i) {

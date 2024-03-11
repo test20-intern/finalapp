@@ -61,35 +61,10 @@ public class BirthdaysController {
 
     // API to get clients birthdays for a given data range.
     @GetMapping("/getClientBirthdays")
-    public ResponseEntity<AppResponse<List<PG_CLIENTINFO>>> getClientBirthdays(
-            @RequestParam String agntnum,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
-    ) {
-        // Set default values if startDate or endDate is not provided
-        if (startDate == null) {
-            startDate = new Date(); // Today's date
-        }
-        if (endDate == null) {
-            // Calculate end date as 7 days after today
-            endDate = calculateEndDate(startDate, 7);
-        }
-        // exception handling
-        try {
-            List<PG_CLIENTINFO> clientInfoList = clientInfoService.getClientBirthdays(agntnum, startDate, endDate);
-
-            if (clientInfoList.isEmpty()) {
-                throw new ValueNotExistException("No client birthdays found for the specified criteria.");
-            }
-
-            return new ResponseEntity<>(AppResponse.ok(clientInfoList), HttpStatus.OK);
-        } catch (ValueNotExistException e) {
-            return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "ClientBirthdaysNotFound",
-                    e.getMessage()), HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            return new ResponseEntity<>(AppResponse.error(null, "500", "Internal Server Error", "GetClientBirthdaysOperationFailed",
-                    "Error getting client birthdays: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public List<PG_CLIENTINFO> getClientInfo(@RequestParam String agentNumber,
+                                          @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+                                          @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
+        return clientInfoService.getClientInfoByAgentAndDateRange(agentNumber, startDate, endDate);
     }
 
     // Helper method to calculate end date based on start date and daysToAdd

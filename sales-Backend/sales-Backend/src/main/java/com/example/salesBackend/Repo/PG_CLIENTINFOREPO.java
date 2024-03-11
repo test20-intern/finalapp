@@ -20,17 +20,18 @@ public interface PG_CLIENTINFOREPO extends JpaRepository<PG_CLIENTINFO, String> 
 
 
 
-    @Query("SELECT c FROM PG_CLIENTINFO c " +
-            "JOIN PG_POLICYINFO p ON c.CLIENT_NO = p.CLIENT_NO " +
-            "WHERE p.AGNTNUM = :agntnum " +
-            "AND FUNCTION('MONTH', c.DOB) * 100 + FUNCTION('DAY', c.DOB) >= FUNCTION('MONTH', :startDate) * 100 + FUNCTION('DAY', :startDate) " +
-            "AND FUNCTION('MONTH', c.DOB) * 100 + FUNCTION('DAY', c.DOB) <= FUNCTION('MONTH', :endDate) * 100 + FUNCTION('DAY', :endDate) " +
-            "ORDER BY FUNCTION('MONTH', c.DOB) * 100 + FUNCTION('DAY', c.DOB) ASC")
-    List<PG_CLIENTINFO> findByAgntnumAndDobBetween(
-            @Param("agntnum") String agntnum,
-            @Param("startDate") Date startDate,
-            @Param("endDate") Date endDate
-    );
+    @Query(value = "SELECT ci.* FROM PG_CLIENTINFO ci " +
+            "INNER JOIN PG_POLICYINFO pi ON ci.CLIENT_NO = pi.CLIENT_NO " +
+            "WHERE pi.AGNTNUM = :agentNumber " +
+            "AND ci.DOB <> '99999999' " +
+            "AND MONTH(CONVERT(DATE, CONVERT(VARCHAR(8), CONVERT(INT, ci.DOB)))) * 100 + DAY(CONVERT(DATE, CONVERT(VARCHAR(8), CONVERT(INT, ci.DOB)))) " +
+            "BETWEEN MONTH(:startDate) * 100 + DAY(:startDate) AND MONTH(:endDate) * 100 + DAY(:endDate) " +
+            "ORDER BY MONTH(CONVERT(DATE, CONVERT(VARCHAR(8), CONVERT(INT, ci.DOB)))), DAY(CONVERT(DATE, CONVERT(VARCHAR(8), CONVERT(INT, ci.DOB))))",
+            nativeQuery = true)
+    List<PG_CLIENTINFO> findClientInfoByAgentAndDateRange(@Param("agentNumber") String agentNumber,
+                                                       @Param("startDate") Date startDate,
+                                                       @Param("endDate") Date endDate);
+
 
 
 
