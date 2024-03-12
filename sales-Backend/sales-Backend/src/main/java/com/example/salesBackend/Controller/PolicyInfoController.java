@@ -30,14 +30,15 @@ public class PolicyInfoController {
             @RequestParam(required = false) String NIC,
             @RequestParam(required = false) String NAME,
             @RequestParam(required = false) String CLIENT_NO,
-            @RequestParam(required = false) String AGNTNUM
+            @RequestParam String AGNTNUM
     ) {
         try {
             List<Object[]> result;
 
-            if (POLICY_NO == null && NIC == null && NAME == null && CLIENT_NO == null && AGNTNUM == null) {
+            if (POLICY_NO == null && NIC == null && NAME == null && CLIENT_NO == null && AGNTNUM != null) {
                 System.out.println("No search parameters provided. Returning all details.");
-                result = policyInfoService.getPolicyDetailsWithClientName();
+                result = policyInfoService.getPolicyDetailsWithClientName("00099763");
+                System.out.println(result);
             } else {
                 System.out.println("Search parameters provided. Returning results based on search.");
                 result = policyInfoService.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO, AGNTNUM);
@@ -57,7 +58,6 @@ public class PolicyInfoController {
                         formattedItem.put("NAME", item[1]);
                         formattedItem.put("PREMIUM", item[2]);
                         formattedItem.put("POLICY_STATUS", item[3]);
-                        formattedItem.put("AGNTNUM", item[4]);
                         return formattedItem;
                     })
                     .collect(Collectors.toList());
@@ -71,6 +71,7 @@ public class PolicyInfoController {
                     "Error getting policy details: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 
     // API to show policy details.
