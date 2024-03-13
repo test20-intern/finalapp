@@ -76,12 +76,12 @@ public class PolicyInfoController {
     // API to show policy details.
     @GetMapping("/policy-columns")
     public ResponseEntity<AppResponse<List<Map<String, Object>>>> getPolicyColumns(
-            @RequestParam(required = true) String POLICY_NO,
-            @RequestParam(required = true) String AGNTNUM
+            @RequestParam(required = true) String POLICY_NO
+
 
     ) {
         try {
-            List<Object[]> result = policyInfoService.getPolicyColumns(POLICY_NO,AGNTNUM);
+            List<Object[]> result = policyInfoService.getPolicyColumns(POLICY_NO);
 
             // If no data is found for the given POLICY_NO, throw ValueNotExistException
             if (result == null || result.isEmpty()) {
