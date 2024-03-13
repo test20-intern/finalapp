@@ -12,10 +12,9 @@ import java.util.List;
 public interface PG_CLIENTINFOREPO extends JpaRepository<PG_CLIENTINFO, String> {
 
     // Query to get client details based on the POLICY_NO
-    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_ClientDetailsByPolicyNo @AGNTNUM= :AGNTNUM,@POLICY_NO = :POLICY_NO")
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_ClientDetailsByPolicyNo @POLICY_NO = :POLICY_NO")
     List<PG_CLIENTINFO> getClientDetailsByPolicyNo(
-            @Param("POLICY_NO") String POLICY_NO,
-            @Param("AGNTNUM") String AGNTNUM
+            @Param("POLICY_NO") String POLICY_NO
             );
 
 
