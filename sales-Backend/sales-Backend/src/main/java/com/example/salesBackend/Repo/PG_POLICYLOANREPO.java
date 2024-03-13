@@ -9,9 +9,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PG_POLICYLOANREPO extends JpaRepository<PG_POLICYLOAN,String> {
-    @Query("SELECT l " +
-            "FROM PG_POLICYLOAN l " +
-            "JOIN PG_POLICYINFO p ON l.POLICY_NO = p.POLICY_NO " +
-            "WHERE p.POLICY_NO = :POLICY_NO")
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_PolicyLoanByPolicyNumber @POLICY_NO=:POLICY_NO")
     List<PG_POLICYLOAN> getLoanDetailsByPolicyNo(@Param("POLICY_NO") String POLICY_NO);
 }
