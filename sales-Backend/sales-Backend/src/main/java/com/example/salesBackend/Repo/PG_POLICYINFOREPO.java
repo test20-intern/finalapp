@@ -35,7 +35,7 @@ List<Object[]> getPolicyDetailsWithSearchParams(
     @Query("SELECT p.POLICY_NO, c.NAME, p.PREMIUM, p.POLICY_STATUS " +
             "FROM PG_POLICYINFO p " +
             "JOIN PG_CLIENTINFO c ON p.CLIENT_NO = c.CLIENT_NO "+
-            "WHERE p.AGNTNUM = :AGNTNUM")
+            "WHERE SUBSTRING(p.AGNTNUM, LEN(p.AGNTNUM) - 5, 6) = :AGNTNUM")
     List<Object[]> getPolicyDetailsWithClientName(@Param("AGNTNUM") String AGNTNUM);
 
 

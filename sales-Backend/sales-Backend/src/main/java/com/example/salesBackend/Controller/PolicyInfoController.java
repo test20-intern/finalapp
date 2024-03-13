@@ -37,7 +37,7 @@ public class PolicyInfoController {
 
             if (AGNTNUM != null && (POLICY_NO == null && NIC == null && NAME == null && CLIENT_NO == null)) {
                 // If AGNTNUM is provided without any other search parameters, use getPolicyDetailsWithClientName
-                result = policyInfoService.getPolicyDetailsWithClientName("00"+AGNTNUM);
+                result = policyInfoService.getPolicyDetailsWithClientName(AGNTNUM);
             } else {
                 // Use getPolicyDetailsWithSearchParams if any other search parameters are provided along with AGNTNUM
                 result = policyInfoService.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO, AGNTNUM);
