@@ -19,12 +19,12 @@ public class CLIENTINFOSERVICE {
     @Autowired
     private PG_CLIENTINFOREPO pgClientInfoRepo;
 
-    public List<PG_CLIENTINFO> getClientDetailsByPolicyNo(String POLICY_NO) throws ValueNotExistException, BadRequestRuntimeException {
+    public List<PG_CLIENTINFO> getClientDetailsByPolicyNo(String AGNTNUM,String POLICY_NO) throws ValueNotExistException, BadRequestRuntimeException {
         if (POLICY_NO == null || POLICY_NO.isEmpty()) {
             throw new BadRequestRuntimeException("Policy number cannot be null or empty");
         }
 
-        List<PG_CLIENTINFO> clientDetails = pgClientInfoRepo.getClientDetailsByPolicyNo(POLICY_NO);
+        List<PG_CLIENTINFO> clientDetails = pgClientInfoRepo.getClientDetailsByPolicyNo(AGNTNUM,POLICY_NO);
         if (clientDetails.isEmpty()) {
             throw new ValueNotExistException("Client details not found for policy number: " + POLICY_NO);
         }

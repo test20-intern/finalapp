@@ -28,10 +28,11 @@ public class ClientInfoController {
 
     @GetMapping("/client-details")
     public ResponseEntity<AppResponse<List<Map<String, Object>>>> getClientDetailsByPolicyNo(
-            @RequestParam(required = true) String POLICY_NO
+            @RequestParam(required = true) String POLICY_NO,
+            @RequestParam(required = true) String AGNTNUM
     ) {
         try {
-            List<PG_CLIENTINFO> clientDetails = clientInfoService.getClientDetailsByPolicyNo(POLICY_NO);
+            List<PG_CLIENTINFO> clientDetails = clientInfoService.getClientDetailsByPolicyNo(POLICY_NO,AGNTNUM);
 
             // Convert the result to pass with field names and an incrementing "id".
             List<Map<String, Object>> formattedResult = clientDetails.stream()
