@@ -25,7 +25,7 @@ public class PolicyInfoController {
 
     // API for  search policy details using client details.
     @GetMapping("/policy-details")
-    public ResponseEntity<AppResponse<List<Map<String, Object>>>> getPolicyDetailsWithSearchParams(
+    public ResponseEntity<AppResponse<List<Map<String, Object>>>> getPolicyDetails(
             @RequestParam(required = false) String POLICY_NO,
             @RequestParam(required = false) String NIC,
             @RequestParam(required = false) String NAME,
@@ -35,18 +35,17 @@ public class PolicyInfoController {
         try {
             List<Object[]> result;
 
-            if (POLICY_NO == null && NIC == null && NAME == null && CLIENT_NO == null && AGNTNUM != null) {
-                System.out.println("No search parameters provided. Returning all details.");
-                result = policyInfoService.getPolicyDetailsWithClientName("00099763");
-                System.out.println(result);
+            if (AGNTNUM != null && (POLICY_NO == null && NIC == null && NAME == null && CLIENT_NO == null)) {
+                // If AGNTNUM is provided without any other search parameters, use getPolicyDetailsWithClientName
+                result = policyInfoService.getPolicyDetailsWithClientName(AGNTNUM);
             } else {
-                System.out.println("Search parameters provided. Returning results based on search.");
+                // Use getPolicyDetailsWithSearchParams if any other search parameters are provided along with AGNTNUM
                 result = policyInfoService.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO, AGNTNUM);
+            }
 
-                // If no data is found for the given search parameters, throw ValueNotExistException
-                if (result.isEmpty()) {
-                    throw new ValueNotExistException("No data found for the provided search parameters");
-                }
+            // If no data is found for the given search parameters, throw ValueNotExistException
+            if (result.isEmpty()) {
+                throw new ValueNotExistException("No data found for the provided search parameters");
             }
 
             // Convert the result to pass with field names and an incrementing "id".
