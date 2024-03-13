@@ -60,13 +60,13 @@ List<Object[]> getPolicyDetailsWithSearchParams(
     );
 
 
-    @Query("SELECT COUNT(p) FROM PG_POLICYINFO p WHERE p.AGNTNUM = :agntnum AND p.PAIDUP_DATE > :todayDate")
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_CountOfDuePolicies @agntnum =:agntnum,@todayDate=:todayDate")
     long countDuePolicies(@Param("agntnum") String agntnum, @Param("todayDate") Date todayDate);
 
-    @Query("SELECT COUNT(p) FROM PG_POLICYINFO p WHERE p.AGNTNUM = :agntnum AND p.PAIDUP_DATE BETWEEN :startDate AND :endDate")
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_CountOfOverduePolicies @agntnum=:agntnum,@startDate=:startDate,@endDate=:endDate")
     long countOverduePolicies(@Param("agntnum") String agntnum, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
-    @Query("SELECT COUNT(p) FROM PG_POLICYINFO p WHERE p.AGNTNUM = :agntnum AND p.PAIDUP_DATE < :endDate")
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_CountOfLapsedPolicies @agntnum=:agntnum,@endDate=:endDate")
     long countLapsedPolicies(@Param("agntnum") String agntnum, @Param("endDate") Date endDate);
 
 
