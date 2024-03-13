@@ -34,10 +34,7 @@ List<Object[]> getPolicyDetailsWithSearchParams(
     List<Object[]> getPolicyDetailsWithClientName(@Param("AGNTNUM") String AGNTNUM);
 
 
-    @Query("SELECT p.POLICY_NO, p.PREMIUM, p.TOTAL_DUE, p.SUNDRY_BALANCE, p.PAIDUP_DATE, " +
-            "p.PLAN_NAME, p.PAYMENT_MODE, p.SUM_ASSURED, p.RISK_DATE, p.TERM " +
-            "FROM PG_POLICYINFO p " +
-            "WHERE (?1 IS NULL OR p.POLICY_NO = ?1) " )
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_PolicyDeatilsForPolicyNo @POLICY_NO=:POLICY_NO")
     List<Object[]> getPolicyColumns(@Param("POLICY_NO") String POLICY_NO);
 
 
