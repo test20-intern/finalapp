@@ -52,11 +52,11 @@ List<Object[]> getPolicyDetailsWithSearchParams(
             @Param("endDate") Date endDate
     );
 
-    @Query("SELECT p FROM PG_POLICYINFO p WHERE p.AGNTNUM = :agntnum AND p.PAIDUP_DATE BETWEEN :startDate AND :endDate")
+    @Query(nativeQuery = true,value ="EXEC SalesApp_Select_LapsedPoliciesForGivenDateRange @agntnum=:agntnum,@startDate=:startDate,@inputDate=:inputDate")
     List<PG_POLICYINFO> findLapsedPoliciesByAgntnumAndPaidupDateBetween(
             @Param("agntnum") String agntnum,
             @Param("startDate") Date startDate,
-            @Param("endDate") Date endDate
+            @Param("inputDate") Date inputDate
     );
 
 
