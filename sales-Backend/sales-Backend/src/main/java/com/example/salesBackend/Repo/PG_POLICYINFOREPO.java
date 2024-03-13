@@ -42,9 +42,8 @@ List<Object[]> getPolicyDetailsWithSearchParams(
     @Query("SELECT p.POLICY_NO, p.PREMIUM, p.TOTAL_DUE, p.SUNDRY_BALANCE, p.PAIDUP_DATE, " +
             "p.PLAN_NAME, p.PAYMENT_MODE, p.SUM_ASSURED, p.RISK_DATE, p.TERM " +
             "FROM PG_POLICYINFO p " +
-            "WHERE (?1 IS NULL OR p.POLICY_NO = ?1) " +
-            "AND p.AGNTNUM = ?2")
-    List<Object[]> getPolicyColumns(@Param("POLICY_NO") String POLICY_NO, @Param("AGNTNUM") String AGNTNUM);
+            "WHERE (?1 IS NULL OR p.POLICY_NO = ?1) " )
+    List<Object[]> getPolicyColumns(@Param("POLICY_NO") String POLICY_NO);
 
 
     @Query("SELECT p FROM PG_POLICYINFO p WHERE p.AGNTNUM = :agntnum AND p.PAIDUP_DATE BETWEEN :startDate AND :endDate")

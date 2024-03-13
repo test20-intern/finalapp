@@ -37,7 +37,7 @@ public class PolicyInfoController {
 
             if (AGNTNUM != null && (POLICY_NO == null && NIC == null && NAME == null && CLIENT_NO == null)) {
                 // If AGNTNUM is provided without any other search parameters, use getPolicyDetailsWithClientName
-                result = policyInfoService.getPolicyDetailsWithClientName(AGNTNUM);
+                result = policyInfoService.getPolicyDetailsWithClientName("00"+AGNTNUM);
             } else {
                 // Use getPolicyDetailsWithSearchParams if any other search parameters are provided along with AGNTNUM
                 result = policyInfoService.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO, AGNTNUM);
@@ -76,12 +76,12 @@ public class PolicyInfoController {
     // API to show policy details.
     @GetMapping("/policy-columns")
     public ResponseEntity<AppResponse<List<Map<String, Object>>>> getPolicyColumns(
-            @RequestParam(required = true) String POLICY_NO,
-            @RequestParam(required = true) String AGNTNUM
+            @RequestParam(required = true) String POLICY_NO
+
 
     ) {
         try {
-            List<Object[]> result = policyInfoService.getPolicyColumns(POLICY_NO,AGNTNUM);
+            List<Object[]> result = policyInfoService.getPolicyColumns(POLICY_NO);
 
             // If no data is found for the given POLICY_NO, throw ValueNotExistException
             if (result == null || result.isEmpty()) {
