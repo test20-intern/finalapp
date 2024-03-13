@@ -40,9 +40,9 @@ public class POLICYINFOSERVICE {
         }
     }
 
-    public List<Object[]> getPolicyColumns(String POLICY_NO) {
+    public List<Object[]> getPolicyColumns(String POLICY_NO, String AGNTNUM) {
         try {
-            return pgPolicyInfoRepo.getPolicyColumns(POLICY_NO);
+            return pgPolicyInfoRepo.getPolicyColumns(POLICY_NO,AGNTNUM);
         } catch (Exception e) {
 
             throw new RuntimeException("Error retrieving policy columns by policy number", e);
