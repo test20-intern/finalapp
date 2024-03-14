@@ -19,7 +19,7 @@ public interface PG_BENEFICIARYREPO extends JpaRepository<PG_BENEFICIARY, Benefi
     @Query("SELECT new com.example.salesBackend.Dto.Response.BirthdaysResponse(b, c) FROM PG_BENEFICIARY b " +
             "JOIN PG_CLIENTINFO c ON b.BID.CUSTOMERID = c.CLIENT_NO " +
             "JOIN PG_POLICYINFO p ON c.CLIENT_NO = p.CLIENT_NO " +
-            "WHERE p.AGNTNUM = :agntnum " +
+            "WHERE SUBSTRING(p.AGNTNUM, LEN(p.AGNTNUM) - 5, 6) = :agntnum " +
             "AND FUNCTION('MONTH', b.DOB) * 100 + FUNCTION('DAY', b.DOB) >= FUNCTION('MONTH', :startDate) * 100 + FUNCTION('DAY', :startDate) " +
             "AND FUNCTION('MONTH', b.DOB) * 100 + FUNCTION('DAY', b.DOB) <= FUNCTION('MONTH', :endDate) * 100 + FUNCTION('DAY', :endDate) " +
             "ORDER BY FUNCTION('MONTH', b.DOB) * 100 + FUNCTION('DAY', b.DOB) ASC"
