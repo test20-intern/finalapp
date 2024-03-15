@@ -69,14 +69,14 @@ public class ReceiptsController {
 
     // API for get receipt details for a given date range.
     @GetMapping("/agentReceipts")
-    public ResponseEntity<AppResponse<List<Object[]>>> getAgentReceipts(
+    public ResponseEntity<AppResponse<List<Map<String, Object>>>> getAgentReceipts(
             @RequestParam String agntnum,
             @RequestParam(required = false) String policyNo,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
     ) {
         try {
-            List<Object[]> agentReceipts = pgReceiptsService.getAgentReceipts(agntnum, policyNo, startDate, endDate);
+            List<Map<String, Object>> agentReceipts = pgReceiptsService.getAgentReceiptsMapped(agntnum, policyNo, startDate, endDate);
 
             if (agentReceipts.isEmpty()) {
                 return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "AgentReceiptsNotFound",
@@ -90,6 +90,7 @@ public class ReceiptsController {
                     "Error getting agent receipts: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 
 

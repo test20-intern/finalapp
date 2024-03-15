@@ -20,13 +20,7 @@ public interface PG_RECEIPTSREPO extends JpaRepository<PG_RECEIPTS, PG_RECEIPTSI
 
 
     // Query for 'getAgentReceipts
-    @Query("SELECT r, p " +
-            "FROM PG_RECEIPTS r " +
-            "JOIN PG_POLICYINFO p ON r.RID.POLICY_NO = p.POLICY_NO " +
-            "WHERE p.AGNTNUM = :agntnum " +
-            "AND (:policyNo IS NULL OR p.POLICY_NO = :policyNo) " +
-            "AND r.RECEIPT_DATE BETWEEN :startDate AND :endDate " +
-            "ORDER BY p.POLICY_NO ASC, r.RECEIPT_DATE ASC")
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_ReceiptDetailsForAgent @agntnum=:agntnum,@policyNo=:policyNo,@startDate=:startDate,@endDate=:endDate")
     List<Object[]> getAgentReceipts(
             @Param("agntnum") String agntnum,
             @Param("policyNo") String policyNo,
