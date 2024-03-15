@@ -59,6 +59,7 @@ public class BeneficiaryController {
         }
     }
 
+
     // auto-incrementing id function
     private static long idCounter = 1;
     private synchronized long generateIncrementingId() {
