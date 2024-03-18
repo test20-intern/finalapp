@@ -32,9 +32,20 @@ public class BENEFICIARYSERVICE {
             throw new ValueNotExistException("Beneficiary details not found for policy number: " + policyNo);
         }
 
+        Set<String> uniqueBeneficiaryKeys = new HashSet<>();
         return beneficiaries.stream()
+                .filter(beneficiary -> {
+                    String key = getKey(beneficiary);
+                    boolean isDuplicate = !uniqueBeneficiaryKeys.add(key);
+                    return !isDuplicate;
+                })
                 .map(this::mapEntityToRequest)
                 .collect(Collectors.toList());
+    }
+
+    private String getKey(PG_BENEFICIARY beneficiary) {
+        // Combine DOB, RELATIONSHIP, and NAME to form a unique key
+        return beneficiary.getDOB().toString() + beneficiary.getBID().getRELATIONSHIP() + beneficiary.getNAME();
     }
 
     private BENEFICIARYREQUEST mapEntityToRequest(PG_BENEFICIARY beneficiary) {
@@ -45,7 +56,6 @@ public class BENEFICIARYSERVICE {
         request.setPERCENTAGE(beneficiary.getPERCENTAGE());
         return request;
     }
-
 
 
     // BeneficiaryService.java
