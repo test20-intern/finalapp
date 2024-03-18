@@ -25,6 +25,8 @@ public class ReceiptsController {
     @Autowired
     private RECEIPTSSERVICE pgReceiptsService;
 
+
+
     // auto-incrementing counter to pass an id to the frontend
     private static long idCounter = 1;
 
@@ -52,9 +54,6 @@ public class ReceiptsController {
         } catch (ValueNotExistException e) {
             return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "ReceiptDetailsNotFound",
                     "Receipt details not found for policy number: " + POLICY_NO), HttpStatus.NOT_FOUND);
-        } catch (BadRequestRuntimeException e) {
-            return new ResponseEntity<>(AppResponse.error(null, "400", "Bad Request", "BadRequest",
-                    "Bad request received: " + e.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(AppResponse.error(null, "500", "Internal Server Error", "GetReceiptDetailsOperationFailed",
                     "Error getting receipt details: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
