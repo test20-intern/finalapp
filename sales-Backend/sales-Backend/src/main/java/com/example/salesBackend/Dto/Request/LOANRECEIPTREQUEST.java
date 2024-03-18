@@ -1,11 +1,11 @@
 package com.example.salesBackend.Dto.Request;
 
 
-import jakarta.persistence.Id;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.util.Date;
+
 
 @Setter
 @Getter
@@ -21,4 +21,6 @@ public class LOANRECEIPTREQUEST {
     private String LOAN_NO;
     private Date RECEIPT_DATE;
     private BigDecimal AMOUNT;
+
+
 }

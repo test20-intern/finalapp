@@ -26,14 +26,14 @@ public class LoanReceiptController {
     // Created an auto-incrementing counter to pass an id to the frontend.
     private static long idCounter = 1;
 
-    @GetMapping("/details")
-    public ResponseEntity<AppResponse<List<Map<String, Object>>>> getloanReceiptDetailsByPolicyNo(
+    @GetMapping("/loanReceipts/details")
+    public ResponseEntity<AppResponse<List<Map<String, Object>>>> getLoanReceiptDetailsByPolicyNo(
             @RequestParam String POLICY_NO
     ) {
         try {
-            List<LOANRECEIPTREQUEST> result = loanReceiptsService.getloanReceiptDetailsByPolicyNo(POLICY_NO);
+            List<LOANRECEIPTREQUEST> result = loanReceiptsService.getLoanReceiptDetailsByPolicyNo(POLICY_NO);
 
-            // Convert the result to pass with field names and an incrementing "id".
+            // Convert the result to pass with field names and an incrementing "id"
             List<Map<String, Object>> formattedResult = result.stream()
                     .map(item -> {
                         Map<String, Object> formattedItem = new HashMap<>();
@@ -46,7 +46,7 @@ public class LoanReceiptController {
                         return formattedItem;
                     })
                     .collect(Collectors.toList());
-// Handling exceptions
+
             return new ResponseEntity<>(AppResponse.ok(formattedResult), HttpStatus.OK);
         } catch (ValueNotExistException e) {
             return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "LoanReceiptDetailsNotFound",
