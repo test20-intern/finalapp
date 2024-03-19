@@ -10,6 +10,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PG_LOANRECEIPTSREPO extends JpaRepository<PG_LOANRECEIPTS, LoanReceiptsId> {
-  @Query(nativeQuery = true, value = "EXEC SalesApp_Select_LoanReceiptsForPolicyNo @POLICY_NO=:POLICY_NO")
-  List<Object[]> findLoanReceiptsDataByPolicyNo(@Param("POLICY_NO") String POLICY_NO);
+  @Query(nativeQuery = true, value = "EXEC SalesApp_Select_LoanReceiptsForPolicyNo @POLICY_NO=:POLICY_NO,@userType=:userType")
+  List<Object[]> findLoanReceiptsDataByPolicyNo(
+          @Param("POLICY_NO") String POLICY_NO,
+          @Param("userType")String userType);
 }

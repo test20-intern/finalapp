@@ -11,8 +11,11 @@ import java.util.List;
 public interface PG_BENEFITREPO extends JpaRepository<PG_BENEFIT,String> {
 
 
-    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_BenefitDetailsByPolicyNo @policyNo = :policyNo")
-    List<Object[]> getBenefitDetailsByPolicyNo(@Param("policyNo") String policyNo);
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_BenefitDetailsByPolicyNo @policyNo = :policyNo,@userType=:userType")
+    List<Object[]> getBenefitDetailsByPolicyNo(
+            @Param("policyNo") String policyNo,
+            @Param("userType") String userType
+    );
 
 
 

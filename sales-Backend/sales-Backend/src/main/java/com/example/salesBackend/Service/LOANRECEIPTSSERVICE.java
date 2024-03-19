@@ -24,12 +24,12 @@ public class LOANRECEIPTSSERVICE {
     private PG_LOANRECEIPTSREPO pgloanReceiptsRepo;
 
 
-    public List<LOANRECEIPTREQUEST> getLoanReceiptDetailsByPolicyNo(String POLICY_NO) throws BadRequestRuntimeException, ValueNotExistException {
+    public List<LOANRECEIPTREQUEST> getLoanReceiptDetailsByPolicyNo(String POLICY_NO,String userType) throws BadRequestRuntimeException, ValueNotExistException {
         if (POLICY_NO == null || POLICY_NO.isEmpty()) {
             throw new BadRequestRuntimeException("Policy number cannot be null or empty");
         }
 
-        List<Object[]> loanReceiptData = pgloanReceiptsRepo.findLoanReceiptsDataByPolicyNo(POLICY_NO);
+        List<Object[]> loanReceiptData = pgloanReceiptsRepo.findLoanReceiptsDataByPolicyNo(POLICY_NO,userType);
         if (loanReceiptData.isEmpty()) {
             throw new ValueNotExistException("Loan receipt details not found for policy number: " + POLICY_NO);
         }

@@ -34,7 +34,8 @@ public class BirthdaysController {
     public ResponseEntity<AppResponse<List<BirthdaysResponse>>> getBeneficiaryBirthdays(
             @RequestParam String agntnum,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            @RequestParam String userType
     ) {
         // Set default values if startDate or endDate is not provided. Default dates are start date = today
         // end date = today + 7 days.
@@ -47,7 +48,7 @@ public class BirthdaysController {
         }
         // exception handling part
         try {
-            List<BirthdaysResponse> birthdaysResponseList = beneficiaryService.getBeneficiaryBirthdays(agntnum, startDate, endDate);
+            List<BirthdaysResponse> birthdaysResponseList = beneficiaryService.getBeneficiaryBirthdays(agntnum, startDate, endDate,userType);
             return new ResponseEntity<>(AppResponse.ok(birthdaysResponseList), HttpStatus.OK);
         } catch (ValueNotExistException e) {
             return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "BeneficiaryBirthdaysNotFound",
@@ -64,9 +65,10 @@ public class BirthdaysController {
     @GetMapping("/getClientBirthdays")
     public ResponseEntity<List<PG_CLIENTINFO>> getClientInfo(@RequestParam String agentNumber,
                                                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
-                                                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate) {
+                                                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate,
+                                                             @RequestParam String userType) {
         try {
-            List<PG_CLIENTINFO> clientInfoList = clientInfoService.getClientInfoByAgentAndDateRange(agentNumber, startDate, endDate);
+            List<PG_CLIENTINFO> clientInfoList = clientInfoService.getClientInfoByAgentAndDateRange(agentNumber, startDate, endDate,userType);
             return new ResponseEntity<>(clientInfoList, HttpStatus.OK);
         } catch (ValueNotExistException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

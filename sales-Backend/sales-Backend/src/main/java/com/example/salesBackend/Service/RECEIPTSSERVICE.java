@@ -22,12 +22,12 @@ public class RECEIPTSSERVICE {
     @Autowired
     private PG_POLICYINFOREPO pgPolicyInfoRepo;
 
-    public List<RECEIPTREQUEST> getReceiptDetailsByPolicyNo(String POLICY_NO) throws ValueNotExistException {
+    public List<RECEIPTREQUEST> getReceiptDetailsByPolicyNo(String POLICY_NO,String userType) throws ValueNotExistException {
         if (POLICY_NO == null || POLICY_NO.isEmpty()) {
             throw new IllegalArgumentException("Policy number cannot be null or empty");
         }
 
-        List<Object[]> receiptData = pgReceiptsRepo.findReceiptDataByPolicyNo(POLICY_NO);
+        List<Object[]> receiptData = pgReceiptsRepo.findReceiptDataByPolicyNo(POLICY_NO,userType);
         if (receiptData.isEmpty()) {
             throw new ValueNotExistException("Receipt details not found for policy number: " + POLICY_NO);
         }
@@ -45,8 +45,8 @@ public class RECEIPTSSERVICE {
     }
 
     //code snippet for getAgentReceipts API.
-    public List<Map<String, Object>> getAgentReceiptsMapped(String agntnum, String policyNo, Date startDate, Date endDate) {
-        List<Object[]> results = pgReceiptsRepo.getAgentReceipts(agntnum, policyNo, startDate, endDate);
+    public List<Map<String, Object>> getAgentReceiptsMapped(String agntnum, String policyNo, Date startDate, Date endDate,String userType) {
+        List<Object[]> results = pgReceiptsRepo.getAgentReceipts(agntnum, policyNo, startDate, endDate,userType);
         List<Map<String, Object>> mappedResults = new ArrayList<>();
 
         for (Object[] row : results) {

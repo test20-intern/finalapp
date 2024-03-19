@@ -24,12 +24,12 @@ public class BENEFICIARYSERVICE {
     @Autowired
     private POLICYINFOSERVICE pgPolicyInfoService;
 
-    public List<BENEFICIARYREQUEST> getBeneficiaryDetailsByPolicyNo(String policyNo) throws ValueNotExistException, BadRequestRuntimeException {
+    public List<BENEFICIARYREQUEST> getBeneficiaryDetailsByPolicyNo(String policyNo,String userType) throws ValueNotExistException, BadRequestRuntimeException {
         if (policyNo == null || policyNo.isEmpty()) {
             throw new BadRequestRuntimeException("Policy number cannot be null or empty");
         }
 
-        List<PG_BENEFICIARY> beneficiaries = beneficiaryRepo.findByPolicyNo(policyNo);
+        List<PG_BENEFICIARY> beneficiaries = beneficiaryRepo.findByPolicyNo(policyNo,userType);
         if (beneficiaries.isEmpty()) {
             throw new ValueNotExistException("Beneficiary details not found for policy number: " + policyNo);
         }
@@ -61,8 +61,8 @@ public class BENEFICIARYSERVICE {
 
 
     // BeneficiaryService.java
-    public List<BirthdaysResponse> getBeneficiaryBirthdays(String agntnum, Date startDate, Date endDate) throws ValueNotExistException {
-        List<Object[]> result = beneficiaryRepo.findBirthdaysByAgentNumber(agntnum, startDate, endDate);
+    public List<BirthdaysResponse> getBeneficiaryBirthdays(String agntnum, Date startDate, Date endDate,String userType) throws ValueNotExistException {
+        List<Object[]> result = beneficiaryRepo.findBirthdaysByAgentNumber(agntnum, startDate, endDate,userType);
         List<BirthdaysResponse> birthdaysResponseList = new ArrayList<>();
         HashSet<String> uniqueSet = new HashSet<>();
 
@@ -89,7 +89,7 @@ public class BENEFICIARYSERVICE {
                 beneficiary.setBID(beneficiaryId);
                 beneficiary.setNAME(name);
                 beneficiary.setDOB(dob);
-                //beneficiary.setPERCENTAGE((BigDecimal) row[3]);
+
 
                 clientInfo.setCLIENT_NO((String) row[5]);
                 clientInfo.setADD_CITY((String) row[6]);

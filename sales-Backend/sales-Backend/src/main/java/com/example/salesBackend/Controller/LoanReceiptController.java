@@ -28,10 +28,11 @@ public class LoanReceiptController {
 
     @GetMapping("/loanReceipts/details")
     public ResponseEntity<AppResponse<List<Map<String, Object>>>> getLoanReceiptDetailsByPolicyNo(
-            @RequestParam String POLICY_NO
+            @RequestParam String POLICY_NO,
+            @RequestParam String userType
     ) {
         try {
-            List<LOANRECEIPTREQUEST> result = loanReceiptsService.getLoanReceiptDetailsByPolicyNo(POLICY_NO);
+            List<LOANRECEIPTREQUEST> result = loanReceiptsService.getLoanReceiptDetailsByPolicyNo(POLICY_NO,userType);
 
             // Convert the result to pass with field names and an incrementing "id"
             List<Map<String, Object>> formattedResult = result.stream()
