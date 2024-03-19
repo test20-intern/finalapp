@@ -70,17 +70,17 @@ List<Object[]> getPolicyDetailsWithSearchParams(
     long countLapsedPolicies(@Param("agntnum") String agntnum, @Param("endDate") Date endDate);
 
 
-    @Query("SELECT COUNT (p) FROM PG_POLICYINFO p WHERE p.AGNTNUM=:agntnum AND PLAN_NAME='PENSION-CRF'")
+    @Query("SELECT COUNT (p) FROM PG_POLICYINFO p WHERE SUBSTRING(p.AGNTNUM, LEN(p.AGNTNUM) - 5, 6)=:agntnum AND PLAN_NAME='PENSION-CRF'")
     long countPensionPolicies (@Param("agntnum")String agntnum );
 
 
 
 
     // calculate the count for policy_plans.
-    @Query("SELECT COUNT (p) FROM PG_POLICYINFO p WHERE p.AGNTNUM=:agntnum AND PLAN_NAME='LIFE-SHILPA'")
+    @Query("SELECT COUNT (p) FROM PG_POLICYINFO p WHERE SUBSTRING(p.AGNTNUM, LEN(p.AGNTNUM) - 5, 6)=:agntnum AND PLAN_NAME='LIFE-SHILPA'")
     long countLifeShilpaPolicies (@Param("agntnum")String agntnum );
 
-    @Query("SELECT COUNT (p) FROM PG_POLICYINFO p WHERE p.AGNTNUM=:agntnum AND PLAN_NAME='SEYLINC LIFE LONG'")
+    @Query("SELECT COUNT (p) FROM PG_POLICYINFO p WHERE SUBSTRING(p.AGNTNUM, LEN(p.AGNTNUM) - 5, 6)=:agntnum AND PLAN_NAME='SEYLINC LIFE LONG'")
     long countSeylincLifeLongPolicies (@Param("agntnum")String agntnum );
 
     @Query("SELECT COUNT (p) FROM PG_POLICYINFO p WHERE p.AGNTNUM=:agntnum AND PLAN_NAME='CEYLINCO UTHUM'")

@@ -24,12 +24,12 @@ public class BENEFICIARYSERVICE {
     @Autowired
     private POLICYINFOSERVICE pgPolicyInfoService;
 
-    public List<BENEFICIARYREQUEST> getBeneficiaryDetailsByPolicyNo(String policyNo) throws ValueNotExistException, BadRequestRuntimeException {
+    public List<BENEFICIARYREQUEST> getBeneficiaryDetailsByPolicyNo(String policyNo,String userType) throws ValueNotExistException, BadRequestRuntimeException {
         if (policyNo == null || policyNo.isEmpty()) {
             throw new BadRequestRuntimeException("Policy number cannot be null or empty");
         }
 
-        List<PG_BENEFICIARY> beneficiaries = beneficiaryRepo.findByPolicyNo(policyNo);
+        List<PG_BENEFICIARY> beneficiaries = beneficiaryRepo.findByPolicyNo(policyNo,userType);
         if (beneficiaries.isEmpty()) {
             throw new ValueNotExistException("Beneficiary details not found for policy number: " + policyNo);
         }
@@ -61,8 +61,8 @@ public class BENEFICIARYSERVICE {
 
 
     // BeneficiaryService.java
-    public List<BirthdaysResponse> getBeneficiaryBirthdays(String agntnum, Date startDate, Date endDate) throws ValueNotExistException {
-        List<Object[]> result = beneficiaryRepo.findBirthdaysByAgentNumber(agntnum, startDate, endDate);
+    public List<BirthdaysResponse> getBeneficiaryBirthdays(String agntnum, Date startDate, Date endDate,String userType) throws ValueNotExistException {
+        List<Object[]> result = beneficiaryRepo.findBirthdaysByAgentNumber(agntnum, startDate, endDate,userType);
         List<BirthdaysResponse> birthdaysResponseList = new ArrayList<>();
         HashSet<String> uniqueSet = new HashSet<>();
 
@@ -82,19 +82,19 @@ public class BENEFICIARYSERVICE {
 
                 // Assuming the order of columns in the result matches the constructor parameters of BirthdaysResponse
                 BeneficiaryId beneficiaryId = new BeneficiaryId();
-                beneficiaryId.setSOCODE((String) row[5]);
+                beneficiaryId.setSOCODE((String) row[4]);
                 beneficiaryId.setCUSTOMERID(customerId);
-                beneficiaryId.setRELATIONSHIP((String) row[4]);
+                beneficiaryId.setRELATIONSHIP((String) row[3]);
 
                 beneficiary.setBID(beneficiaryId);
                 beneficiary.setNAME(name);
                 beneficiary.setDOB(dob);
-                beneficiary.setPERCENTAGE((BigDecimal) row[3]);
 
-                clientInfo.setCLIENT_NO((String) row[6]);
-                clientInfo.setADD_CITY((String) row[7]);
-                clientInfo.setTEL_1((String) row[8]);
-                clientInfo.setTEL_2((String) row[9]);
+
+                clientInfo.setCLIENT_NO((String) row[5]);
+                clientInfo.setADD_CITY((String) row[6]);
+                clientInfo.setTEL_1((String) row[7]);
+                clientInfo.setTEL_2((String) row[8]);
 
                 BirthdaysResponse birthdaysResponse = new BirthdaysResponse(beneficiary, clientInfo);
                 birthdaysResponseList.add(birthdaysResponse);

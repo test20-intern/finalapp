@@ -28,12 +28,14 @@ public class BeneficiaryController {
 
     @GetMapping("/beneficiary-details")
     public AppResponse<List<Map<String, Object>>> getBeneficiaryDetailsByPolicyNo(
-            @RequestParam(required = true) String policyNo
+            @RequestParam(required = true) String policyNo,
+            @RequestParam(required = true) String userType
+
     ) {
         try {
-            List<BENEFICIARYREQUEST> beneficiaryDetails = beneficiaryService.getBeneficiaryDetailsByPolicyNo(policyNo);
+            List<BENEFICIARYREQUEST> beneficiaryDetails = beneficiaryService.getBeneficiaryDetailsByPolicyNo(policyNo,userType);
 
-            // Convert the result to pass with field names and an incrementing "id".
+            // Convert the result to pass with field names (Uppercase Letters) and an incrementing "id".
             List<Map<String, Object>> response = beneficiaryDetails.stream()
                     .map(item -> {
                         Map<String, Object> formattedItem = new HashMap<>();
