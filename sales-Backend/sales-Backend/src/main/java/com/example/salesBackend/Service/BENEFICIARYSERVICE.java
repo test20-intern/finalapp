@@ -82,19 +82,19 @@ public class BENEFICIARYSERVICE {
 
                 // Assuming the order of columns in the result matches the constructor parameters of BirthdaysResponse
                 BeneficiaryId beneficiaryId = new BeneficiaryId();
-                beneficiaryId.setSOCODE((String) row[5]);
+                beneficiaryId.setSOCODE((String) row[4]);
                 beneficiaryId.setCUSTOMERID(customerId);
-                beneficiaryId.setRELATIONSHIP((String) row[4]);
+                beneficiaryId.setRELATIONSHIP((String) row[3]);
 
                 beneficiary.setBID(beneficiaryId);
                 beneficiary.setNAME(name);
                 beneficiary.setDOB(dob);
-                beneficiary.setPERCENTAGE((BigDecimal) row[3]);
+                //beneficiary.setPERCENTAGE((BigDecimal) row[3]);
 
-                clientInfo.setCLIENT_NO((String) row[6]);
-                clientInfo.setADD_CITY((String) row[7]);
-                clientInfo.setTEL_1((String) row[8]);
-                clientInfo.setTEL_2((String) row[9]);
+                clientInfo.setCLIENT_NO((String) row[5]);
+                clientInfo.setADD_CITY((String) row[6]);
+                clientInfo.setTEL_1((String) row[7]);
+                clientInfo.setTEL_2((String) row[8]);
 
                 BirthdaysResponse birthdaysResponse = new BirthdaysResponse(beneficiary, clientInfo);
                 birthdaysResponseList.add(birthdaysResponse);
