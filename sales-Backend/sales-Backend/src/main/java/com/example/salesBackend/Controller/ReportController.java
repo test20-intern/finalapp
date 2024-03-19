@@ -32,10 +32,11 @@ public class ReportController {
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getDuePolicies(
             @RequestParam String agntnum,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            @RequestParam String userType
     ) {
         try {
-            List<PG_POLICYINFO> duePolicies = pgPolicyInfoService.getDuePolicies(agntnum, inputDate, endDate);
+            List<PG_POLICYINFO> duePolicies = pgPolicyInfoService.getDuePolicies(agntnum, inputDate, endDate,userType);
 
             if (duePolicies.isEmpty()) {
                 return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "DuePoliciesNotFound",
