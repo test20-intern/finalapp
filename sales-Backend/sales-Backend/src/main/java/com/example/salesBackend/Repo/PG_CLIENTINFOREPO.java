@@ -12,9 +12,10 @@ import java.util.List;
 public interface PG_CLIENTINFOREPO extends JpaRepository<PG_CLIENTINFO, String> {
 
     // Query to get client details based on the POLICY_NO
-    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_ClientDetailsByPolicyNo @POLICY_NO = :POLICY_NO")
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_ClientDetailsByPolicyNo @POLICY_NO = :POLICY_NO,@userType=:userType")
     List<PG_CLIENTINFO> getClientDetailsByPolicyNo(
-            @Param("POLICY_NO") String POLICY_NO
+            @Param("POLICY_NO") String POLICY_NO,
+            @Param("userType")String userType
             );
 
 
@@ -23,11 +24,13 @@ public interface PG_CLIENTINFOREPO extends JpaRepository<PG_CLIENTINFO, String> 
     @Query(nativeQuery = true, value = "EXEC SalesApp_Select_ClientBirthdaysByAgentNumberAndDateRange " +
             "@agentNumber = :agentNumber, " +
             "@startDate = :startDate, " +
-            "@endDate = :endDate")
+            "@endDate = :endDate,"+
+            "@userType=:userType")
     List<PG_CLIENTINFO> findClientInfoByAgentAndDateRange(
             @Param("agentNumber") String agentNumber,
             @Param("startDate") Date startDate,
-            @Param("endDate") Date endDate);
+            @Param("endDate") Date endDate,
+            @Param("userType")String userType);
 
 
 

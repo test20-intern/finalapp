@@ -19,11 +19,12 @@ public interface PG_BENEFICIARYREPO extends JpaRepository<PG_BENEFICIARY, Benefi
             @Param("userType") String userType
     );
 
-    @Query( nativeQuery = true, value = "SalesApp_Select_BeneficiaryBirthdayForAgentNo @agntnum=:agntnum,@startDate=:startDate , @endDate=:endDate ")
+    @Query( nativeQuery = true, value = "SalesApp_Select_BeneficiaryBirthdayForAgentNo @agntnum=:agntnum,@startDate=:startDate , @endDate=:endDate, @userType=:userType ")
     List<Object[]> findBirthdaysByAgentNumber(
             @Param("agntnum") String agntnum,
             @Param("startDate") Date startDate,
-            @Param("endDate") Date endDate
+            @Param("endDate") Date endDate,
+            @Param("userType") String userType
     );
 
 
