@@ -13,8 +13,11 @@ import java.util.List;
 @Repository
 public interface PG_BENEFICIARYREPO extends JpaRepository<PG_BENEFICIARY, BeneficiaryId> {
 
-    @Query(nativeQuery = true, value = "EXEC SalesApp_Select_BeneficiaryForPolicyNo @POLICY_NO=:policyNo")
-    List<PG_BENEFICIARY> findByPolicyNo(@Param("policyNo") String policyNo);
+    @Query(nativeQuery = true, value = "EXEC SalesApp_Select_BeneficiaryForPolicyNo @POLICY_NO=:policyNo, @userType=:userType")
+    List<PG_BENEFICIARY> findByPolicyNo(
+            @Param("policyNo") String policyNo,
+            @Param("userType") String userType
+    );
 
     @Query( nativeQuery = true, value = "SalesApp_Select_BeneficiaryBirthdayForAgentNo @agntnum=:agntnum,@startDate=:startDate , @endDate=:endDate ")
     List<Object[]> findBirthdaysByAgentNumber(

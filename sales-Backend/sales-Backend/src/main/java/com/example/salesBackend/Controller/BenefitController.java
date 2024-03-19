@@ -30,9 +30,12 @@ public class BenefitController {
 
 // API for get all the benefits that get by one policy number ( life number wise)
     @GetMapping("/details")
-    public ResponseEntity<Map<String, List<Map<String, Object>>>> getBenefitDetailsByPolicyNo(@RequestParam String policyNo) {
+    public ResponseEntity<Map<String, List<Map<String, Object>>>> getBenefitDetailsByPolicyNo(
+            @RequestParam String policyNo,
+            @RequestParam String userType
+            ) {
         try {
-            List<Object[]> results = benefitService.getBenefitDetailsByPolicyNo(policyNo);
+            List<Object[]> results = benefitService.getBenefitDetailsByPolicyNo(policyNo,userType);
 
             Map<String, List<Map<String, Object>>> categorizedDetails = new HashMap<>();
 
