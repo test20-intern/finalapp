@@ -55,7 +55,7 @@ public class RECEIPTSSERVICE {
             // Mapping RID data
             Map<String, Object> ridData = new HashMap<>();
             ridData.put("amount", row[3]);
-            ridData.put("policy_NO", row[0]);
+            ridData.put("policy_NO", row[4]);
             ridData.put("receipt_NO", row[1]);
             mappedRow.put("rid", ridData);
 
@@ -63,25 +63,25 @@ public class RECEIPTSSERVICE {
             mappedRow.put("receipt_DATE", row[2]);
 
             // Mapping PG_CLIENTINFO data
-            mappedRow.put("term", row[12]);
-            mappedRow.put("agntnum", row[21]);
-            mappedRow.put("branch", row[13]);
-            mappedRow.put("premium", row[14]);
-            mappedRow.put("policy_NO", row[0]);
-            mappedRow.put("sum_ASSURED", row[8]);
-            mappedRow.put("risk_DATE", row[9]);
-            mappedRow.put("paidup_DATE", row[10]);
+            mappedRow.put("term", row[11]);
+            mappedRow.put("agntnum", row[20]);
+            mappedRow.put("branch", row[14]);
+            mappedRow.put("premium", row[15]);
+            mappedRow.put("policy_NO", row[4]);
+            mappedRow.put("sum_ASSURED", row[9]);
+            mappedRow.put("risk_DATE", row[10]);
+            mappedRow.put("paidup_DATE", row[11]);
             mappedRow.put("policy_STATUS", row[19]);
             mappedRow.put("interest", row[16]);
-            mappedRow.put("client_NO", row[4]);
-            mappedRow.put("premium_DUE", row[15]);
-            mappedRow.put("sundry_BALANCE", row[17]);
-            mappedRow.put("prem_CESS_DATE", row[11]);
-            mappedRow.put("total_DUE", row[18]);
-            mappedRow.put("plan_NAME", row[6]);
-            mappedRow.put("account_BALANCE", row[20]);
-            mappedRow.put("payment_MODE", row[7]);
-            mappedRow.put("name", row[5]);
+            mappedRow.put("client_NO", row[5]);
+            mappedRow.put("premium_DUE", row[17]);
+            mappedRow.put("sundry_BALANCE", row[18]);
+            mappedRow.put("prem_CESS_DATE", row[12]);
+            mappedRow.put("total_DUE", row[13]);
+            mappedRow.put("plan_NAME", row[7]);
+            mappedRow.put("account_BALANCE", row[8]);
+            mappedRow.put("payment_MODE", row[6]);
+            mappedRow.put("name", row[6]);
 
             mappedResults.add(mappedRow);
         }

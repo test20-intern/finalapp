@@ -16,18 +16,13 @@ public interface PG_BENEFICIARYREPO extends JpaRepository<PG_BENEFICIARY, Benefi
     @Query(nativeQuery = true, value = "EXEC SalesApp_Select_BeneficiaryForPolicyNo @POLICY_NO=:policyNo")
     List<PG_BENEFICIARY> findByPolicyNo(@Param("policyNo") String policyNo);
 
-    @Query("SELECT  DISTINCT b, c FROM PG_BENEFICIARY b " +
-            "JOIN PG_CLIENTINFO c ON b.BID.CUSTOMERID = c.CLIENT_NO " +
-            "JOIN PG_POLICYINFO p ON c.CLIENT_NO = p.CLIENT_NO " +
-            "WHERE SUBSTRING(p.AGNTNUM, LEN(p.AGNTNUM) - 5, 6) = :agntnum " +
-            "AND FUNCTION('MONTH', b.DOB) * 100 + FUNCTION('DAY', b.DOB) >= FUNCTION('MONTH', :startDate) * 100 + FUNCTION('DAY', :startDate) " +
-            "AND FUNCTION('MONTH', b.DOB) * 100 + FUNCTION('DAY', b.DOB) <= FUNCTION('MONTH', :endDate) * 100 + FUNCTION('DAY', :endDate) " )
-//            "ORDER BY FUNCTION('MONTH', b.DOB) * 100 + FUNCTION('DAY', b.DOB) ASC")
+    @Query( nativeQuery = true, value = "SalesApp_Select_BeneficiaryBirthdayForAgentNo @agntnum=:agntnum,@startDate=:startDate , @endDate=:endDate ")
     List<Object[]> findBirthdaysByAgentNumber(
             @Param("agntnum") String agntnum,
             @Param("startDate") Date startDate,
             @Param("endDate") Date endDate
     );
+
 
 
 
