@@ -20,18 +20,23 @@ public interface PG_POLICYINFOREPO extends JpaRepository<PG_POLICYINFO, String> 
         "@NIC = :NIC, " +
         "@NAME = :NAME, " +
         "@CLIENT_NO = :CLIENT_NO, " +
-        "@AGNTNUM = :AGNTNUM")
+        "@AGNTNUM = :AGNTNUM,"+
+        "@userType=:userType")
 List<Object[]> getPolicyDetailsWithSearchParams(
         @Param("POLICY_NO") String POLICY_NO,
         @Param("NIC") String NIC,
         @Param("NAME") String NAME,
         @Param("CLIENT_NO") String CLIENT_NO,
-        @Param("AGNTNUM") String AGNTNUM);
+        @Param("AGNTNUM") String AGNTNUM,
+        @Param("userType")String userType
+        );
 
 
     /* Query for when user want to see all the policy details. By directly clicking "Search"*/
-    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_PolicyDeatilsOnlyforAgentNumber @AGNTNUM=:AGNTNUM")
-    List<Object[]> getPolicyDetailsWithClientName(@Param("AGNTNUM") String AGNTNUM);
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_PolicyDeatilsOnlyforAgentNumber @AGNTNUM=:AGNTNUM,@userType=:userType")
+    List<Object[]> getPolicyDetailsWithClientName(
+            @Param("AGNTNUM") String AGNTNUM,
+            @Param ("userType")String userType);
 
 
     @Query(nativeQuery = true,value = "EXEC SalesApp_Select_PolicyDeatilsForPolicyNo @POLICY_NO=:POLICY_NO")
