@@ -20,21 +20,21 @@ public class POLICYINFOSERVICE {
     @Autowired
     private PG_POLICYINFOREPO pgPolicyInfoRepo;
 
-    public List<Object[]> getPolicyDetailsWithClientName(String AGNTNUM) {
+    public List<Object[]> getPolicyDetailsWithClientName(String AGNTNUM,String userType) {
         try {
 
-            return pgPolicyInfoRepo.getPolicyDetailsWithClientName(AGNTNUM);
+            return pgPolicyInfoRepo.getPolicyDetailsWithClientName(AGNTNUM,userType);
         } catch (Exception e) {
             throw new RuntimeException("Error retrieving policy details with client name", e);
         }
     }
 
-    public List<Object[]> getPolicyDetailsWithSearchParams(String POLICY_NO, String NIC, String NAME, String CLIENT_NO, String AGNTNUM) {
+    public List<Object[]> getPolicyDetailsWithSearchParams(String POLICY_NO, String NIC, String NAME, String CLIENT_NO, String AGNTNUM,String userType) {
         try {
             if (AGNTNUM == null || AGNTNUM.isEmpty()) {
                 throw new IllegalArgumentException("AGNTNUM is required");
             }
-            return pgPolicyInfoRepo.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO, AGNTNUM);
+            return pgPolicyInfoRepo.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO, AGNTNUM,userType);
         } catch (Exception e) {
             throw new RuntimeException("Error retrieving policy details with search parameters", e);
         }
