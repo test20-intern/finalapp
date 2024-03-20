@@ -55,9 +55,9 @@ public class POLICYINFOSERVICE {
     }
 
 // service to get the overdue policies.
-    public List<PG_POLICYINFO> getOverduePolicies(String agntnum, Date inputDate) {
+    public List<PG_POLICYINFO> getOverduePolicies(String agntnum, Date inputDate,String userType) {
         Date startDate = calculateStartDateForOverdue(inputDate);
-        return pgPolicyInfoRepo.findOverduePoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, inputDate);
+        return pgPolicyInfoRepo.findOverduePoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, inputDate,userType);
     }
  //here we have to calculate the start date of overdue period. ( start date = One month before the input date)
     private Date calculateStartDateForOverdue(Date inputDate) {
@@ -68,9 +68,9 @@ public class POLICYINFOSERVICE {
 
 
     // service to get lapsed policies.
-    public List<PG_POLICYINFO> getLapsedPolicies(String agntnum, Date startDate, Date inputDate) {
+    public List<PG_POLICYINFO> getLapsedPolicies(String agntnum, Date startDate, Date inputDate, String userType) {
         Date endDate = calculateEndDateForLapsed(inputDate);
-        return pgPolicyInfoRepo.findLapsedPoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, inputDate);
+        return pgPolicyInfoRepo.findLapsedPoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, inputDate,userType);
     }
 
     // here we have to calculate the lapsed policies end date because we have to avoid the overdue period.
