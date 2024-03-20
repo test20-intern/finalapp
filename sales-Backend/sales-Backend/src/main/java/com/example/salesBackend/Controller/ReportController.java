@@ -32,10 +32,11 @@ public class ReportController {
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getDuePolicies(
             @RequestParam String agntnum,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            @RequestParam String userType
     ) {
         try {
-            List<PG_POLICYINFO> duePolicies = pgPolicyInfoService.getDuePolicies(agntnum, inputDate, endDate);
+            List<PG_POLICYINFO> duePolicies = pgPolicyInfoService.getDuePolicies(agntnum, inputDate, endDate,userType);
 
             if (duePolicies.isEmpty()) {
                 return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "DuePoliciesNotFound",
@@ -55,10 +56,11 @@ public class ReportController {
     @GetMapping("/overduePolicies")
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getOverduePolicies(
             @RequestParam String agntnum,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate,
+            @RequestParam String userType
     ) throws ValueNotExistException {
         try {
-            List<PG_POLICYINFO> overduePolicies = pgPolicyInfoService.getOverduePolicies(agntnum, inputDate);
+            List<PG_POLICYINFO> overduePolicies = pgPolicyInfoService.getOverduePolicies(agntnum, inputDate,userType);
 
             if (overduePolicies.isEmpty()) {
                 return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "OverduePoliciesNotFound",
@@ -77,12 +79,13 @@ public class ReportController {
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getLapsedPolicies(
             @RequestParam String agntnum,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam String userType
     ) {
         try {
             validateDates(inputDate, startDate);
 
-            List<PG_POLICYINFO> lapsedPolicies = pgPolicyInfoService.getLapsedPolicies(agntnum, startDate, inputDate);
+            List<PG_POLICYINFO> lapsedPolicies = pgPolicyInfoService.getLapsedPolicies(agntnum, startDate, inputDate,userType);
 
             if (lapsedPolicies.isEmpty()) {
                 return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "LapsedPoliciesNotFound",

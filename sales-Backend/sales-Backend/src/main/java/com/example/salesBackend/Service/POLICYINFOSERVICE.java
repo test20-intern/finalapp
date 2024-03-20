@@ -20,21 +20,21 @@ public class POLICYINFOSERVICE {
     @Autowired
     private PG_POLICYINFOREPO pgPolicyInfoRepo;
 
-    public List<Object[]> getPolicyDetailsWithClientName(String AGNTNUM) {
+    public List<Object[]> getPolicyDetailsWithClientName(String AGNTNUM,String userType) {
         try {
 
-            return pgPolicyInfoRepo.getPolicyDetailsWithClientName(AGNTNUM);
+            return pgPolicyInfoRepo.getPolicyDetailsWithClientName(AGNTNUM,userType);
         } catch (Exception e) {
             throw new RuntimeException("Error retrieving policy details with client name", e);
         }
     }
 
-    public List<Object[]> getPolicyDetailsWithSearchParams(String POLICY_NO, String NIC, String NAME, String CLIENT_NO, String AGNTNUM) {
+    public List<Object[]> getPolicyDetailsWithSearchParams(String POLICY_NO, String NIC, String NAME, String CLIENT_NO, String AGNTNUM,String userType) {
         try {
             if (AGNTNUM == null || AGNTNUM.isEmpty()) {
                 throw new IllegalArgumentException("AGNTNUM is required");
             }
-            return pgPolicyInfoRepo.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO, AGNTNUM);
+            return pgPolicyInfoRepo.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO, AGNTNUM,userType);
         } catch (Exception e) {
             throw new RuntimeException("Error retrieving policy details with search parameters", e);
         }
@@ -50,14 +50,14 @@ public class POLICYINFOSERVICE {
     }
 
 // service to get Due policy details.
-    public List<PG_POLICYINFO> getDuePolicies(String agntnum, Date inputDate, Date endDate) {
-        return pgPolicyInfoRepo.findDuePoliciesByAgntnumAndPaidupDateBetween(agntnum, inputDate, endDate);
+    public List<PG_POLICYINFO> getDuePolicies(String agntnum, Date inputDate, Date endDate,String userType) {
+        return pgPolicyInfoRepo.findDuePoliciesByAgntnumAndPaidupDateBetween(agntnum, inputDate, endDate,userType);
     }
 
 // service to get the overdue policies.
-    public List<PG_POLICYINFO> getOverduePolicies(String agntnum, Date inputDate) {
+    public List<PG_POLICYINFO> getOverduePolicies(String agntnum, Date inputDate,String userType) {
         Date startDate = calculateStartDateForOverdue(inputDate);
-        return pgPolicyInfoRepo.findOverduePoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, inputDate);
+        return pgPolicyInfoRepo.findOverduePoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, inputDate,userType);
     }
  //here we have to calculate the start date of overdue period. ( start date = One month before the input date)
     private Date calculateStartDateForOverdue(Date inputDate) {
@@ -68,9 +68,9 @@ public class POLICYINFOSERVICE {
 
 
     // service to get lapsed policies.
-    public List<PG_POLICYINFO> getLapsedPolicies(String agntnum, Date startDate, Date inputDate) {
+    public List<PG_POLICYINFO> getLapsedPolicies(String agntnum, Date startDate, Date inputDate, String userType) {
         Date endDate = calculateEndDateForLapsed(inputDate);
-        return pgPolicyInfoRepo.findLapsedPoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, inputDate);
+        return pgPolicyInfoRepo.findLapsedPoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, inputDate,userType);
     }
 
     // here we have to calculate the lapsed policies end date because we have to avoid the overdue period.

@@ -32,10 +32,11 @@ public class ReceiptsController {
 
     @GetMapping("/details")
     public ResponseEntity<AppResponse<List<Map<String, Object>>>> getReceiptDetailsByPolicyNo(
-            @RequestParam String POLICY_NO
+            @RequestParam String POLICY_NO,
+            @RequestParam String userType
     ) {
         try {
-            List<RECEIPTREQUEST> result = pgReceiptsService.getReceiptDetailsByPolicyNo(POLICY_NO);
+            List<RECEIPTREQUEST> result = pgReceiptsService.getReceiptDetailsByPolicyNo(POLICY_NO,userType);
 
             // Convert the result to pass with field names and an incrementing "id"
             List<Map<String, Object>> formattedResult = result.stream()
@@ -72,10 +73,11 @@ public class ReceiptsController {
             @RequestParam String agntnum,
             @RequestParam(required = false) String policyNo,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            @RequestParam String userType
     ) {
         try {
-            List<Map<String, Object>> agentReceipts = pgReceiptsService.getAgentReceiptsMapped(agntnum, policyNo, startDate, endDate);
+            List<Map<String, Object>> agentReceipts = pgReceiptsService.getAgentReceiptsMapped(agntnum, policyNo, startDate, endDate,userType);
 
             if (agentReceipts.isEmpty()) {
                 return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "AgentReceiptsNotFound",
