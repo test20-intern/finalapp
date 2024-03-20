@@ -40,9 +40,9 @@ public class POLICYINFOSERVICE {
         }
     }
 
-    public List<Object[]> getPolicyColumns(String POLICY_NO) {
+    public List<Object[]> getPolicyColumns(String POLICY_NO,String userType) {
         try {
-            return pgPolicyInfoRepo.getPolicyColumns(POLICY_NO);
+            return pgPolicyInfoRepo.getPolicyColumns(POLICY_NO,userType);
         } catch (Exception e) {
 
             throw new RuntimeException("Error retrieving policy columns by policy number", e);
@@ -85,16 +85,16 @@ public class POLICYINFOSERVICE {
     // to get the number of due/overdue/lapsed policies to show in the dashboard (graphs).
     // we get the current date and calculate the count for each type of policies.
 
-    public DashboardCounts getPolicyCounts(String agntnum) throws ValueNotExistException {
+    public DashboardCounts getPolicyCounts(String agntnum,String userType) throws ValueNotExistException {
         LocalDate today = LocalDate.now();
         Date todayDate = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         LocalDate oneMonthAgo = today.minusMonths(1);
         Date oneMonthAgoDate = Date.from(oneMonthAgo.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        long numberOfDuePolicies = pgPolicyInfoRepo.countDuePolicies(agntnum, todayDate);
-        long numberOfOverduePolicies = pgPolicyInfoRepo.countOverduePolicies(agntnum, oneMonthAgoDate, todayDate);
-        long numberOfLapsedPolicies = pgPolicyInfoRepo.countLapsedPolicies(agntnum, oneMonthAgoDate);
+        long numberOfDuePolicies = pgPolicyInfoRepo.countDuePolicies(agntnum, todayDate,userType);
+        long numberOfOverduePolicies = pgPolicyInfoRepo.countOverduePolicies(agntnum, oneMonthAgoDate, todayDate,userType);
+        long numberOfLapsedPolicies = pgPolicyInfoRepo.countLapsedPolicies(agntnum, oneMonthAgoDate,userType);
 
         if (numberOfDuePolicies == 0 && numberOfOverduePolicies == 0 && numberOfLapsedPolicies == 0) {
             throw new ValueNotExistException("No policies found for agent number: " + agntnum);

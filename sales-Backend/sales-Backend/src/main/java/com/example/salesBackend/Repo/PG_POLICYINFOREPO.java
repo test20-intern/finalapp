@@ -39,8 +39,10 @@ List<Object[]> getPolicyDetailsWithSearchParams(
             @Param ("userType")String userType);
 
 
-    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_PolicyDeatilsForPolicyNo @POLICY_NO=:POLICY_NO")
-    List<Object[]> getPolicyColumns(@Param("POLICY_NO") String POLICY_NO);
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_PolicyDeatilsForPolicyNo @POLICY_NO=:POLICY_NO,@userType=:userType")
+    List<Object[]> getPolicyColumns(
+            @Param("POLICY_NO") String POLICY_NO,
+            @Param("userType")String userType);
 
 
     @Query(nativeQuery = true,value ="EXEC SalesApp_Select_DuePoliciesForGivenDateRange @agntnum=:agntnum,@startDate=:startDate,@endDate=:endDate,@userType=:userType")
@@ -68,14 +70,14 @@ List<Object[]> getPolicyDetailsWithSearchParams(
     );
 
 
-    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_CountOfDuePolicies @agntnum =:agntnum,@todayDate=:todayDate")
-    long countDuePolicies(@Param("agntnum") String agntnum, @Param("todayDate") Date todayDate);
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_CountOfDuePolicies @agntnum =:agntnum,@todayDate=:todayDate,@userType=:userType")
+    long countDuePolicies(@Param("agntnum") String agntnum, @Param("todayDate") Date todayDate,@Param("userType") String userType);
 
-    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_CountOfOverduePolicies @agntnum=:agntnum,@startDate=:startDate,@endDate=:endDate")
-    long countOverduePolicies(@Param("agntnum") String agntnum, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_CountOfOverduePolicies @agntnum=:agntnum,@startDate=:startDate,@endDate=:endDate,@userType=:userType")
+    long countOverduePolicies(@Param("agntnum") String agntnum, @Param("startDate") Date startDate, @Param("endDate") Date endDate,@Param("userType") String userType);
 
-    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_CountOfLapsedPolicies @agntnum=:agntnum,@endDate=:endDate")
-    long countLapsedPolicies(@Param("agntnum") String agntnum, @Param("endDate") Date endDate);
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_CountOfLapsedPolicies @agntnum=:agntnum,@endDate=:endDate,@userType=:userType")
+    long countLapsedPolicies(@Param("agntnum") String agntnum, @Param("endDate") Date endDate,@Param("userType") String userType);
 
 
     @Query("SELECT COUNT (p) FROM PG_POLICYINFO p WHERE SUBSTRING(p.AGNTNUM, LEN(p.AGNTNUM) - 5, 6)=:agntnum AND PLAN_NAME='PENSION-CRF'")
