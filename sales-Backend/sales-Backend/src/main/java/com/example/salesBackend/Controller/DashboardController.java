@@ -25,10 +25,11 @@ public class DashboardController {
     /* API for graph values for policy details */
     @GetMapping("/policyCounts")
     public ResponseEntity<AppResponse<DashboardCounts>> getPolicyCounts(
-            @RequestParam String agntnum
+            @RequestParam String agntnum,
+            @RequestParam String userType
     ) {
         try {
-            DashboardCounts counts = pgPolicyInfoService.getPolicyCounts(agntnum);
+            DashboardCounts counts = pgPolicyInfoService.getPolicyCounts(agntnum,userType);
             return new ResponseEntity<>(AppResponse.ok(counts), HttpStatus.OK);
         } catch (ValueNotExistException e) {
             return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "DataNotFound", e.getMessage()), HttpStatus.NOT_FOUND);
