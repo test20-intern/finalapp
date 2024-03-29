@@ -51,7 +51,7 @@ public class ReportController {
         }
     }
 
-    //     API to get Overdue policies. Over Due Policies= policies that were due
+    //     API to get Overdue policies. OverDue Policies= policies that were due
 //     ( calculate using paidup_date column in policyInfo table) in past  days/ months.
     @GetMapping("/overduePolicies")
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getOverduePolicies(
