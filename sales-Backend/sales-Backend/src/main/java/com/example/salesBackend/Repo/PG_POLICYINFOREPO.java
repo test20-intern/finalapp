@@ -84,15 +84,20 @@ List<Object[]> getPolicyDetailsWithSearchParams(
 
 
 
-    @Query("SELECT p.PLAN_NAME, COUNT(p.PLAN_NAME) FROM PG_POLICYINFO p WHERE SUBSTRING(p.AGNTNUM, LEN(p.AGNTNUM) - 5, 6) = :agntnum GROUP BY p.PLAN_NAME")
+    @Query(nativeQuery = true, value = "EXEC SalesApp_Select_CountPlanTypesforAgentNumber @agntnum=:agntnum")
     List<Object[]> findPlanTypesCountByAgntnum(@Param("agntnum") String agntnum);
-    default Map<String, Long> countPlanTypesByAgntnum(String agntnum) {
+
+    default Map<String, Integer> countPlanTypesByAgntnum(String agntnum) {
         return findPlanTypesCountByAgntnum(agntnum).stream()
                 .collect(Collectors.toMap(
                         entry -> (String) entry[0],
-                        entry -> (Long) entry[1]
+                        entry -> ((Number) entry[1]).intValue() // Cast to Integer
                 ));
-    }
+
+
+
+
+}
 
 
 
