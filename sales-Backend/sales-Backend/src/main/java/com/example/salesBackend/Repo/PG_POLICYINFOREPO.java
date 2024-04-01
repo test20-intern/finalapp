@@ -82,25 +82,10 @@ List<Object[]> getPolicyDetailsWithSearchParams(
     long countLapsedPolicies(@Param("agntnum") String agntnum, @Param("endDate") Date endDate,@Param("userType") String userType);
 
 
-    @Query("SELECT COUNT (p) FROM PG_POLICYINFO p WHERE SUBSTRING(p.AGNTNUM, LEN(p.AGNTNUM) - 5, 6)=:agntnum AND PLAN_NAME='PENSION-CRF'")
-    long countPensionPolicies (@Param("agntnum")String agntnum );
 
-
-
-
-    // calculate the count for policy_plans.
-    @Query("SELECT COUNT (p) FROM PG_POLICYINFO p WHERE SUBSTRING(p.AGNTNUM, LEN(p.AGNTNUM) - 5, 6)=:agntnum AND PLAN_NAME='LIFE-SHILPA'")
-    long countLifeShilpaPolicies (@Param("agntnum")String agntnum );
-
-    @Query("SELECT COUNT (p) FROM PG_POLICYINFO p WHERE SUBSTRING(p.AGNTNUM, LEN(p.AGNTNUM) - 5, 6)=:agntnum AND PLAN_NAME='SEYLINC LIFE LONG'")
-    long countSeylincLifeLongPolicies (@Param("agntnum")String agntnum );
-
-    @Query("SELECT COUNT (p) FROM PG_POLICYINFO p WHERE p.AGNTNUM=:agntnum AND PLAN_NAME='CEYLINCO UTHUM'")
-    long countCeylincoUthumPolicies (@Param("agntnum")String agntnum );
 
     @Query("SELECT p.PLAN_NAME, COUNT(p.PLAN_NAME) FROM PG_POLICYINFO p WHERE SUBSTRING(p.AGNTNUM, LEN(p.AGNTNUM) - 5, 6) = :agntnum GROUP BY p.PLAN_NAME")
     List<Object[]> findPlanTypesCountByAgntnum(@Param("agntnum") String agntnum);
-
     default Map<String, Long> countPlanTypesByAgntnum(String agntnum) {
         return findPlanTypesCountByAgntnum(agntnum).stream()
                 .collect(Collectors.toMap(
@@ -114,6 +99,23 @@ List<Object[]> getPolicyDetailsWithSearchParams(
 
 
 }
+
+
+//    @Query("SELECT COUNT (p) FROM PG_POLICYINFO p WHERE SUBSTRING(p.AGNTNUM, LEN(p.AGNTNUM) - 5, 6)=:agntnum AND PLAN_NAME='PENSION-CRF'")
+//    long countPensionPolicies (@Param("agntnum")String agntnum );
+//
+//
+//
+//
+//    // calculate the count for policy_plans.
+//    @Query("SELECT COUNT (p) FROM PG_POLICYINFO p WHERE SUBSTRING(p.AGNTNUM, LEN(p.AGNTNUM) - 5, 6)=:agntnum AND PLAN_NAME='LIFE-SHILPA'")
+//    long countLifeShilpaPolicies (@Param("agntnum")String agntnum );
+//
+//    @Query("SELECT COUNT (p) FROM PG_POLICYINFO p WHERE SUBSTRING(p.AGNTNUM, LEN(p.AGNTNUM) - 5, 6)=:agntnum AND PLAN_NAME='SEYLINC LIFE LONG'")
+//    long countSeylincLifeLongPolicies (@Param("agntnum")String agntnum );
+//
+//    @Query("SELECT COUNT (p) FROM PG_POLICYINFO p WHERE p.AGNTNUM=:agntnum AND PLAN_NAME='CEYLINCO UTHUM'")
+//    long countCeylincoUthumPolicies (@Param("agntnum")String agntnum );
 
 
 
