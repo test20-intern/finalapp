@@ -98,7 +98,7 @@ List<Object[]> getPolicyDetailsWithSearchParams(
     @Query("SELECT COUNT (p) FROM PG_POLICYINFO p WHERE p.AGNTNUM=:agntnum AND PLAN_NAME='CEYLINCO UTHUM'")
     long countCeylincoUthumPolicies (@Param("agntnum")String agntnum );
 
-    @Query("SELECT p.PLAN_NAME, COUNT(p.PLAN_NAME) FROM PG_POLICYINFO p WHERE p.AGNTNUM = :agntnum GROUP BY p.PLAN_NAME")
+    @Query("SELECT p.PLAN_NAME, COUNT(p.PLAN_NAME) FROM PG_POLICYINFO p WHERE SUBSTRING(p.AGNTNUM, LEN(p.AGNTNUM) - 5, 6) = :agntnum GROUP BY p.PLAN_NAME")
     List<Object[]> findPlanTypesCountByAgntnum(@Param("agntnum") String agntnum);
 
     default Map<String, Long> countPlanTypesByAgntnum(String agntnum) {
