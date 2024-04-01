@@ -60,7 +60,7 @@ public class ReportController {
             @RequestParam String userType
     ) throws ValueNotExistException {
         try {
-            List<PG_POLICYINFO> overduePolicies = pgPolicyInfoService.getOverduePolicies(agntnum, inputDate,userType);
+            List<PG_POLICYINFO> overduePolicies = pgPolicyInfoService.getOverduePolicies(agntnum, inputDate, userType);
 
             if (overduePolicies.isEmpty()) {
                 return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "OverduePoliciesNotFound",
@@ -72,6 +72,7 @@ public class ReportController {
             return handleException(e, "Error getting overdue policies");
         }
     }
+
 
     //     API to get Lapsed  policies. Lapsed Policies= policies that were due
 //     ( calculate using paidup_date column in policyInfo table) before overdue period.
@@ -99,12 +100,15 @@ public class ReportController {
         }
     }
 
+
+
  // the user should input a start date that is before date from the input date.
     private void validateDates(Date inputDate, Date startDate) throws BadRequestRuntimeException {
         if (startDate.after(inputDate)) {
             throw new BadRequestRuntimeException("Start date should be before or equal to the input date.");
         }
     }
+
 
     private ResponseEntity<AppResponse<List<PG_POLICYINFO>>> handleException(Exception e, String errorMessage) {
         if (e instanceof ValueNotExistException) {
