@@ -17,12 +17,12 @@ public class POLICYLOANSERVICE {
     @Autowired
     private PG_POLICYLOANREPO pgPolicyloanrepo;
 
-    public List<PG_POLICYLOAN> getLoanDetailsByPolicyNo(String POLICY_NO) throws ValueNotExistException, BadRequestRuntimeException {
+    public List<PG_POLICYLOAN> getLoanDetailsByPolicyNo(String POLICY_NO,String userType) throws ValueNotExistException, BadRequestRuntimeException {
         if (POLICY_NO == null || POLICY_NO.isEmpty()) {
             throw new BadRequestRuntimeException("Policy number cannot be null or empty");
         }
 
-        List<PG_POLICYLOAN> loanDetails = pgPolicyloanrepo.getLoanDetailsByPolicyNo(POLICY_NO);
+        List<PG_POLICYLOAN> loanDetails = pgPolicyloanrepo.getLoanDetailsByPolicyNo(POLICY_NO,userType);
         if (loanDetails.isEmpty()) {
             throw new ValueNotExistException("Loan details not found for policy number: " + POLICY_NO);
         }

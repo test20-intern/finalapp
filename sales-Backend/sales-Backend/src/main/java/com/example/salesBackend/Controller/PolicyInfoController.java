@@ -30,17 +30,18 @@ public class PolicyInfoController {
             @RequestParam(required = false) String NIC,
             @RequestParam(required = false) String NAME,
             @RequestParam(required = false) String CLIENT_NO,
-            @RequestParam String AGNTNUM
+            @RequestParam String AGNTNUM,
+            @RequestParam String userType
     ) {
         try {
             List<Object[]> result;
 
             if (AGNTNUM != null && (POLICY_NO == null && NIC == null && NAME == null && CLIENT_NO == null)) {
                 // If AGNTNUM is provided without any other search parameters, use getPolicyDetailsWithClientName
-                result = policyInfoService.getPolicyDetailsWithClientName(AGNTNUM);
+                result = policyInfoService.getPolicyDetailsWithClientName(AGNTNUM,userType);
             } else {
                 // Use getPolicyDetailsWithSearchParams if any other search parameters are provided along with AGNTNUM
-                result = policyInfoService.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO, AGNTNUM);
+                result = policyInfoService.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO, AGNTNUM,userType);
             }
 
             // If no data is found for the given search parameters, throw ValueNotExistException
@@ -76,12 +77,13 @@ public class PolicyInfoController {
     // API to show policy details.
     @GetMapping("/policy-columns")
     public ResponseEntity<AppResponse<List<Map<String, Object>>>> getPolicyColumns(
-            @RequestParam(required = true) String POLICY_NO
+            @RequestParam(required = true) String POLICY_NO,
+            @RequestParam(required = true) String userType
 
 
     ) {
         try {
-            List<Object[]> result = policyInfoService.getPolicyColumns(POLICY_NO);
+            List<Object[]> result = policyInfoService.getPolicyColumns(POLICY_NO,userType);
 
             // If no data is found for the given POLICY_NO, throw ValueNotExistException
             if (result == null || result.isEmpty()) {

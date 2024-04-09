@@ -16,12 +16,12 @@ public class BENEFITSERVICE {
         this.benefitRepository = benefitRepository;
     }
 
-    public List<Object[]> getBenefitDetailsByPolicyNo(String policyNo) throws ValueNotExistException, BadRequestRuntimeException {
+    public List<Object[]> getBenefitDetailsByPolicyNo(String policyNo,String userType) throws ValueNotExistException, BadRequestRuntimeException {
         if (policyNo == null || policyNo.isEmpty()) {
             throw new BadRequestRuntimeException("Policy number cannot be null or empty");
         }
 
-        List<Object[]> benefitDetails = benefitRepository.getBenefitDetailsByPolicyNo(policyNo);
+        List<Object[]> benefitDetails = benefitRepository.getBenefitDetailsByPolicyNo(policyNo,userType);
         if (benefitDetails.isEmpty()) {
             throw new ValueNotExistException("Benefit details not found for policy number: " + policyNo);
         }
