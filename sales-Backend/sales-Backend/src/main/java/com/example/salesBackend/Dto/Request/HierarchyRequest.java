@@ -7,7 +7,6 @@ import lombok.Setter;
 
 @Setter
 @Getter
-
 @Data
 public class HierarchyRequest {
 
