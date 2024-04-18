@@ -17,5 +17,19 @@ public class HierarchyService {
         List<String> soCodes = jdbcTemplate.queryForList(query, new Object[]{request.getGroupCode(), request.getBranchCode(), request.getUnitCode(), request.getUserType()}, String.class);
         return soCodes;
     }
+
+    public List<String> getUnitCode(HierarchyRequest request) {
+        String query = "EXEC SalesApp_Select_UnitCode ?, ?, ?, ?";
+        List<String> unitCodes = jdbcTemplate.queryForList(query, new Object[]{request.getGroupCode(), request.getBranchCode(), request.getUnitCode(), request.getUserType()}, String.class);
+        return unitCodes;
+    }
+
+    public List<String> getBranchCode(HierarchyRequest request) {
+        String query = "EXEC SalesApp_Select_BranchCode ?, ?, ?, ?";
+        List<String> branchCodes = jdbcTemplate.queryForList(query, new Object[]{request.getGroupCode(), request.getBranchCode(), request.getUnitCode(), request.getUserType()}, String.class);
+        return branchCodes;
+    }
+
+
 }
 

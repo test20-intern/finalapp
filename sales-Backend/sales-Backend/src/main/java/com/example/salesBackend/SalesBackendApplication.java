@@ -1,7 +1,6 @@
 package com.example.salesBackend;
 
 
-import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -9,7 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableEncryptableProperties
 @EntityScan("package com.example.salesBackend.Entity;")
 @EnableJpaRepositories("com.example.salesBackend.Repo")
 public class SalesBackendApplication {

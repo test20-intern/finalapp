@@ -30,4 +30,34 @@ public class HierarchyController {
         return ResponseEntity.ok().body(soCodes);
     }
 
+    @GetMapping("/getUnitcode")
+    public ResponseEntity<List<String>> getUnitCode(
+            @RequestParam(name = "groupCode") String groupCode,
+            @RequestParam(name = "branchCode") String branchCode,
+            @RequestParam(name = "unitCode") String unitCode,
+            @RequestParam(name = "userType") String userType) {
+        HierarchyRequest request = new HierarchyRequest();
+        request.setGroupCode(groupCode);
+        request.setBranchCode(branchCode);
+        request.setUnitCode(unitCode);
+        request.setUserType(userType);
+        List<String> unitCodes = hierarchyService.getUnitCode(request);
+        return ResponseEntity.ok().body(unitCodes);
+    }
+
+    @GetMapping("/getBranchcode")
+    public ResponseEntity<List<String>> getBranchCode(
+            @RequestParam(name = "groupCode") String groupCode,
+            @RequestParam(name = "branchCode") String branchCode,
+            @RequestParam(name = "unitCode") String unitCode,
+            @RequestParam(name = "userType") String userType) {
+        HierarchyRequest request = new HierarchyRequest();
+        request.setGroupCode(groupCode);
+        request.setBranchCode(branchCode);
+        request.setUnitCode(unitCode);
+        request.setUserType(userType);
+        List<String> branchCodes = hierarchyService.getBranchCode(request);
+        return ResponseEntity.ok().body(branchCodes);
+    }
+
 }
