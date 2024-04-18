@@ -33,11 +33,11 @@ public class HierarchyService {
 
     public List<String> getUnitCode(HierarchyRequest request) throws BadRequestRuntimeException, ValueNotExistException {
         // Check for invalid parameters
-        if (request.getGroupCode() == null || request.getBranchCode() == null || request.getUnitCode() == null || request.getUserType() == null) {
+        if (request.getGroupCode() == null || request.getBranchCode() == null || request.getUserType() == null) {
             throw new BadRequestRuntimeException("One or more parameters are null");
         }
-        String query = "EXEC SalesApp_Select_UnitCode ?, ?, ?, ?";
-        List<String> unitCodes = jdbcTemplate.queryForList(query, new Object[]{request.getGroupCode(), request.getBranchCode(), request.getUnitCode(), request.getUserType()}, String.class);
+        String query = "EXEC SalesApp_Select_UnitCode ?, ?, ?";
+        List<String> unitCodes = jdbcTemplate.queryForList(query, new Object[]{request.getGroupCode(), request.getBranchCode(),request.getUserType()}, String.class);
 
         // Check if the result is empty
         if (unitCodes.isEmpty()) {
@@ -48,11 +48,11 @@ public class HierarchyService {
 
     public List<String> getBranchCode(HierarchyRequest request) throws BadRequestRuntimeException, ValueNotExistException {
         // Check for invalid parameters
-        if (request.getGroupCode() == null || request.getBranchCode() == null || request.getUnitCode() == null || request.getUserType() == null) {
+        if (request.getGroupCode() == null ||  request.getUserType() == null) {
             throw new BadRequestRuntimeException("One or more parameters are null");
         }
-        String query = "EXEC SalesApp_Select_BranchCode ?, ?, ?, ?";
-        List<String> branchCodes = jdbcTemplate.queryForList(query, new Object[]{request.getGroupCode(), request.getBranchCode(), request.getUnitCode(), request.getUserType()}, String.class);
+        String query = "EXEC SalesApp_Select_BranchCode ?, ?";
+        List<String> branchCodes = jdbcTemplate.queryForList(query, new Object[]{request.getGroupCode(), request.getUserType()}, String.class);
 
         // Check if the result is empty
         if (branchCodes.isEmpty()) {

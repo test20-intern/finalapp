@@ -51,13 +51,13 @@ public class HierarchyController {
     public ResponseEntity<AppResponse<List<String>>> getUnitCode(
             @RequestParam(name = "groupCode") String groupCode,
             @RequestParam(name = "branchCode") String branchCode,
-            @RequestParam(name = "unitCode") String unitCode,
+           // @RequestParam(name = "unitCode") String unitCode,
             @RequestParam(name = "userType") String userType) {
         try {
             HierarchyRequest request = new HierarchyRequest();
             request.setGroupCode(groupCode);
             request.setBranchCode(branchCode);
-            request.setUnitCode(unitCode);
+            //request.setUnitCode(unitCode);
             request.setUserType(userType);
 
             List<String> unitCodes = hierarchyService.getUnitCode(request);
@@ -78,14 +78,14 @@ public class HierarchyController {
     @GetMapping("/getBranchcode")
     public ResponseEntity<AppResponse<List<String>>> getBranchCode(
             @RequestParam(name = "groupCode") String groupCode,
-            @RequestParam(name = "branchCode") String branchCode,
-            @RequestParam(name = "unitCode") String unitCode,
+            //RequestParam(name = "branchCode") String branchCode,
+            //@RequestParam(name = "unitCode") String unitCode,
             @RequestParam(name = "userType") String userType) {
         try {
             HierarchyRequest request = new HierarchyRequest();
             request.setGroupCode(groupCode);
-            request.setBranchCode(branchCode);
-            request.setUnitCode(unitCode);
+            //request.setBranchCode(branchCode);
+            //request.setUnitCode(unitCode);
             request.setUserType(userType);
 
             List<String> branchCodes = hierarchyService.getBranchCode(request);
