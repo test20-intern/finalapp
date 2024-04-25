@@ -73,9 +73,12 @@ List<Object[]> getPolicyDetailsWithSearchParams(
 
 
 
-    @Query(nativeQuery = true,value ="EXEC SalesApp_Select_LapsedPoliciesForGivenDateRange @agntnum=:agntnum,@startDate=:startDate,@inputDate=:inputDate,@userType=:userType")
+    @Query(nativeQuery = true,value ="EXEC SalesApp_Test_Select_LapsedPoliciesForGivenDateRange @agntnum=:agntnum,@startDate=:startDate,@inputDate=:inputDate,@GroupCode=:GroupCode,@BranchCode=:BranchCode,@UnitCode=:UnitCode,@userType=:userType")
     List<PG_POLICYINFO> findLapsedPoliciesByAgntnumAndPaidupDateBetween(
             @Param("agntnum") String agntnum,
+            @Param("GroupCode") String GroupCode,
+            @Param("BranchCode") String BranchCode,
+            @Param("UnitCode") String UnitCode,
             @Param("startDate") Date startDate,
             @Param("inputDate") Date inputDate,
             @Param("userType")String userType

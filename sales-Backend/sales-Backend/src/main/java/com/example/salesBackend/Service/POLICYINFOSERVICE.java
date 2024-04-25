@@ -70,9 +70,9 @@ public List<PG_POLICYINFO> getOverduePolicies(String agntnum, Date inputDate, St
 
 
     // service to get lapsed policies.
-    public List<PG_POLICYINFO> getLapsedPolicies(String agntnum, Date startDate, Date inputDate, String userType) {
+    public List<PG_POLICYINFO> getLapsedPolicies(String agntnum,String GroupCode,String BranchCode,String UnitCode, Date startDate, Date inputDate, String userType) {
         //Date endDate = calculateEndDateForLapsed(inputDate);
-        return pgPolicyInfoRepo.findLapsedPoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate,inputDate, userType);
+        return pgPolicyInfoRepo.findLapsedPoliciesByAgntnumAndPaidupDateBetween(agntnum,GroupCode,BranchCode,UnitCode, startDate,inputDate, userType);
     }
 
     // here we have to calculate the lapsed policies end date because we have to avoid the overdue period.

@@ -81,7 +81,10 @@ public class ReportController {
 //     ( calculate using paidup_date column in policyInfo table) before overdue period.
     @GetMapping("/lapsedPolicies")
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getLapsedPolicies(
-            @RequestParam String agntnum,
+            @RequestParam(required = false)String agntnum,
+            @RequestParam(required = false) String GroupCode,
+            @RequestParam(required = false) String BranchCode,
+            @RequestParam(required = false) String UnitCode,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam String userType
@@ -89,7 +92,7 @@ public class ReportController {
         try {
             validateDates(inputDate, startDate);
 
-            List<PG_POLICYINFO> lapsedPolicies = pgPolicyInfoService.getLapsedPolicies(agntnum, startDate, inputDate,userType);
+            List<PG_POLICYINFO> lapsedPolicies = pgPolicyInfoService.getLapsedPolicies(agntnum,GroupCode,BranchCode,UnitCode, startDate, inputDate,userType);
 
             if (lapsedPolicies.isEmpty()) {
                 return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "LapsedPoliciesNotFound",
