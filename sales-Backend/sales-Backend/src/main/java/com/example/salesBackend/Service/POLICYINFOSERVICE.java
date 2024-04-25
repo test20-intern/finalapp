@@ -50,8 +50,8 @@ public class POLICYINFOSERVICE {
     }
 
 // service to get Due policy details.
-    public List<PG_POLICYINFO> getDuePolicies(String agntnum, Date inputDate, Date endDate,String userType) {
-        return pgPolicyInfoRepo.findDuePoliciesByAgntnumAndPaidupDateBetween(agntnum, inputDate, endDate,userType);
+    public List<PG_POLICYINFO> getDuePolicies(String agntnum,String GroupCode,String BranchCode,String UnitCode, Date inputDate, Date endDate,String userType) {
+        return pgPolicyInfoRepo.findDuePoliciesByAgntnumAndPaidupDateBetween(agntnum,GroupCode,BranchCode,UnitCode, inputDate, endDate,userType);
     }
 
 // service to get the overdue policies.

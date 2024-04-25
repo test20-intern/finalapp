@@ -30,13 +30,16 @@ public class ReportController {
 //     API to get due policies. Due Policies= policies that are due
 //     ( calculate using paidup_date column in policyInfo table) in upcoming days/ months.
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getDuePolicies(
-            @RequestParam String agntnum,
+            @RequestParam(required = false)String agntnum,
+            @RequestParam(required = false) String GroupCode,
+            @RequestParam(required = false) String BranchCode,
+            @RequestParam(required = false) String UnitCode,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
             @RequestParam String userType
     ) {
         try {
-            List<PG_POLICYINFO> duePolicies = pgPolicyInfoService.getDuePolicies(agntnum, inputDate, endDate,userType);
+            List<PG_POLICYINFO> duePolicies = pgPolicyInfoService.getDuePolicies(agntnum,GroupCode,BranchCode,UnitCode, inputDate, endDate,userType);
 
             if (duePolicies.isEmpty()) {
                 return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "DuePoliciesNotFound",
