@@ -29,12 +29,12 @@ public class POLICYINFOSERVICE {
         }
     }
 
-    public List<Object[]> getPolicyDetailsWithSearchParams(String POLICY_NO, String NIC, String NAME, String CLIENT_NO, String AGNTNUM,String userType) {
+    public List<Object[]> getPolicyDetailsWithSearchParams(String POLICY_NO, String NIC, String NAME, String CLIENT_NO,String GroupCode,String BranchCode,String UnitCode, String AGNTNUM,String userType) {
         try {
-            if (AGNTNUM == null || AGNTNUM.isEmpty()) {
-                throw new IllegalArgumentException("AGNTNUM is required");
+            if (GroupCode == null || GroupCode.isEmpty()) {
+                throw new IllegalArgumentException("GroupCode is required");
             }
-            return pgPolicyInfoRepo.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO, AGNTNUM,userType);
+            return pgPolicyInfoRepo.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO,GroupCode,BranchCode,UnitCode, AGNTNUM,userType);
         } catch (Exception e) {
             throw new RuntimeException("Error retrieving policy details with search parameters", e);
         }

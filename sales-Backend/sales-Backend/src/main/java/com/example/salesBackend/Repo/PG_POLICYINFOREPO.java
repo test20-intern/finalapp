@@ -15,11 +15,12 @@ public interface PG_POLICYINFOREPO extends JpaRepository<PG_POLICYINFO, String> 
 
 /*Query to search the policy details when search by Policy number, NIC, Name( Name in ClientInfo table)
    Or client Number */
-@Query(nativeQuery = true, value = "EXEC SalesApp_Select_PolicyDeatilsForAgentNumberAndParamaters " +
+@Query(nativeQuery = true, value = "EXEC SalesApp_Test_Select_PolicyDeatilsForAgentNumberAndParamaters " +
         "@POLICY_NO = :POLICY_NO, " +
         "@NIC = :NIC, " +
         "@NAME = :NAME, " +
         "@CLIENT_NO = :CLIENT_NO, " +
+        "@GroupCode=:GroupCode,@BranchCode=:BranchCode,@UnitCode=:UnitCode,"+
         "@AGNTNUM = :AGNTNUM,"+
         "@userType=:userType")
 List<Object[]> getPolicyDetailsWithSearchParams(
@@ -27,6 +28,9 @@ List<Object[]> getPolicyDetailsWithSearchParams(
         @Param("NIC") String NIC,
         @Param("NAME") String NAME,
         @Param("CLIENT_NO") String CLIENT_NO,
+        @Param("GroupCode") String GroupCode,
+        @Param("BranchCode") String BranchCode,
+        @Param("UnitCode") String UnitCode,
         @Param("AGNTNUM") String AGNTNUM,
         @Param("userType")String userType
         );

@@ -44,7 +44,7 @@ public class PolicyInfoController {
                 result = policyInfoService.getPolicyDetailsWithClientName(GroupCode,BranchCode,UnitCode,AGNTNUM,userType);
             } else {
                 // Use getPolicyDetailsWithSearchParams if any other search parameters are provided along with AGNTNUM
-                result = policyInfoService.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO, AGNTNUM,userType);
+                result = policyInfoService.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO,GroupCode,BranchCode,UnitCode, AGNTNUM,userType);
             }
 
             // If no data is found for the given search parameters, throw ValueNotExistException
