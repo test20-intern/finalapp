@@ -55,9 +55,9 @@ public class POLICYINFOSERVICE {
     }
 
 // service to get the overdue policies.
-public List<PG_POLICYINFO> getOverduePolicies(String agntnum, Date inputDate, String userType) {
+public List<PG_POLICYINFO> getOverduePolicies(String agntnum,String GroupCode,String BranchCode,String UnitCode, Date inputDate, String userType) {
     Date startDate = calculateStartDateForOverdue(inputDate);
-    return pgPolicyInfoRepo.findOverduePoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, inputDate, userType);
+    return pgPolicyInfoRepo.findOverduePoliciesByAgntnumAndPaidupDateBetween(agntnum, GroupCode,BranchCode,UnitCode,startDate, inputDate, userType);
 }
 
     private Date calculateStartDateForOverdue(Date inputDate) {

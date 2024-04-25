@@ -63,9 +63,12 @@ List<Object[]> getPolicyDetailsWithSearchParams(
             @Param("userType")String userType
     );
 
-    @Query(nativeQuery = true, value = "EXEC SalesApp_Select_OverduePoliciesForGivenDateRange @agntnum=:agntnum,@startDate=:startDate,@endDate=:endDate,@userType=:userType")
+    @Query(nativeQuery = true, value = "EXEC SalesApp_Test_Select_OverduePoliciesForGivenDateRange @agntnum=:agntnum,@startDate=:startDate,@endDate=:endDate,@GroupCode=:GroupCode,@BranchCode=:BranchCode,@UnitCode=:UnitCode,@userType=:userType")
     List<PG_POLICYINFO> findOverduePoliciesByAgntnumAndPaidupDateBetween(
             @Param("agntnum") String agntnum,
+            @Param("GroupCode") String GroupCode,
+            @Param("BranchCode") String BranchCode,
+            @Param("UnitCode") String UnitCode,
             @Param("startDate") Date startDate,
             @Param("endDate") Date endDate,
             @Param("userType") String userType

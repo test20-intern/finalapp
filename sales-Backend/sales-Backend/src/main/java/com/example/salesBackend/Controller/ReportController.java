@@ -58,12 +58,15 @@ public class ReportController {
 //     ( calculate using paidup_date column in policyInfo table) in past  days/ months.
     @GetMapping("/overduePolicies")
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getOverduePolicies(
-            @RequestParam String agntnum,
+            @RequestParam(required = false)String agntnum,
+            @RequestParam(required = false) String GroupCode,
+            @RequestParam(required = false) String BranchCode,
+            @RequestParam(required = false) String UnitCode,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate,
             @RequestParam String userType
     ) throws ValueNotExistException {
         try {
-            List<PG_POLICYINFO> overduePolicies = pgPolicyInfoService.getOverduePolicies(agntnum, inputDate, userType);
+            List<PG_POLICYINFO> overduePolicies = pgPolicyInfoService.getOverduePolicies(agntnum,GroupCode,BranchCode,UnitCode, inputDate, userType);
 
             if (overduePolicies.isEmpty()) {
                 return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "OverduePoliciesNotFound",
