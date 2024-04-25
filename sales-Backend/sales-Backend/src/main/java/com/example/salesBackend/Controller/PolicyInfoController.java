@@ -30,7 +30,10 @@ public class PolicyInfoController {
             @RequestParam(required = false) String NIC,
             @RequestParam(required = false) String NAME,
             @RequestParam(required = false) String CLIENT_NO,
-            @RequestParam String AGNTNUM,
+            @RequestParam(required = false) String GroupCode,
+            @RequestParam(required = false) String BranchCode,
+            @RequestParam(required = false) String UnitCode,
+            @RequestParam(required = false) String AGNTNUM,
             @RequestParam String userType
     ) {
         try {
@@ -38,7 +41,7 @@ public class PolicyInfoController {
 
             if (AGNTNUM != null && (POLICY_NO == null && NIC == null && NAME == null && CLIENT_NO == null)) {
                 // If AGNTNUM is provided without any other search parameters, use getPolicyDetailsWithClientName
-                result = policyInfoService.getPolicyDetailsWithClientName(AGNTNUM,userType);
+                result = policyInfoService.getPolicyDetailsWithClientName(GroupCode,BranchCode,UnitCode,AGNTNUM,userType);
             } else {
                 // Use getPolicyDetailsWithSearchParams if any other search parameters are provided along with AGNTNUM
                 result = policyInfoService.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO, AGNTNUM,userType);

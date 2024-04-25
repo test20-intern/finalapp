@@ -33,8 +33,11 @@ List<Object[]> getPolicyDetailsWithSearchParams(
 
 
     /* Query for when user want to see all the policy details. By directly clicking "Search"*/
-    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_PolicyDeatilsOnlyforAgentNumber @AGNTNUM=:AGNTNUM,@userType=:userType")
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Test_Select_PolicyDeatilsOnlyforAgentNumber @GroupCode=:GroupCode,@BranchCode=:BranchCode,@UnitCode=:UnitCode, @AGNTNUM=:AGNTNUM,@userType=:userType")
     List<Object[]> getPolicyDetailsWithClientName(
+            @Param("GroupCode") String GroupCode,
+            @Param("BranchCode") String BranchCode,
+            @Param("UnitCode") String UnitCode,
             @Param("AGNTNUM") String AGNTNUM,
             @Param ("userType")String userType);
 

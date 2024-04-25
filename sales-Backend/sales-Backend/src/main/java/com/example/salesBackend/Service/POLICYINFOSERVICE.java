@@ -20,10 +20,10 @@ public class POLICYINFOSERVICE {
     @Autowired
     private PG_POLICYINFOREPO pgPolicyInfoRepo;
 
-    public List<Object[]> getPolicyDetailsWithClientName(String AGNTNUM,String userType) {
+    public List<Object[]> getPolicyDetailsWithClientName(String GroupCode,String BranchCode,String UnitCode,String AGNTNUM,String userType) {
         try {
 
-            return pgPolicyInfoRepo.getPolicyDetailsWithClientName(AGNTNUM,userType);
+            return pgPolicyInfoRepo.getPolicyDetailsWithClientName(GroupCode,BranchCode,UnitCode,AGNTNUM,userType);
         } catch (Exception e) {
             throw new RuntimeException("Error retrieving policy details with client name", e);
         }
