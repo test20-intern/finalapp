@@ -61,8 +61,8 @@ public class BENEFICIARYSERVICE {
 
 
     // BeneficiaryService.java
-    public List<BirthdaysResponse> getBeneficiaryBirthdays(String agntnum, Date startDate, Date endDate,String userType) throws ValueNotExistException {
-        List<Object[]> result = beneficiaryRepo.findBirthdaysByAgentNumber(agntnum, startDate, endDate,userType);
+    public List<BirthdaysResponse> getBeneficiaryBirthdays(Date startDate, Date endDate,String GroupCode,String BranchCode,String UnitCode,String agntnum ,String userType) throws ValueNotExistException {
+        List<Object[]> result = beneficiaryRepo.findBirthdaysByAgentNumber(startDate, endDate, GroupCode,BranchCode,UnitCode,agntnum,userType);
         List<BirthdaysResponse> birthdaysResponseList = new ArrayList<>();
         HashSet<String> uniqueSet = new HashSet<>();
 

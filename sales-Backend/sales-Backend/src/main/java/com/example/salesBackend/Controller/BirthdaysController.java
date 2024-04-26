@@ -32,9 +32,12 @@ public class BirthdaysController {
     //API to get beneficiaries birthdays for a given date range.
     @GetMapping("/getBeneficiaryBirthdays")
     public ResponseEntity<AppResponse<List<BirthdaysResponse>>> getBeneficiaryBirthdays(
-            @RequestParam String agntnum,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            @RequestParam(required = false) String GroupCode,
+            @RequestParam(required = false) String BranchCode,
+            @RequestParam(required = false) String UnitCode,
+            @RequestParam(required = false) String agntnum,
             @RequestParam String userType
     ) {
         // Set default values if startDate or endDate is not provided. Default dates are start date = today
@@ -48,7 +51,7 @@ public class BirthdaysController {
         }
         // exception handling part
         try {
-            List<BirthdaysResponse> birthdaysResponseList = beneficiaryService.getBeneficiaryBirthdays(agntnum, startDate, endDate,userType);
+            List<BirthdaysResponse> birthdaysResponseList = beneficiaryService.getBeneficiaryBirthdays(startDate, endDate,GroupCode,BranchCode,UnitCode,agntnum, userType);
             return new ResponseEntity<>(AppResponse.ok(birthdaysResponseList), HttpStatus.OK);
         } catch (ValueNotExistException e) {
             return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "BeneficiaryBirthdaysNotFound",
