@@ -7,7 +7,6 @@ import com.example.salesBackend.Repo.PG_CLIENTINFOREPO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -32,8 +31,8 @@ public class CLIENTINFOSERVICE {
         return clientDetails;
     }
 
-    public List<PG_CLIENTINFO> getClientInfoByAgentAndDateRange(String agentNumber, Date startDate, Date endDate,String userType) throws ValueNotExistException {
-        List<PG_CLIENTINFO> clientInfoList = pgClientInfoRepo.findClientInfoByAgentAndDateRange(agentNumber, startDate, endDate,userType);
+    public List<Object[]> getClientInfoByAgentAndDateRange(String agentNumber, Date startDate, Date endDate, String userType, String groupCode, String branchCode, String unitCode) throws ValueNotExistException {
+        List<Object[]> clientInfoList = pgClientInfoRepo.findClientInfoByAgentAndDateRange(startDate, endDate, groupCode, branchCode, unitCode, agentNumber, userType);
 
         if (clientInfoList.isEmpty()) {
             throw new ValueNotExistException("No client information found for the specified criteria.");
@@ -41,6 +40,8 @@ public class CLIENTINFOSERVICE {
 
         return clientInfoList;
     }
+
+
 
 
 

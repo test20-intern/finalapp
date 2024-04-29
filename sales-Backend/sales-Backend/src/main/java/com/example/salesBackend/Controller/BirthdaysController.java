@@ -14,9 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @CrossOrigin
@@ -63,19 +61,39 @@ public class BirthdaysController {
 
     // API to get clients birthdays for a given data range.
     @GetMapping("/getClientBirthdays")
-    public ResponseEntity<List<PG_CLIENTINFO>> getClientInfo(@RequestParam String agentNumber,
-                                                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
-                                                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate,
-                                                             @RequestParam String userType) {
+    public ResponseEntity<List<Map<String, Object>>> getClientInfo(
+            @RequestParam String agentNumber,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate,
+            @RequestParam String userType,
+            @RequestParam(required = false) String groupCode,
+            @RequestParam(required = false) String branchCode,
+            @RequestParam(required = false) String unitCode) {
         try {
-            List<PG_CLIENTINFO> clientInfoList = clientInfoService.getClientInfoByAgentAndDateRange(agentNumber, startDate, endDate,userType);
-            return new ResponseEntity<>(clientInfoList, HttpStatus.OK);
+            List<Object[]> clientInfoList = clientInfoService.getClientInfoByAgentAndDateRange(agentNumber, startDate, endDate, userType, groupCode, branchCode, unitCode);
+
+            // Transform Object arrays to Map<String, Object>
+            List<Map<String, Object>> resultList = new ArrayList<>();
+            for (Object[] objArray : clientInfoList) {
+                Map<String, Object> formattedItem = new HashMap<>();
+                formattedItem.put("clientNo", objArray[0]);
+                formattedItem.put("name", objArray[1]);
+                formattedItem.put("dob", objArray[2]);
+                formattedItem.put("add_City", objArray[3]);
+                formattedItem.put("tel_1", objArray[4]);
+                formattedItem.put("tel_2", objArray[5]);
+                resultList.add(formattedItem);
+            }
+
+            return new ResponseEntity<>(resultList, HttpStatus.OK);
         } catch (ValueNotExistException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
 
     // Helper method to calculate end date based on start date and daysToAdd
