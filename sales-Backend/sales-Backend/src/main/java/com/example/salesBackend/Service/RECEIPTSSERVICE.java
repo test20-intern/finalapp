@@ -45,8 +45,8 @@ public class RECEIPTSSERVICE {
     }
 
     //code snippet for getAgentReceipts API.
-    public List<Map<String, Object>> getAgentReceiptsMapped(String agntnum, String policyNo, Date startDate, Date endDate,String userType) {
-        List<Object[]> results = pgReceiptsRepo.getAgentReceipts(agntnum, policyNo, startDate, endDate,userType);
+    public List<Map<String, Object>> getAgentReceiptsMapped(String GroupCode,String BranchCode,String UnitCode,String agntnum, String policyNo, Date startDate, Date endDate,String userType) {
+        List<Object[]> results = pgReceiptsRepo.getAgentReceipts(GroupCode,BranchCode,UnitCode,agntnum, policyNo, startDate, endDate,userType);
         List<Map<String, Object>> mappedResults = new ArrayList<>();
 
         for (Object[] row : results) {
