@@ -7,7 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BeneficiaryIdDTO {
-
     private String SOCODE;
     private String CONTRACTID;
     private String CUSTOMERID;

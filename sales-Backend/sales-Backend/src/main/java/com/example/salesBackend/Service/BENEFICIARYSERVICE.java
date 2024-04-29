@@ -61,8 +61,8 @@ public class BENEFICIARYSERVICE {
 
 
     // BeneficiaryService.java
-    public List<BirthdaysResponse> getBeneficiaryBirthdays(String agntnum, Date startDate, Date endDate,String userType) throws ValueNotExistException {
-        List<Object[]> result = beneficiaryRepo.findBirthdaysByAgentNumber(agntnum, startDate, endDate,userType);
+    public List<BirthdaysResponse> getBeneficiaryBirthdays(String agntnum, Date startDate, Date endDate,String userType,String groupCode, String branchCode, String unitCode) throws ValueNotExistException {
+        List<Object[]> result = beneficiaryRepo.findBirthdaysByAgentNumber(agntnum, startDate, endDate, userType,groupCode, branchCode, unitCode);
         List<BirthdaysResponse> birthdaysResponseList = new ArrayList<>();
         HashSet<String> uniqueSet = new HashSet<>();
 
@@ -82,7 +82,7 @@ public class BENEFICIARYSERVICE {
 
                 // Assuming the order of columns in the result matches the constructor parameters of BirthdaysResponse
                 BeneficiaryId beneficiaryId = new BeneficiaryId();
-                beneficiaryId.setSOCODE((String) row[4]);
+//                beneficiaryId.setSOCODE((String) row[4]);
                 beneficiaryId.setCUSTOMERID(customerId);
                 beneficiaryId.setRELATIONSHIP((String) row[3]);
 
@@ -91,10 +91,10 @@ public class BENEFICIARYSERVICE {
                 beneficiary.setDOB(dob);
 
 
-                clientInfo.setCLIENT_NO((String) row[5]);
-                clientInfo.setADD_CITY((String) row[6]);
-                clientInfo.setTEL_1((String) row[7]);
-                clientInfo.setTEL_2((String) row[8]);
+                clientInfo.setCLIENT_NO((String) row[4]);
+                clientInfo.setADD_CITY((String) row[5]);
+                clientInfo.setTEL_1((String) row[6]);
+                clientInfo.setTEL_2((String) row[7]);
 
                 BirthdaysResponse birthdaysResponse = new BirthdaysResponse(beneficiary, clientInfo);
                 birthdaysResponseList.add(birthdaysResponse);
