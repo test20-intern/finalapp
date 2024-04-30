@@ -6,24 +6,23 @@ import com.example.salesBackend.Entity.PG_CLIENTINFO;
 import lombok.*;
 
 
-
-
 @NoArgsConstructor
 @Data
-// BirthdaysResponse.java
-
+@Getter
+@Setter
 public class BirthdaysResponse {
-
     private BeneficiaryBday beneficiary;
     private BeneficiaryClientBday clientInfo;
     private String customerId;
     private String client_No;
+    private String relationship;
 
     public BirthdaysResponse(PG_BENEFICIARY beneficiaryEntity, PG_CLIENTINFO clientInfoEntity) {
         this.beneficiary = convertToBeneficiaryDTO(beneficiaryEntity);
         this.clientInfo = convertToClientInfoDTO(clientInfoEntity);
         this.customerId = beneficiaryEntity.getBID().getCUSTOMERID();
         this.client_No = clientInfoEntity.getCLIENT_NO();
+        this.relationship = beneficiaryEntity.getBID().getRELATIONSHIP(); 
     }
 
     // Conversion methods
@@ -41,8 +40,6 @@ public class BirthdaysResponse {
         dto.setTEL_2(clientInfoEntity.getTEL_2());
         return dto;
     }
-
-
-
 }
+
 
