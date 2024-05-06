@@ -7,17 +7,14 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.sql.exec.spi.StandardEntityInstanceResolver;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SystemLogs {
+public class SalesappLogs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long logId;

@@ -1,7 +1,7 @@
 package com.example.salesBackend.Controller;
 
-import com.example.salesBackend.Dto.Response.SystemLogsDto;
-import com.example.salesBackend.Entity.SystemLogs;
+import com.example.salesBackend.Dto.Response.SalesappLogsDto;
+import com.example.salesBackend.Entity.SalesappLogs;
 import com.example.salesBackend.Service.SystemLogsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,19 +15,19 @@ public class SystemLogsController {
     private SystemLogsService systemLogsService;
 
     @PostMapping("/saveLog")
-    public String saveSystemLogs(@RequestBody SystemLogsDto systemLogsDto) {
-        //SystemLogs systemLogs = mapDtoToEntity(systemLogsDto);
-        return systemLogsService.saveLog(systemLogsDto);
+    public String saveSystemLogs(@RequestBody SalesappLogsDto salesappLogsDto) {
+        //SalesappLogs systemLogs = mapDtoToEntity(salesappLogsDto);
+        return systemLogsService.saveLog(salesappLogsDto);
     }
 
-    private SystemLogs mapDtoToEntity(SystemLogsDto systemLogsDto) {
-        SystemLogs systemLogs = new SystemLogs();
-        systemLogs.setEmpId(systemLogsDto.getEmpId());
-        systemLogs.setUserName(systemLogsDto.getUserName());
-        systemLogs.setUserType(systemLogsDto.getUserType());
-        systemLogs.setIpAddress(systemLogsDto.getIpAddress());
-        systemLogs.setLogDate(systemLogsDto.getLogDate());
-        return systemLogs;
+    private SalesappLogs mapDtoToEntity(SalesappLogsDto salesappLogsDto) {
+        SalesappLogs salesappLogs = new SalesappLogs();
+        salesappLogs.setEmpId(salesappLogsDto.getEmpId());
+        salesappLogs.setUserName(salesappLogsDto.getUserName());
+        salesappLogs.setUserType(salesappLogsDto.getUserType());
+        salesappLogs.setIpAddress(salesappLogsDto.getIpAddress());
+        salesappLogs.setLogDate(salesappLogsDto.getLogDate());
+        return salesappLogs;
     }
 
 }

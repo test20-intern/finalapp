@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SystemLogsDto {
+public class SalesappLogsDto {
     private long logId;
     private long empId;
     private String userName;
