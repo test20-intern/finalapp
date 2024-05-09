@@ -9,10 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class POLICYINFOSERVICE {
@@ -106,7 +103,15 @@ public List<PG_POLICYINFO> getOverduePolicies(String agntnum, Date inputDate, St
     }
 
     public Map<String, Long> getPlanTypes(String agntnum) {
-        return pgPolicyInfoRepo.countPlanTypesByAgntnum(agntnum);
+        Map<String, Integer> planTypesCount = pgPolicyInfoRepo.countPlanTypesByAgntnum(agntnum);
+
+        // Convert Integer counts to Long
+        Map<String, Long> planTypesCountLong = new HashMap<>();
+        for (Map.Entry<String, Integer> entry : planTypesCount.entrySet()) {
+            planTypesCountLong.put(entry.getKey(), entry.getValue().longValue());
+        }
+
+        return planTypesCountLong;
     }
 
 
