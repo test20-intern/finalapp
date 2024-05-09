@@ -7,6 +7,7 @@ import com.example.salesBackend.Repo.PG_CLIENTINFOREPO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -32,7 +33,7 @@ public class CLIENTINFOSERVICE {
         return clientDetails;
     }
 
-    public List<PG_CLIENTINFO> getClientInfoByAgentAndDateRange(String agentNumber, Date startDate, Date endDate,String userType) throws ValueNotExistException {
+    public List<PG_CLIENTINFO> getClientInfoByAgentAndDateRange(String agentNumber, LocalDate startDate, LocalDate endDate, String userType) throws ValueNotExistException {
         List<PG_CLIENTINFO> clientInfoList = pgClientInfoRepo.findClientInfoByAgentAndDateRange(agentNumber, startDate, endDate,userType);
 
         if (clientInfoList.isEmpty()) {

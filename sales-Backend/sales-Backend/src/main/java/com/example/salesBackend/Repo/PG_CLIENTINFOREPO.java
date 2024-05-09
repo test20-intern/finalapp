@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 @Repository
@@ -28,8 +29,8 @@ public interface PG_CLIENTINFOREPO extends JpaRepository<PG_CLIENTINFO, String> 
             "@userType=:userType")
     List<PG_CLIENTINFO> findClientInfoByAgentAndDateRange(
             @Param("agentNumber") String agentNumber,
-            @Param("startDate") Date startDate,
-            @Param("endDate") Date endDate,
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate,
             @Param("userType")String userType);
 
 

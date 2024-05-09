@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -64,8 +65,10 @@ public class BirthdaysController {
     // API to get clients birthdays for a given data range.
     @GetMapping("/getClientBirthdays")
     public ResponseEntity<List<PG_CLIENTINFO>> getClientInfo(@RequestParam String agentNumber,
-                                                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
-                                                             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate,
+                                                             //@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+                                                             //@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate,
+                                                             @RequestParam LocalDate startDate,
+                                                             @RequestParam LocalDate endDate,
                                                              @RequestParam String userType) {
         try {
             List<PG_CLIENTINFO> clientInfoList = clientInfoService.getClientInfoByAgentAndDateRange(agentNumber, startDate, endDate,userType);
