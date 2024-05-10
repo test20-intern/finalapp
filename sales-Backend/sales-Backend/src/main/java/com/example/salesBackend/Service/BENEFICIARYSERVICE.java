@@ -91,7 +91,7 @@ public class BENEFICIARYSERVICE {
                 beneficiary.setDOB(dob);
 
 
-                clientInfo.setCLIENT_NO((String) row[5]);
+                clientInfo.setCLIENT_NO(beneficiaryId.getCUSTOMERID());
                 clientInfo.setADD_CITY((String) row[6]);
                 clientInfo.setTEL_1((String) row[7]);
                 clientInfo.setTEL_2((String) row[8]);
