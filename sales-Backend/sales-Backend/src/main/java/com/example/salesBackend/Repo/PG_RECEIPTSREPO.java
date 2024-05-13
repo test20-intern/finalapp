@@ -11,12 +11,13 @@ import java.util.Date;
 import java.util.List;
 
 public interface PG_RECEIPTSREPO extends JpaRepository<PG_RECEIPTS, PG_RECEIPTSId> {
+
+
     @Query(nativeQuery = true, value = "EXEC SalesApp_Select_ReceiptsForPolicyNo @POLICY_NO=:POLICY_NO,@userType=:userType")
     List<Object[]> findReceiptDataByPolicyNo(
             @Param("POLICY_NO") String POLICY_NO,
             @Param("userType")String userType
     );
-
 
 
     // Query for 'getAgentReceipts
@@ -31,6 +32,18 @@ public interface PG_RECEIPTSREPO extends JpaRepository<PG_RECEIPTS, PG_RECEIPTSI
             @Param("endDate") Date endDate,
             @Param("userType")String userType
     );
+
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Test_Select_TotalAmount @GroupCode=:GroupCode,@BranchCode=:BranchCode,@UnitCode=:UnitCode, @agntnum=:agntnum,@userType=:userType,@inputDate=:inputDate")
+    List<Object> getTotalAmount(
+            @Param("GroupCode") String GroupCode,
+            @Param("BranchCode") String BranchCode,
+            @Param("UnitCode") String UnitCode,
+            @Param("agntnum") String agntnum,
+            @Param("userType")String userType,
+            @Param("inputDate")Date inputDate
+
+    );
+
 
 
 
