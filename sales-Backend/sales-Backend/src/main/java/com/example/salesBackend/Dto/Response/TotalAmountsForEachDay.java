@@ -10,19 +10,15 @@ import java.util.Date;
 
 @Data
 @AllArgsConstructor
-
+@NoArgsConstructor
 public class TotalAmountsForEachDay {
 
-    private static int counter = 1;
-    private int  id;
+    private int id;
     private Date receiptDate;
     private BigDecimal totalAmount;
 
 
-    public TotalAmountsForEachDay() {
-        this.id = counter++;
 
-    }
 
 
 
