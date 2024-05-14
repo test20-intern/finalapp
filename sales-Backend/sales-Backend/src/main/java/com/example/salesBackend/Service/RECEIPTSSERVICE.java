@@ -92,13 +92,12 @@ public class RECEIPTSSERVICE {
     public List<TotalAmountsForEachDay> getTotalAmount(String groupCode, String branchCode, String unitCode, String agntnum, String userType, Date inputDate) {
         List<Object> result = pgReceiptsRepo.getTotalAmount(groupCode, branchCode, unitCode, agntnum, userType, inputDate);
         List<TotalAmountsForEachDay> totalAmounts = new ArrayList<>();
-
-        int id = 1; // Start ID from 1
+        int id = 1;
 
         for (Object obj : result) {
             Object[] row = (Object[]) obj;
             TotalAmountsForEachDay totalAmount = new TotalAmountsForEachDay();
-            totalAmount.setId(id++); 
+            totalAmount.setId(id++);
             totalAmount.setReceiptDate((Date) row[0]);
             totalAmount.setTotalAmount((BigDecimal) row[1]);
             totalAmounts.add(totalAmount);

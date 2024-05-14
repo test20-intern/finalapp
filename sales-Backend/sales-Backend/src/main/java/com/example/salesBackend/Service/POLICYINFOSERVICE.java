@@ -87,19 +87,19 @@ public List<PG_POLICYINFO> getOverduePolicies(String agntnum,String GroupCode,St
     // to get the number of due/overdue/lapsed policies to show in the dashboard (graphs).
     // we get the current date and calculate the count for each type of policies.
 
-    public DashboardCounts getPolicyCounts(String agntnum,String userType) throws ValueNotExistException {
+    public DashboardCounts getPolicyCounts(String GroupCode,String BranchCode,String UnitCode,String agntnum,String userType) throws ValueNotExistException {
         LocalDate today = LocalDate.now();
         Date todayDate = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         LocalDate oneMonthAgo = today.minusMonths(1);
         Date oneMonthAgoDate = Date.from(oneMonthAgo.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        long numberOfDuePolicies = pgPolicyInfoRepo.countDuePolicies(agntnum, todayDate,userType);
-        long numberOfOverduePolicies = pgPolicyInfoRepo.countOverduePolicies(agntnum, oneMonthAgoDate, todayDate,userType);
-        long numberOfLapsedPolicies = pgPolicyInfoRepo.countLapsedPolicies(agntnum, oneMonthAgoDate,userType);
+        long numberOfDuePolicies = pgPolicyInfoRepo.countDuePolicies(todayDate,GroupCode,BranchCode,UnitCode,agntnum,userType);
+        long numberOfOverduePolicies = pgPolicyInfoRepo.countOverduePolicies( oneMonthAgoDate, todayDate,GroupCode,BranchCode,UnitCode,agntnum,userType);
+        long numberOfLapsedPolicies = pgPolicyInfoRepo.countLapsedPolicies( oneMonthAgoDate,GroupCode,BranchCode,UnitCode,agntnum,userType);
 
         if (numberOfDuePolicies == 0 && numberOfOverduePolicies == 0 && numberOfLapsedPolicies == 0) {
-            throw new ValueNotExistException("No policies found for agent number: " + agntnum);
+            throw new ValueNotExistException("No policies found " );
         }
 
         return new DashboardCounts(numberOfDuePolicies, numberOfOverduePolicies, numberOfLapsedPolicies);

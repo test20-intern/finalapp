@@ -33,10 +33,13 @@ public class DashboardController {
     @GetMapping("/policyCounts")
     public ResponseEntity<AppResponse<DashboardCounts>> getPolicyCounts(
             @RequestParam String agntnum,
-            @RequestParam String userType
+            @RequestParam String userType,
+            @RequestParam("groupCode") String groupCode,
+            @RequestParam("branchCode") String branchCode,
+            @RequestParam("unitCode") String unitCode
     ) {
         try {
-            DashboardCounts counts = pgPolicyInfoService.getPolicyCounts(agntnum,userType);
+            DashboardCounts counts = pgPolicyInfoService.getPolicyCounts(groupCode,branchCode,unitCode,agntnum,userType);
             return new ResponseEntity<>(AppResponse.ok(counts), HttpStatus.OK);
         } catch (ValueNotExistException e) {
             return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "DataNotFound", e.getMessage()), HttpStatus.NOT_FOUND);
