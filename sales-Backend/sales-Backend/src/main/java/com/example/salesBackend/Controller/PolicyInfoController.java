@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @RestController
@@ -52,11 +53,14 @@ public class PolicyInfoController {
                 throw new ValueNotExistException("No data found for the provided search parameters");
             }
 
+            AtomicInteger counter = new AtomicInteger(1);
+
+
             // Convert the result to pass with field names and an incrementing "id".
             List<Map<String, Object>> formattedResult = result.stream()
                     .map(item -> {
                         Map<String, Object> formattedItem = new HashMap<>();
-                        formattedItem.put("id", generateIncrementingId()); // Incrementing "id"
+                        formattedItem.put("id", counter.getAndIncrement()); // Incrementing "id"
                         formattedItem.put("POLICY_NO", item[0]);
                         formattedItem.put("NAME", item[1]);
                         formattedItem.put("PREMIUM", item[2]);
@@ -92,12 +96,12 @@ public class PolicyInfoController {
             if (result == null || result.isEmpty()) {
                 throw new ValueNotExistException("No policy columns found for the provided POLICY_NO: " + POLICY_NO);
             }
-
+            AtomicInteger counter = new AtomicInteger(1);
             // Convert the result to pass with field names and an incrementing "id".
             List<Map<String, Object>> formattedResult = result.stream()
                     .map(item -> {
                         Map<String, Object> formattedItem = new HashMap<>();
-                        formattedItem.put("id", generateIncrementingId());
+                        formattedItem.put("id", counter.getAndIncrement());
                         formattedItem.put("POLICY_NO", item[0]);
                         formattedItem.put("PREMIUM", item[1]);
                         formattedItem.put("TOTAL_DUE", item[2]);
