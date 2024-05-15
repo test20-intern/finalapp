@@ -21,7 +21,7 @@ public class SystemLogs {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long logId;
-    private long empId;
+    private String empId;
     private String userName;
     private String userType;
     private String ipAddress;
