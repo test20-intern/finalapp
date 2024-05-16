@@ -1,6 +1,5 @@
 package com.example.salesBackend.Controller;
 
-import com.example.salesBackend.Exceptions.BadRequestRuntimeException;
 import com.example.salesBackend.Exceptions.ValueNotExistException;
 import com.example.salesBackend.Service.POLICYINFOSERVICE;
 import com.example.salesBackend.util.AppResponse;
@@ -42,7 +41,7 @@ public class PolicyInfoController {
 
             if ( (POLICY_NO == null && NIC == null && NAME == null && CLIENT_NO == null)) {
                 // If AGNTNUM is provided without any other search parameters, use getPolicyDetailsWithClientName
-                result = policyInfoService.getPolicyDetailsWithClientName(GroupCode,BranchCode,UnitCode,AGNTNUM,userType);
+                result = policyInfoService.getPolicyDetailsWithAgent(GroupCode,BranchCode,UnitCode,AGNTNUM,userType);
             } else {
                 // Use getPolicyDetailsWithSearchParams if any other search parameters are provided along with AGNTNUM
                 result = policyInfoService.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO,GroupCode,BranchCode,UnitCode, AGNTNUM,userType);

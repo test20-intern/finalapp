@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +19,7 @@ public class POLICYINFOSERVICE {
     @Autowired
     private PG_POLICYINFOREPO pgPolicyInfoRepo;
 
-    public List<Object[]> getPolicyDetailsWithClientName(String GroupCode,String BranchCode,String UnitCode,String AGNTNUM,String userType) {
+    public List<Object[]> getPolicyDetailsWithAgent(String GroupCode, String BranchCode, String UnitCode, String AGNTNUM, String userType) {
         try {
 
             return pgPolicyInfoRepo.getPolicyDetailsWithClientName(GroupCode,BranchCode,UnitCode,AGNTNUM,userType);

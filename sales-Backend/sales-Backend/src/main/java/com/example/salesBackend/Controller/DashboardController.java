@@ -2,10 +2,13 @@
 package com.example.salesBackend.Controller;
 
 import com.example.salesBackend.Dto.Request.DashboardCounts;
+import com.example.salesBackend.Dto.Response.SalesPerformanceDTO;
 import com.example.salesBackend.Dto.Response.TotalAmountsForEachDay;
+
 import com.example.salesBackend.Exceptions.ValueNotExistException;
 import com.example.salesBackend.Service.POLICYINFOSERVICE;
 import com.example.salesBackend.Service.RECEIPTSSERVICE;
+import com.example.salesBackend.Service.SalesPerformanceService;
 import com.example.salesBackend.util.AppResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,6 +31,11 @@ public class DashboardController {
 
     @Autowired
     private RECEIPTSSERVICE receiptDetailsService;
+
+    @Autowired
+    private SalesPerformanceService salesPerformanceService;
+
+
 
     /* API for graph values for policy details */
     @GetMapping("/policyCounts")
@@ -79,6 +87,21 @@ public class DashboardController {
         List<TotalAmountsForEachDay> totalAmounts = receiptDetailsService.getTotalAmount(groupCode, branchCode, unitCode, agntnum, userType, inputDate);
         return ResponseEntity.ok(totalAmounts);
     }
+
+
+
+
+    @GetMapping("/performance")
+    public SalesPerformanceDTO getSalesPerformance(
+            @RequestParam String groupCode,
+            @RequestParam String branchCode,
+            @RequestParam String unitCode,
+            @RequestParam String agntnum,
+            @RequestParam String userType) {
+        return salesPerformanceService.getSalesPerformance(groupCode, branchCode, unitCode, agntnum, userType);
+    }
+
+
 
 
 
