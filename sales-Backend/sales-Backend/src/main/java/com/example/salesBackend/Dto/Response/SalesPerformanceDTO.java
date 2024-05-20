@@ -16,9 +16,11 @@ public class SalesPerformanceDTO {
     private Date lastUpdate;
     private Long totalNOP;
     private Long totalMCFP;
+    private Long totalTP;
     private Long totalGTP;
     private Long totalCUMNOP;
     private Long totalCUMMCFP;
+    private long totalCUMTP;
     private Long totalCUMGTP;
 
 
