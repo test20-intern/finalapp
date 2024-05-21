@@ -14,14 +14,22 @@ import java.util.Date;
 @Setter
 public class SalesPerformanceDTO {
     private Date lastUpdate;
-    private Long totalNOP;
-    private Long totalMCFP;
-    private Long totalTP;
-    private Long totalGTP;
-    private Long totalCUMNOP;
-    private Long totalCUMMCFP;
-    private long totalCUMTP;
-    private Long totalCUMGTP;
+    private long totalNOP;
+    private long totalTgNOP;
+    private long totalMCFP;
+    private long totalTgMCFP;
+    private long totalTP;
+    private long totalTgTP;
+    private long totalGTP;
+    private long totalTgGTP;
+    private long totalCUMNOP;
+    private long totalTgCUMNOP;
+    private long totalCUMMCFP;
+    private long totalTgCUMMCFP;
+    private long  totalCUMTP;
+    private long  totalTgCUMTP;
+    private long totalCUMGTP;
+    private long totalTgCUMGTP;
 
 
 }

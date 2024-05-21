@@ -25,11 +25,22 @@ public class SalesPerformanceService {
             SalesPerformanceDTO dto = new SalesPerformanceDTO();
             dto.setLastUpdate((Date) result[0]);
             dto.setTotalNOP(((Number) result[1]).longValue());
-            dto.setTotalMCFP(((Number) result[2]).longValue());
-            dto.setTotalGTP(((Number) result[3]).longValue());
-            dto.setTotalCUMNOP(((Number) result[4]).longValue());
-            dto.setTotalCUMMCFP(((Number) result[5]).longValue());
-            dto.setTotalCUMGTP(((Number) result[6]).longValue());
+            dto.setTotalTgNOP(((Number) result[2]).longValue());
+            dto.setTotalTP(((Number) result[3]).longValue());
+            dto.setTotalTgTP(((Number) result[4]).longValue());
+            dto.setTotalMCFP(((Number) result[5]).longValue());
+            dto.setTotalTgMCFP(((Number) result[6]).longValue());
+            dto.setTotalGTP(((Number) result[7]).longValue());
+            dto.setTotalTgGTP(((Number) result[8]).longValue());
+
+            dto.setTotalCUMNOP(((Number) result[9]).longValue());
+            dto.setTotalTgCUMNOP(((Number) result[10]).longValue());
+            dto.setTotalCUMMCFP(((Number) result[11]).longValue());
+            dto.setTotalTgCUMMCFP(((Number) result[12]).longValue());
+            dto.setTotalCUMTP(((Number) result[13]).longValue());
+            dto.setTotalTgCUMTP(((Number) result[14]).longValue());
+            dto.setTotalCUMGTP(((Number) result[15]).longValue());
+            dto.setTotalTgCUMGTP(((Number) result[16]).longValue());
             return dto;
         }
         return null;

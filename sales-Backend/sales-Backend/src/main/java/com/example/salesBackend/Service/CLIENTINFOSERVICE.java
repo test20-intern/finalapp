@@ -1,5 +1,6 @@
 package com.example.salesBackend.Service;
 
+
 import com.example.salesBackend.Entity.PG_CLIENTINFO;
 import com.example.salesBackend.Exceptions.BadRequestRuntimeException;
 import com.example.salesBackend.Exceptions.ValueNotExistException;
@@ -17,6 +18,8 @@ public class CLIENTINFOSERVICE {
 
     @Autowired
     private PG_CLIENTINFOREPO pgClientInfoRepo;
+
+
 
     public List<PG_CLIENTINFO> getClientDetailsByPolicyNo(String POLICY_NO,String userType) throws ValueNotExistException, BadRequestRuntimeException {
         if (POLICY_NO == null || POLICY_NO.isEmpty()) {
@@ -40,6 +43,10 @@ public class CLIENTINFOSERVICE {
 
         return clientInfoList;
     }
+
+//    public List<ClientCityDTO> getClientCity(String groupCode, String branchCode, String unitCode, String agntnum, String userType) {
+//        return pgClientInfoRepo.getClientCity(groupCode, branchCode, unitCode, agntnum, userType);
+//    }
 
 
 
