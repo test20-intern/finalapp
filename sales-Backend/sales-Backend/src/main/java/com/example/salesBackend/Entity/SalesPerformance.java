@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -20,21 +21,21 @@ public class SalesPerformance {
 
     @Id
     private String SOCode;
-    private long NOP;
-    private long TgNOP;
-    private long MCFP;
-    private long TgMCFP;
-    private long TP;
-    private long TgTP;
-    private long GTP;
-    private long TgGTP;
-    private long CUMNOP;
-    private long TgCUMNOP;
-    private long CUMMCFP;
-    private long TgCUMMCFP;
-    private long CUMTP;
-    private long TgCUMTP;
-    private long CUMGTP;
-    private long TgCUMGTP;
+    private BigDecimal NOP;
+    private BigDecimal TgNOP;
+    private BigDecimal MCFP;
+    private BigDecimal TgMCFP;
+    private BigDecimal TP;
+    private BigDecimal TgTP;
+    private BigDecimal GTP;
+    private BigDecimal TgGTP;
+    private BigDecimal CUMNOP;
+    private BigDecimal TgCUMNOP;
+    private BigDecimal CUMMCFP;
+    private BigDecimal TgCUMMCFP;
+    private BigDecimal CUMTP;
+    private BigDecimal TgCUMTP;
+    private BigDecimal CUMGTP;
+    private BigDecimal TgCUMGTP;
     private Date LastUpdated;
 }
