@@ -10,6 +10,7 @@ import com.example.salesBackend.Exceptions.ValueNotExistException;
 import com.example.salesBackend.Repo.PG_BENEFICIARYREPO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.example.salesBackend.enums.statusValue;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -28,7 +29,7 @@ public class BENEFICIARYSERVICE {
         if (policyNo == null || policyNo.isEmpty()) {
             throw new BadRequestRuntimeException("Policy number cannot be null or empty");
         }
-
+    int status = statusValue.ACTIVE.sts();
         List<PG_BENEFICIARY> beneficiaries = beneficiaryRepo.findByPolicyNo(policyNo,userType);
         if (beneficiaries.isEmpty()) {
             throw new ValueNotExistException("Beneficiary details not found for policy number: " + policyNo);

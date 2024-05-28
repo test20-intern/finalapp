@@ -44,9 +44,7 @@ public class CLIENTINFOSERVICE {
         return clientInfoList;
     }
 
-//    public List<ClientCityDTO> getClientCity(String groupCode, String branchCode, String unitCode, String agntnum, String userType) {
-//        return pgClientInfoRepo.getClientCity(groupCode, branchCode, unitCode, agntnum, userType);
-//    }
+
 
 
 

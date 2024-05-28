@@ -1,25 +1,28 @@
-//package com.example.salesBackend.Controller;
-//
-//import com.example.salesBackend.Dto.Response.ClientCityDTO;
-//import com.example.salesBackend.Service.CLIENTINFOSERVICE;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.util.List;
-//@RestController
-//@CrossOrigin
-//@RequestMapping("/api/v1/diaryDetails")
-//public class DiaryController {
-//
-//    @Autowired
-//    private CLIENTINFOSERVICE clientInfoService;
-//    @GetMapping("/ClientCity")
-//    public List<ClientCityDTO> getClientCity(
-//            @RequestParam String groupCode,
-//            @RequestParam String branchCode,
-//            @RequestParam String unitCode,
-//            @RequestParam String agntnum,
-//            @RequestParam String userType) {
-//        return clientInfoService.getClientCity(groupCode, branchCode, unitCode, agntnum, userType);
-//    }
-//}
+package com.example.salesBackend.Controller;
+
+
+import com.example.salesBackend.Entity.EventsTitle;
+import com.example.salesBackend.Service.EventsTitleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@CrossOrigin
+@RequestMapping("/Diary")
+public class DiaryController {
+
+    @Autowired
+    private EventsTitleService eventsTitleService;
+
+    // Endpoint to get all events
+    @GetMapping("/eventNames")
+    public List<EventsTitle> getAllEvents() {
+        return eventsTitleService.getAllEvents();
+    }
+
+}
