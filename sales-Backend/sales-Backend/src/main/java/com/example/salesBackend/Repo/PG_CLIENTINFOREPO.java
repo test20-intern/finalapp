@@ -41,6 +41,24 @@ List<Object[]> findClientInfoByAgentAndDateRange(
         @Param("userType") String userType);
 
 
+    @Query(nativeQuery = true, value = "EXEC SalesApp_Test_Select_ClientCity  " +
+            "@GroupCode = :groupCode, " +
+            "@BranchCode = :branchCode, " +
+            "@UnitCode = :unitCode, " +
+            "@agntnum = :agntnum, " +
+            "@City= :City,"+
+            "@UserType = :userType")
+    List<Object[]> findClientCityByAgentNumber(
+            @Param("groupCode") String groupCode,
+            @Param("branchCode") String branchCode,
+            @Param("unitCode") String unitCode,
+            @Param("agntnum") String agntnum,
+            @Param("City") String City,
+            @Param("userType") String userType);
+
+
+
+
 
 
 
