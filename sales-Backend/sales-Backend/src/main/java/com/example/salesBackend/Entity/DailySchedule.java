@@ -19,8 +19,8 @@ public class DailySchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long RECORD_ID;
     private String agntnum;
-    private Date START_DATE;
-    private Date END_DATE;
+    private Date startDate;
+    private Date endDate;
     private String TITLE;
     private String STATUS;
 }

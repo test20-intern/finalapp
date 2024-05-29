@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -86,6 +87,22 @@ public class DiaryController {
         List<DailySchedule> dailySchedules = dailyScheduleService.getDailySchedulesByagntnum(agntnum);
         return new ResponseEntity<>(dailySchedules, HttpStatus.OK);
     }
+
+//    @PutMapping("/updateDailyDiary")
+//    public ResponseEntity<DailySchedule> updateDailyDiary(
+//            @RequestParam String agntnum,
+//            @RequestParam Date startDate,
+//            @RequestParam Date endDate,
+//            @RequestBody DailySchedule updatedSchedule) {
+//        DailySchedule updatedDailySchedule = dailyScheduleService.updateDailySchedule(agntnum, startDate, endDate, updatedSchedule);
+//        if (updatedDailySchedule != null) {
+//            return new ResponseEntity<>(updatedDailySchedule, HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
+
+
 
 
 
