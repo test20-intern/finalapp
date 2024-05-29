@@ -18,7 +18,7 @@ public class DailySchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long RECORD_ID;
-    private String SO_CODE;
+    private String agntnum;
     private Date START_DATE;
     private Date END_DATE;
     private String TITLE;

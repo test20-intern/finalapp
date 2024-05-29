@@ -81,6 +81,14 @@ public class DiaryController {
         return new ResponseEntity<>(savedDailySchedule, HttpStatus.CREATED);
     }
 
+    @GetMapping("/getDailyDiary")
+    public ResponseEntity<List<DailySchedule>> getDailyDiary(@RequestParam String agntnum) {
+        List<DailySchedule> dailySchedules = dailyScheduleService.getDailySchedulesByagntnum(agntnum);
+        return new ResponseEntity<>(dailySchedules, HttpStatus.OK);
+    }
+
+
+
 
 
 
