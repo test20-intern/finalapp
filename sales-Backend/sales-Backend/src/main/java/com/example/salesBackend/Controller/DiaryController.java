@@ -1,10 +1,12 @@
 package com.example.salesBackend.Controller;
 
 
+import com.example.salesBackend.Entity.DailySchedule;
 import com.example.salesBackend.Entity.EventsTitle;
 import com.example.salesBackend.Exceptions.ValueNotExistException;
 import com.example.salesBackend.Service.ClientCityService;
 //import com.example.salesBackend.Service.DailyScheduleService;
+import com.example.salesBackend.Service.DailyScheduleService;
 import com.example.salesBackend.Service.EventsTitleService;
 import com.example.salesBackend.util.AppResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +29,8 @@ public class DiaryController {
     @Autowired
     private ClientCityService clientCityService;
 
-//    @Autowired
-//    private DailyScheduleService dailyScheduleService;
+    @Autowired
+    private DailyScheduleService dailyScheduleService;
 
     // Endpoint to get all events
     @GetMapping("/eventNames")
@@ -73,11 +75,11 @@ public class DiaryController {
 
 
 
-//    @PostMapping("/saveDialyDiary")
-//    public ResponseEntity<DailySchedule> saveDailyDiary(@RequestBody DailySchedule dailySchedule) {
-//        DailySchedule savedDailySchedule = dailyScheduleService.saveDailySchedule(dailySchedule);
-//        return new ResponseEntity<>(savedDailySchedule, HttpStatus.CREATED);
-//    }
+    @PostMapping("/saveDialyDiary")
+    public ResponseEntity<DailySchedule> saveDailyDiary(@RequestBody DailySchedule dailySchedule) {
+        DailySchedule savedDailySchedule = dailyScheduleService.saveDailySchedule(dailySchedule);
+        return new ResponseEntity<>(savedDailySchedule, HttpStatus.CREATED);
+    }
 
 
 

@@ -1,26 +1,26 @@
 package com.example.salesBackend.Entity;
 
-
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-
-@Entity
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-//@Table(name = "DailySchedule")
 public class DailySchedule {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long RECORD_ID;
     private String SO_CODE;
-    private Date START;
-    private Date END;
+    private Date START_DATE;
+    private Date END_DATE;
     private String TITLE;
     private String STATUS;
-
 }
