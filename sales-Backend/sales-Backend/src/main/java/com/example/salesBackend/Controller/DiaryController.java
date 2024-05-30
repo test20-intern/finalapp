@@ -12,6 +12,7 @@ import com.example.salesBackend.util.AppResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -78,9 +79,19 @@ public class DiaryController {
 
     @PostMapping("/saveDialyDiary")
     public ResponseEntity<DailySchedule> saveDailyDiary(@RequestBody DailySchedule dailySchedule) {
-        DailySchedule savedDailySchedule = dailyScheduleService.saveDailySchedule(dailySchedule);
-        return new ResponseEntity<>(savedDailySchedule, HttpStatus.CREATED);
+        try {
+            DailySchedule savedDailySchedule = dailyScheduleService.saveDailySchedule(dailySchedule);
+            return new ResponseEntity<>(savedDailySchedule, HttpStatus.CREATED);
+
+        } catch (RuntimeException e) {
+            return new ResponseEntity<DailySchedule>((MultiValueMap<String, String>) AppResponse.error(null, "400", "Bad Request", "BadRequest",
+                    "Bad request received: " + e.getMessage()), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<DailySchedule>((MultiValueMap<String, String>) AppResponse.error(null, "500", "Internal Server Error", "Saving is not complete",
+                    "Error getting daily schedule: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
 
     @GetMapping("/getDailyDiary")
     public ResponseEntity<List<DailySchedule>> getDailyDiary(@RequestParam String agntnum) {

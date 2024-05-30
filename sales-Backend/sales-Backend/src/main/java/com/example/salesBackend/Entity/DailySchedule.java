@@ -23,4 +23,5 @@ public class DailySchedule {
     private Date endDate;
     private String TITLE;
     private String STATUS;
+    private Boolean AllDay ;
 }
