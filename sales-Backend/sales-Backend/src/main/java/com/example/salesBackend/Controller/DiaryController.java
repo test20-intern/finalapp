@@ -10,11 +10,13 @@ import com.example.salesBackend.Service.DailyScheduleService;
 import com.example.salesBackend.Service.EventsTitleService;
 import com.example.salesBackend.util.AppResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -99,19 +101,17 @@ public class DiaryController {
         return new ResponseEntity<>(dailySchedules, HttpStatus.OK);
     }
 
-//    @PutMapping("/updateDailyDiary")
-//    public ResponseEntity<DailySchedule> updateDailyDiary(
-//            @RequestParam String agntnum,
-//            @RequestParam Date startDate,
-//            @RequestParam Date endDate,
-//            @RequestBody DailySchedule updatedSchedule) {
-//        DailySchedule updatedDailySchedule = dailyScheduleService.updateDailySchedule(agntnum, startDate, endDate, updatedSchedule);
-//        if (updatedDailySchedule != null) {
-//            return new ResponseEntity<>(updatedDailySchedule, HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
+    @PutMapping("/updateDailyDiary")
+    public ResponseEntity<String> updateDailyDiary(
+            @RequestParam("agntnum") String agntnum,
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
+            @RequestParam("newTitle") String newTitle) {
+
+        dailyScheduleService.updateDailyDiary(agntnum, startDate, endDate, newTitle);
+        return new ResponseEntity<>("Daily diary updated successfully", HttpStatus.OK);
+    }
+
 
 
 

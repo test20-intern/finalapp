@@ -85,6 +85,8 @@ public class BirthdaysController {
                 formattedItem.put("add_CITY", objArray[3]);
                 formattedItem.put("tel_1", objArray[4]);
                 formattedItem.put("tel_2", objArray[5]);
+                formattedItem.put("agntnum", objArray[8]);
+
                 resultList.add(formattedItem);
             }
 

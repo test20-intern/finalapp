@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 public interface PG_POLICYINFOREPO extends JpaRepository<PG_POLICYINFO, String> {
 
 
+
+
 /*Query to search the policy details when search by Policy number, NIC, Name( Name in ClientInfo table)
    Or client Number */
 @Query(nativeQuery = true, value = "EXEC SalesApp_Test_Select_PolicyDeatilsForAgentNumberAndParamaters " +

@@ -6,16 +6,18 @@ import com.example.salesBackend.Entity.DailySchedule;
 import com.example.salesBackend.Repo.DailyScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DailyScheduleService {
 
     @Autowired
     private DailyScheduleRepository dailyScheduleRepository;
+
 
     public DailySchedule saveDailySchedule(DailySchedule dailySchedule) {
         return dailyScheduleRepository.save(dailySchedule);
@@ -25,18 +27,21 @@ public class DailyScheduleService {
         return dailyScheduleRepository.findByagntnum(agntnum);
     }
 
-//    public DailySchedule updateDailySchedule(String agntnum, Date startDate, Date endDate, DailySchedule updatedSchedule) {
-//        Optional<DailySchedule> existingSchedule = dailyScheduleRepository.findByAgntnumAndStartDateAndEndDate(agntnum, startDate, endDate);
-//
-//        if (existingSchedule.isPresent()) {
-//            DailySchedule schedule = existingSchedule.get();
-//            schedule.setTITLE(updatedSchedule.getTITLE());
-//            schedule.setSTATUS(updatedSchedule.getSTATUS());
-//            return dailyScheduleRepository.save(schedule);
-//        } else {
-//            return null;
-//        }
-//    }
+
+
+    @Transactional
+    public void updateDailyDiary(String agntnum, LocalDateTime startDate, LocalDateTime endDate, String newTitle) {
+        try {
+            int rowsAffected = dailyScheduleRepository.updateDailySchedule(agntnum, startDate, endDate, newTitle);
+            if (rowsAffected == 0) {
+                throw new RuntimeException("No rows updated");
+            }
+        } catch (Exception e) {
+
+            throw new RuntimeException("Failed to update daily diary", e);
+        }
+    }
+
 
 
 }
