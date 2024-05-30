@@ -76,7 +76,7 @@ public class BENEFICIARYSERVICE {
             String addCity = (String) row[5];
             String tel1 = (String) row[6];
             String tel2 = (String) row[7];
-            String agentNumber = (String) row[8];  // Add this line
+            String agentNum = (String) row[8];
 
             String uniqueKey = customerId + dob.toString() + name;
 
@@ -97,7 +97,7 @@ public class BENEFICIARYSERVICE {
                 clientInfo.setTEL_1(tel1);
                 clientInfo.setTEL_2(tel2);
 
-                BirthdaysResponse birthdaysResponse = new BirthdaysResponse(beneficiary, clientInfo);
+                BirthdaysResponse birthdaysResponse = new BirthdaysResponse(beneficiary, clientInfo, agentNum);
                 birthdaysResponseList.add(birthdaysResponse);
 
                 uniqueSet.add(uniqueKey);
@@ -111,6 +111,3 @@ public class BENEFICIARYSERVICE {
         return birthdaysResponseList;
     }
 }
-
-
-

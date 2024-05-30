@@ -16,13 +16,15 @@ public class BirthdaysResponse {
     private String customerId;
     private String client_No;
     private String relationship;
+    private String agentNum;
 
-    public BirthdaysResponse(PG_BENEFICIARY beneficiaryEntity, PG_CLIENTINFO clientInfoEntity) {
+    public BirthdaysResponse(PG_BENEFICIARY beneficiaryEntity, PG_CLIENTINFO clientInfoEntity, String agentNum) {
         this.beneficiary = convertToBeneficiaryDTO(beneficiaryEntity);
         this.clientInfo = convertToClientInfoDTO(clientInfoEntity);
         this.customerId = beneficiaryEntity.getBID().getCUSTOMERID();
         this.client_No = clientInfoEntity.getCLIENT_NO();
-        this.relationship = beneficiaryEntity.getBID().getRELATIONSHIP(); 
+        this.relationship = beneficiaryEntity.getBID().getRELATIONSHIP();
+        this.agentNum = agentNum;
     }
 
     // Conversion methods
@@ -41,5 +43,3 @@ public class BirthdaysResponse {
         return dto;
     }
 }
-
-
