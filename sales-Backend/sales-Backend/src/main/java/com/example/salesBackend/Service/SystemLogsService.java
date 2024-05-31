@@ -24,8 +24,6 @@ public class SystemLogsService {
     public String saveLog(SystemLogsDto systemLogsDto){
         SystemLogs systemLogs = modelMapper.map(systemLogsDto,SystemLogs.class);
         systemLogs.setLogDate(LocalDateTime.now());
-        LocalDateTime date = LocalDateTime.now();
-        System.out.println(date);
         systemLogsRepo.save(systemLogs);
         return "ok";
     }

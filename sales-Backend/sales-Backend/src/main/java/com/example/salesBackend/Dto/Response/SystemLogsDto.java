@@ -11,10 +11,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class SystemLogsDto {
     private long logId;
-    private long empId;
+    private String empId;
     private String userName;
     private String userType;
     private String ipAddress;
+
     private LocalDateTime logDate;
 
 }

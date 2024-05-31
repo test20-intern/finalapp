@@ -21,7 +21,7 @@ public interface PG_RECEIPTSREPO extends JpaRepository<PG_RECEIPTS, PG_RECEIPTSI
 
 
     // Query for 'getAgentReceipts
-    @Query(nativeQuery = true,value = "EXEC SalesApp_Test_Select_ReceiptDetailsForAgent @GroupCode=:GroupCode,@BranchCode=:BranchCode,@UnitCode=:UnitCode, @agntnum=:agntnum,@policyNo=:policyNo,@startDate=:startDate,@endDate=:endDate,@userType=:userType")
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_ReceiptDetailsForAgent @GroupCode=:GroupCode,@BranchCode=:BranchCode,@UnitCode=:UnitCode, @agntnum=:agntnum,@policyNo=:policyNo,@startDate=:startDate,@endDate=:endDate,@userType=:userType")
     List<Object[]> getAgentReceipts(
             @Param("GroupCode") String GroupCode,
             @Param("BranchCode") String BranchCode,
@@ -33,7 +33,7 @@ public interface PG_RECEIPTSREPO extends JpaRepository<PG_RECEIPTS, PG_RECEIPTSI
             @Param("userType")String userType
     );
 
-    @Query(nativeQuery = true,value = "EXEC SalesApp_Test_Select_TotalAmount @GroupCode=:GroupCode,@BranchCode=:BranchCode,@UnitCode=:UnitCode, @agntnum=:agntnum,@userType=:userType,@inputDate=:inputDate")
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_TotalAmount @GroupCode=:GroupCode,@BranchCode=:BranchCode,@UnitCode=:UnitCode, @agntnum=:agntnum,@userType=:userType,@inputDate=:inputDate")
     List<Object> getTotalAmount(
             @Param("GroupCode") String GroupCode,
             @Param("BranchCode") String BranchCode,

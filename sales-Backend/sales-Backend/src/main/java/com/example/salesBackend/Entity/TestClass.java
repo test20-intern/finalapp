@@ -4,17 +4,14 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.sql.exec.spi.StandardEntityInstanceResolver;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SystemLogs {
+@Entity
+public class TestClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long logId;
@@ -24,5 +21,4 @@ public class SystemLogs {
     private String ipAddress;
     @Column(columnDefinition = "DATETIME")
     private LocalDateTime logDate;
-
 }

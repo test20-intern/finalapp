@@ -23,7 +23,7 @@ public interface PG_CLIENTINFOREPO extends JpaRepository<PG_CLIENTINFO, String> 
 // the DOB column in PG_CLIENTINFO is in DECIMAL format in the LIFEDB database. so we convert the DOB to date
 // and do the calculation to find clients that have their birthday in a given date range.
 // Repository method
-@Query(nativeQuery = true, value = "EXEC SalesApp_Test_Select_ClientBirthdaysByAgentNumberAndDateRange " +
+@Query(nativeQuery = true, value = "EXEC SalesApp_Select_ClientBirthdaysByAgentNumberAndDateRange " +
         "@startDate = :startDate, " +
         "@endDate = :endDate, " +
         "@GroupCode = :groupCode, " +
@@ -41,7 +41,7 @@ List<Object[]> findClientInfoByAgentAndDateRange(
         @Param("userType") String userType);
 
 
-    @Query(nativeQuery = true, value = "EXEC SalesApp_Test_Select_ClientCity  " +
+    @Query(nativeQuery = true, value = "EXEC SalesApp_Select_ClientCity  " +
             "@GroupCode = :groupCode, " +
             "@BranchCode = :branchCode, " +
             "@UnitCode = :unitCode, " +
@@ -55,12 +55,6 @@ List<Object[]> findClientInfoByAgentAndDateRange(
             @Param("agntnum") String agntnum,
             @Param("City") String City,
             @Param("userType") String userType);
-
-
-
-
-
-
 
 }
 

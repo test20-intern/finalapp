@@ -19,7 +19,7 @@ public interface PG_BENEFICIARYREPO extends JpaRepository<PG_BENEFICIARY, Benefi
             @Param("userType") String userType
     );
 
-    @Query(nativeQuery = true, value = "SalesApp_Test_Select_BeneficiaryBirthdayForAgentNo @agntnum=:agntnum, @startDate=:startDate, @endDate=:endDate, @userType=:userType, "+
+    @Query(nativeQuery = true, value = "SalesApp_Select_BeneficiaryBirthdayForAgentNo @agntnum=:agntnum, @startDate=:startDate, @endDate=:endDate, @userType=:userType, "+
             "@GroupCode=:groupCode, " +
             "@BranchCode=:branchCode, " +
             "@UnitCode=:unitCode")
