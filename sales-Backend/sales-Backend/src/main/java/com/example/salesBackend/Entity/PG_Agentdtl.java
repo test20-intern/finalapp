@@ -16,7 +16,7 @@ import lombok.*;
 @Table(name="PG_Agentdtl ")
 public class PG_Agentdtl {
     @Id
-    @Column(name="SO_CODE")
+    @Column(name="SOCODE")
     private String SO_CODE;
 
     @Column(name="SONAME")
@@ -25,13 +25,13 @@ public class PG_Agentdtl {
     @Column(name="BRANCH")
     private String BRANCH;
 
-    @Column(name="REPORT_SUP")
+    @Column(name="REPORTSUP")
     private String REPORT_SUP;
 
-    @Column(name="ORG_LIM")
+    @Column(name="ORGLIM")
     private String ORG_LIM;
 
-    @Column(name="TEL_NO")
+    @Column(name="TELNO")
     private String TEL_NO;
 
     @Column(name="NIC")
