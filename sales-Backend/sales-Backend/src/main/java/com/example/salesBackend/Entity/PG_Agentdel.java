@@ -13,8 +13,8 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="PG_Agentdtl ")
-public class PG_Agentdtl {
+@Table(name="PG_Agentdel ")
+public class PG_Agentdel {
     @Id
     @Column(name="SOCODE")
     private String SO_CODE;
