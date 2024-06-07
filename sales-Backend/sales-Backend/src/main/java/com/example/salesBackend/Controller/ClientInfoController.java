@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @RestController
@@ -34,12 +35,12 @@ public class ClientInfoController {
     ) {
         try {
             List<PG_CLIENTINFO> clientDetails = clientInfoService.getClientDetailsByPolicyNo(POLICY_NO,userType);
-
+            AtomicInteger counter = new AtomicInteger(1);
             // Convert the result to pass with field names and an incrementing "id".
             List<Map<String, Object>> formattedResult = clientDetails.stream()
                     .map(item -> {
                         Map<String, Object> formattedItem = new HashMap<>();
-                        formattedItem.put("id", generateIncrementingId()); // Incrementing "id"
+                        formattedItem.put("id", counter.getAndIncrement()); // Incrementing "id"
                         formattedItem.put("CLIENT_NO", item.getCLIENT_NO());
                         formattedItem.put("NIC", item.getNIC());
                         formattedItem.put("NAME", item.getNAME());
@@ -50,6 +51,8 @@ public class ClientInfoController {
                         formattedItem.put("TEL_1", item.getTEL_1());
                         formattedItem.put("TEL_2", item.getTEL_2());
                         formattedItem.put("DOB", item.getDOB());
+                        formattedItem.put("RINTERNET", item.getRINTERNET());
+
 
                         return formattedItem;
                     })

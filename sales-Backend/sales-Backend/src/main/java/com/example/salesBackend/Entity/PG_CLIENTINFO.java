@@ -50,8 +50,11 @@ public class PG_CLIENTINFO {
     private String TEL_2;
 
     @Column(name = "DOB")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC")
     private BigDecimal DOB;
+
+    @Column(name="RINTERNET")
+    private String RINTERNET;
 
 
     public void setId(int i) {

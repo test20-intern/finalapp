@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class POLICYINFOSERVICE {
@@ -17,21 +20,21 @@ public class POLICYINFOSERVICE {
     @Autowired
     private PG_POLICYINFOREPO pgPolicyInfoRepo;
 
-    public List<Object[]> getPolicyDetailsWithClientName(String AGNTNUM,String userType) {
+    public List<Object[]> getPolicyDetailsWithAgent(String GroupCode, String BranchCode, String UnitCode, String AGNTNUM, String userType) {
         try {
 
-            return pgPolicyInfoRepo.getPolicyDetailsWithClientName(AGNTNUM,userType);
+            return pgPolicyInfoRepo.getPolicyDetailsWithClientName(GroupCode,BranchCode,UnitCode,AGNTNUM,userType);
         } catch (Exception e) {
             throw new RuntimeException("Error retrieving policy details with client name", e);
         }
     }
 
-    public List<Object[]> getPolicyDetailsWithSearchParams(String POLICY_NO, String NIC, String NAME, String CLIENT_NO, String AGNTNUM,String userType) {
+    public List<Object[]> getPolicyDetailsWithSearchParams(String POLICY_NO, String NIC, String NAME, String CLIENT_NO,String GroupCode,String BranchCode,String UnitCode, String AGNTNUM,String userType) {
         try {
-            if (AGNTNUM == null || AGNTNUM.isEmpty()) {
-                throw new IllegalArgumentException("AGNTNUM is required");
+            if (GroupCode == null || GroupCode.isEmpty()) {
+                throw new IllegalArgumentException("GroupCode is required");
             }
-            return pgPolicyInfoRepo.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO, AGNTNUM,userType);
+            return pgPolicyInfoRepo.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO,GroupCode,BranchCode,UnitCode, AGNTNUM,userType);
         } catch (Exception e) {
             throw new RuntimeException("Error retrieving policy details with search parameters", e);
         }
@@ -47,14 +50,14 @@ public class POLICYINFOSERVICE {
     }
 
 // service to get Due policy details.
-    public List<PG_POLICYINFO> getDuePolicies(String agntnum, Date inputDate, Date endDate,String userType) {
-        return pgPolicyInfoRepo.findDuePoliciesByAgntnumAndPaidupDateBetween(agntnum, inputDate, endDate,userType);
+    public List<PG_POLICYINFO> getDuePolicies(String agntnum,String GroupCode,String BranchCode,String UnitCode, Date inputDate, Date endDate,String userType) {
+        return pgPolicyInfoRepo.findDuePoliciesByAgntnumAndPaidupDateBetween(agntnum,GroupCode,BranchCode,UnitCode, inputDate, endDate,userType);
     }
 
 // service to get the overdue policies.
-public List<PG_POLICYINFO> getOverduePolicies(String agntnum, Date inputDate, String userType) {
+public List<PG_POLICYINFO> getOverduePolicies(String agntnum,String GroupCode,String BranchCode,String UnitCode, Date inputDate, String userType) {
     Date startDate = calculateStartDateForOverdue(inputDate);
-    return pgPolicyInfoRepo.findOverduePoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate, inputDate, userType);
+    return pgPolicyInfoRepo.findOverduePoliciesByAgntnumAndPaidupDateBetween(agntnum, GroupCode,BranchCode,UnitCode,startDate, inputDate, userType);
 }
 
     private Date calculateStartDateForOverdue(Date inputDate) {
@@ -67,9 +70,9 @@ public List<PG_POLICYINFO> getOverduePolicies(String agntnum, Date inputDate, St
 
 
     // service to get lapsed policies.
-    public List<PG_POLICYINFO> getLapsedPolicies(String agntnum, Date startDate, Date inputDate, String userType) {
+    public List<PG_POLICYINFO> getLapsedPolicies(String agntnum,String GroupCode,String BranchCode,String UnitCode, Date startDate, Date inputDate, String userType) {
         //Date endDate = calculateEndDateForLapsed(inputDate);
-        return pgPolicyInfoRepo.findLapsedPoliciesByAgntnumAndPaidupDateBetween(agntnum, startDate,inputDate, userType);
+        return pgPolicyInfoRepo.findLapsedPoliciesByAgntnumAndPaidupDateBetween(agntnum,GroupCode,BranchCode,UnitCode, startDate,inputDate, userType);
     }
 
     // here we have to calculate the lapsed policies end date because we have to avoid the overdue period.
@@ -84,19 +87,19 @@ public List<PG_POLICYINFO> getOverduePolicies(String agntnum, Date inputDate, St
     // to get the number of due/overdue/lapsed policies to show in the dashboard (graphs).
     // we get the current date and calculate the count for each type of policies.
 
-    public DashboardCounts getPolicyCounts(String agntnum,String userType) throws ValueNotExistException {
+    public DashboardCounts getPolicyCounts(String GroupCode,String BranchCode,String UnitCode,String agntnum,String userType) throws ValueNotExistException {
         LocalDate today = LocalDate.now();
         Date todayDate = Date.from(today.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         LocalDate oneMonthAgo = today.minusMonths(1);
         Date oneMonthAgoDate = Date.from(oneMonthAgo.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-        long numberOfDuePolicies = pgPolicyInfoRepo.countDuePolicies(agntnum, todayDate,userType);
-        long numberOfOverduePolicies = pgPolicyInfoRepo.countOverduePolicies(agntnum, oneMonthAgoDate, todayDate,userType);
-        long numberOfLapsedPolicies = pgPolicyInfoRepo.countLapsedPolicies(agntnum, oneMonthAgoDate,userType);
+        long numberOfDuePolicies = pgPolicyInfoRepo.countDuePolicies(todayDate,GroupCode,BranchCode,UnitCode,agntnum,userType);
+        long numberOfOverduePolicies = pgPolicyInfoRepo.countOverduePolicies( oneMonthAgoDate, todayDate,GroupCode,BranchCode,UnitCode,agntnum,userType);
+        long numberOfLapsedPolicies = pgPolicyInfoRepo.countLapsedPolicies( oneMonthAgoDate,GroupCode,BranchCode,UnitCode,agntnum,userType);
 
         if (numberOfDuePolicies == 0 && numberOfOverduePolicies == 0 && numberOfLapsedPolicies == 0) {
-            throw new ValueNotExistException("No policies found for agent number: " + agntnum);
+            throw new ValueNotExistException("No policies found " );
         }
 
         return new DashboardCounts(numberOfDuePolicies, numberOfOverduePolicies, numberOfLapsedPolicies);

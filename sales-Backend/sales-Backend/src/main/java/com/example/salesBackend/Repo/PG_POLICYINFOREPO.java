@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 public interface PG_POLICYINFOREPO extends JpaRepository<PG_POLICYINFO, String> {
 
 
+
+
 /*Query to search the policy details when search by Policy number, NIC, Name( Name in ClientInfo table)
    Or client Number */
 @Query(nativeQuery = true, value = "EXEC SalesApp_Select_PolicyDeatilsForAgentNumberAndParamaters " +
@@ -20,6 +22,7 @@ public interface PG_POLICYINFOREPO extends JpaRepository<PG_POLICYINFO, String> 
         "@NIC = :NIC, " +
         "@NAME = :NAME, " +
         "@CLIENT_NO = :CLIENT_NO, " +
+        "@GroupCode=:GroupCode,@BranchCode=:BranchCode,@UnitCode=:UnitCode,"+
         "@AGNTNUM = :AGNTNUM,"+
         "@userType=:userType")
 List<Object[]> getPolicyDetailsWithSearchParams(
@@ -27,14 +30,20 @@ List<Object[]> getPolicyDetailsWithSearchParams(
         @Param("NIC") String NIC,
         @Param("NAME") String NAME,
         @Param("CLIENT_NO") String CLIENT_NO,
+        @Param("GroupCode") String GroupCode,
+        @Param("BranchCode") String BranchCode,
+        @Param("UnitCode") String UnitCode,
         @Param("AGNTNUM") String AGNTNUM,
         @Param("userType")String userType
         );
 
 
     /* Query for when user want to see all the policy details. By directly clicking "Search"*/
-    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_PolicyDeatilsOnlyforAgentNumber @AGNTNUM=:AGNTNUM,@userType=:userType")
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_PolicyDeatilsOnlyforAgentNumber @GroupCode=:GroupCode,@BranchCode=:BranchCode,@UnitCode=:UnitCode, @AGNTNUM=:AGNTNUM,@userType=:userType")
     List<Object[]> getPolicyDetailsWithClientName(
+            @Param("GroupCode") String GroupCode,
+            @Param("BranchCode") String BranchCode,
+            @Param("UnitCode") String UnitCode,
             @Param("AGNTNUM") String AGNTNUM,
             @Param ("userType")String userType);
 
@@ -45,17 +54,23 @@ List<Object[]> getPolicyDetailsWithSearchParams(
             @Param("userType")String userType);
 
 
-    @Query(nativeQuery = true,value ="EXEC SalesApp_Select_DuePoliciesForGivenDateRange @agntnum=:agntnum,@startDate=:startDate,@endDate=:endDate,@userType=:userType")
+    @Query(nativeQuery = true,value ="EXEC SalesApp_Select_DuePoliciesForGivenDateRange @agntnum=:agntnum,@startDate=:startDate,@endDate=:endDate,@GroupCode=:GroupCode,@BranchCode=:BranchCode,@UnitCode=:UnitCode,@userType=:userType")
     List<PG_POLICYINFO> findDuePoliciesByAgntnumAndPaidupDateBetween(
             @Param("agntnum") String agntnum,
+            @Param("GroupCode") String GroupCode,
+            @Param("BranchCode") String BranchCode,
+            @Param("UnitCode") String UnitCode,
             @Param("startDate") Date startDate,
             @Param("endDate") Date endDate,
             @Param("userType")String userType
     );
 
-    @Query(nativeQuery = true, value = "EXEC SalesApp_Select_OverduePoliciesForGivenDateRange @agntnum=:agntnum,@startDate=:startDate,@endDate=:endDate,@userType=:userType")
+    @Query(nativeQuery = true, value = "EXEC SalesApp_Select_OverduePoliciesForGivenDateRange @agntnum=:agntnum,@startDate=:startDate,@endDate=:endDate,@GroupCode=:GroupCode,@BranchCode=:BranchCode,@UnitCode=:UnitCode,@userType=:userType")
     List<PG_POLICYINFO> findOverduePoliciesByAgntnumAndPaidupDateBetween(
             @Param("agntnum") String agntnum,
+            @Param("GroupCode") String GroupCode,
+            @Param("BranchCode") String BranchCode,
+            @Param("UnitCode") String UnitCode,
             @Param("startDate") Date startDate,
             @Param("endDate") Date endDate,
             @Param("userType") String userType
@@ -63,23 +78,46 @@ List<Object[]> getPolicyDetailsWithSearchParams(
 
 
 
-    @Query(nativeQuery = true,value ="EXEC SalesApp_Select_LapsedPoliciesForGivenDateRange @agntnum=:agntnum,@startDate=:startDate,@inputDate=:inputDate,@userType=:userType")
+    @Query(nativeQuery = true,value ="EXEC SalesApp_Select_LapsedPoliciesForGivenDateRange @agntnum=:agntnum,@startDate=:startDate,@inputDate=:inputDate,@GroupCode=:GroupCode,@BranchCode=:BranchCode,@UnitCode=:UnitCode,@userType=:userType")
     List<PG_POLICYINFO> findLapsedPoliciesByAgntnumAndPaidupDateBetween(
             @Param("agntnum") String agntnum,
+            @Param("GroupCode") String GroupCode,
+            @Param("BranchCode") String BranchCode,
+            @Param("UnitCode") String UnitCode,
             @Param("startDate") Date startDate,
             @Param("inputDate") Date inputDate,
             @Param("userType")String userType
     );
 
 
-    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_CountOfDuePolicies @agntnum =:agntnum,@todayDate=:todayDate,@userType=:userType")
-    long countDuePolicies(@Param("agntnum") String agntnum, @Param("todayDate") Date todayDate,@Param("userType") String userType);
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_CountOfDuePolicies @todayDate=:todayDate,@GroupCode=:GroupCode,@BranchCode=:BranchCode,@UnitCode=:UnitCode,@agntnum=:agntnum,@userType=:userType")
+    long countDuePolicies(
+            @Param("todayDate") Date todayDate,
+            @Param("GroupCode") String GroupCode,
+            @Param("BranchCode") String BranchCode,
+            @Param("UnitCode") String UnitCode,
+            @Param("agntnum") String agntnum,
+            @Param("userType") String userType);
 
-    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_CountOfOverduePolicies @agntnum=:agntnum,@startDate=:startDate,@endDate=:endDate,@userType=:userType")
-    long countOverduePolicies(@Param("agntnum") String agntnum, @Param("startDate") Date startDate, @Param("endDate") Date endDate,@Param("userType") String userType);
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_CountOfOverduePolicies @startDate=:startDate,@endDate=:endDate,@GroupCode=:GroupCode,@BranchCode=:BranchCode,@UnitCode=:UnitCode,@agntnum=:agntnum,@userType=:userType")
+    long countOverduePolicies(
+            @Param("startDate") Date startDate,
+            @Param("endDate") Date endDate,
+            @Param("GroupCode") String GroupCode,
+            @Param("BranchCode") String BranchCode,
+            @Param("UnitCode") String UnitCode,
+            @Param("agntnum") String agntnum,
+            @Param("userType") String userType);
 
-    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_CountOfLapsedPolicies @agntnum=:agntnum,@endDate=:endDate,@userType=:userType")
-    long countLapsedPolicies(@Param("agntnum") String agntnum, @Param("endDate") Date endDate,@Param("userType") String userType);
+    @Query(nativeQuery = true,value = "EXEC SalesApp_Select_CountOfLapsedPolicies @endDate=:endDate,@GroupCode=:GroupCode,@BranchCode=:BranchCode,@UnitCode=:UnitCode,@agntnum=:agntnum,@userType=:userType")
+    long countLapsedPolicies(
+
+            @Param("endDate") Date endDate,
+            @Param("GroupCode") String GroupCode,
+            @Param("BranchCode") String BranchCode,
+            @Param("UnitCode") String UnitCode,
+            @Param("agntnum") String agntnum,
+            @Param("userType") String userType);
 
 
 

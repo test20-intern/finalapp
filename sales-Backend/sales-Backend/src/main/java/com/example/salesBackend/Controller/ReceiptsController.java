@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @RestController
@@ -37,12 +38,12 @@ public class ReceiptsController {
     ) {
         try {
             List<RECEIPTREQUEST> result = pgReceiptsService.getReceiptDetailsByPolicyNo(POLICY_NO,userType);
-
+            AtomicInteger counter = new AtomicInteger(1);
             // Convert the result to pass with field names and an incrementing "id"
             List<Map<String, Object>> formattedResult = result.stream()
                     .map(item -> {
                         Map<String, Object> formattedItem = new HashMap<>();
-                        formattedItem.put("id", generateIncrementingId()); // Incrementing "id"
+                        formattedItem.put("id", counter.getAndIncrement()); // Incrementing "id"
                         formattedItem.put("POLICY_NO", item.getPOLICY_NO());
                         formattedItem.put("RECEIPT_NO", item.getRECEIPT_NO());
                         formattedItem.put("RECEIPT_DATE", item.getRECEIPT_DATE());
@@ -70,14 +71,17 @@ public class ReceiptsController {
     // API for get receipt details for a given date range.
     @GetMapping("/agentReceipts")
     public ResponseEntity<AppResponse<List<Map<String, Object>>>> getAgentReceipts(
-            @RequestParam String agntnum,
+            @RequestParam(required = false) String GroupCode,
+            @RequestParam(required = false) String BranchCode,
+            @RequestParam(required = false) String UnitCode,
+            @RequestParam(required = false) String agntnum,
             @RequestParam(required = false) String policyNo,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
             @RequestParam String userType
     ) {
         try {
-            List<Map<String, Object>> agentReceipts = pgReceiptsService.getAgentReceiptsMapped(agntnum, policyNo, startDate, endDate,userType);
+            List<Map<String, Object>> agentReceipts = pgReceiptsService.getAgentReceiptsMapped(GroupCode,BranchCode,UnitCode,agntnum, policyNo, startDate, endDate,userType);
 
             if (agentReceipts.isEmpty()) {
                 return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "AgentReceiptsNotFound",

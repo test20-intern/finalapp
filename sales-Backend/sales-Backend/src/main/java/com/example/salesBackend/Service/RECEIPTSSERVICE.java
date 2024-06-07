@@ -1,6 +1,7 @@
 package com.example.salesBackend.Service;
 
 import com.example.salesBackend.Dto.Request.RECEIPTREQUEST;
+import com.example.salesBackend.Dto.Response.TotalAmountsForEachDay;
 import com.example.salesBackend.Entity.PG_POLICYINFO;
 import com.example.salesBackend.Entity.PG_RECEIPTS;
 import com.example.salesBackend.Exceptions.BadRequestRuntimeException;
@@ -45,8 +46,8 @@ public class RECEIPTSSERVICE {
     }
 
     //code snippet for getAgentReceipts API.
-    public List<Map<String, Object>> getAgentReceiptsMapped(String agntnum, String policyNo, Date startDate, Date endDate,String userType) {
-        List<Object[]> results = pgReceiptsRepo.getAgentReceipts(agntnum, policyNo, startDate, endDate,userType);
+    public List<Map<String, Object>> getAgentReceiptsMapped(String GroupCode,String BranchCode,String UnitCode,String agntnum, String policyNo, Date startDate, Date endDate,String userType) {
+        List<Object[]> results = pgReceiptsRepo.getAgentReceipts(GroupCode,BranchCode,UnitCode,agntnum, policyNo, startDate, endDate,userType);
         List<Map<String, Object>> mappedResults = new ArrayList<>();
 
         for (Object[] row : results) {
@@ -88,6 +89,23 @@ public class RECEIPTSSERVICE {
 
         return mappedResults;
     }
+    public List<TotalAmountsForEachDay> getTotalAmount(String groupCode, String branchCode, String unitCode, String agntnum, String userType, Date inputDate) {
+        List<Object> result = pgReceiptsRepo.getTotalAmount(groupCode, branchCode, unitCode, agntnum, userType, inputDate);
+        List<TotalAmountsForEachDay> totalAmounts = new ArrayList<>();
+        int id = 1;
+
+        for (Object obj : result) {
+            Object[] row = (Object[]) obj;
+            TotalAmountsForEachDay totalAmount = new TotalAmountsForEachDay();
+            totalAmount.setId(id++);
+            totalAmount.setReceiptDate((Date) row[0]);
+            totalAmount.setTotalAmount((BigDecimal) row[1]);
+            totalAmounts.add(totalAmount);
+        }
+
+        return totalAmounts;
+    }
+
 
 
 

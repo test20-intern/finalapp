@@ -30,13 +30,16 @@ public class ReportController {
 //     API to get due policies. Due Policies= policies that are due
 //     ( calculate using paidup_date column in policyInfo table) in upcoming days/ months.
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getDuePolicies(
-            @RequestParam String agntnum,
+            @RequestParam(required = false)String agntnum,
+            @RequestParam(required = false) String GroupCode,
+            @RequestParam(required = false) String BranchCode,
+            @RequestParam(required = false) String UnitCode,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
             @RequestParam String userType
     ) {
         try {
-            List<PG_POLICYINFO> duePolicies = pgPolicyInfoService.getDuePolicies(agntnum, inputDate, endDate,userType);
+            List<PG_POLICYINFO> duePolicies = pgPolicyInfoService.getDuePolicies(agntnum,GroupCode,BranchCode,UnitCode, inputDate, endDate,userType);
 
             if (duePolicies.isEmpty()) {
                 return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "DuePoliciesNotFound",
@@ -55,12 +58,15 @@ public class ReportController {
 //     ( calculate using paidup_date column in policyInfo table) in past  days/ months.
     @GetMapping("/overduePolicies")
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getOverduePolicies(
-            @RequestParam String agntnum,
+            @RequestParam(required = false)String agntnum,
+            @RequestParam(required = false) String GroupCode,
+            @RequestParam(required = false) String BranchCode,
+            @RequestParam(required = false) String UnitCode,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate,
             @RequestParam String userType
     ) throws ValueNotExistException {
         try {
-            List<PG_POLICYINFO> overduePolicies = pgPolicyInfoService.getOverduePolicies(agntnum, inputDate, userType);
+            List<PG_POLICYINFO> overduePolicies = pgPolicyInfoService.getOverduePolicies(agntnum,GroupCode,BranchCode,UnitCode, inputDate, userType);
 
             if (overduePolicies.isEmpty()) {
                 return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "OverduePoliciesNotFound",
@@ -78,7 +84,10 @@ public class ReportController {
 //     ( calculate using paidup_date column in policyInfo table) before overdue period.
     @GetMapping("/lapsedPolicies")
     public ResponseEntity<AppResponse<List<PG_POLICYINFO>>> getLapsedPolicies(
-            @RequestParam String agntnum,
+            @RequestParam(required = false)String agntnum,
+            @RequestParam(required = false) String GroupCode,
+            @RequestParam(required = false) String BranchCode,
+            @RequestParam(required = false) String UnitCode,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date inputDate,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam String userType
@@ -86,7 +95,7 @@ public class ReportController {
         try {
             validateDates(inputDate, startDate);
 
-            List<PG_POLICYINFO> lapsedPolicies = pgPolicyInfoService.getLapsedPolicies(agntnum, startDate, inputDate,userType);
+            List<PG_POLICYINFO> lapsedPolicies = pgPolicyInfoService.getLapsedPolicies(agntnum,GroupCode,BranchCode,UnitCode, startDate, inputDate,userType);
 
             if (lapsedPolicies.isEmpty()) {
                 return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "LapsedPoliciesNotFound",

@@ -1,5 +1,6 @@
 package com.example.salesBackend.Service;
 
+
 import com.example.salesBackend.Entity.PG_CLIENTINFO;
 import com.example.salesBackend.Exceptions.BadRequestRuntimeException;
 import com.example.salesBackend.Exceptions.ValueNotExistException;
@@ -20,6 +21,8 @@ public class CLIENTINFOSERVICE {
     @Autowired
     private PG_CLIENTINFOREPO pgClientInfoRepo;
 
+
+
     public List<PG_CLIENTINFO> getClientDetailsByPolicyNo(String POLICY_NO,String userType) throws ValueNotExistException, BadRequestRuntimeException {
         if (POLICY_NO == null || POLICY_NO.isEmpty()) {
             throw new BadRequestRuntimeException("Policy number cannot be null or empty");
@@ -33,8 +36,8 @@ public class CLIENTINFOSERVICE {
         return clientDetails;
     }
 
-    public List<PG_CLIENTINFO> getClientInfoByAgentAndDateRange(String agentNumber, LocalDate startDate, LocalDate endDate, String userType) throws ValueNotExistException {
-        List<PG_CLIENTINFO> clientInfoList = pgClientInfoRepo.findClientInfoByAgentAndDateRange(agentNumber, startDate, endDate,userType);
+    public List<Object[]> getClientInfoByAgentAndDateRange(String agentNumber, Date startDate, Date endDate, String userType, String groupCode, String branchCode, String unitCode) throws ValueNotExistException {
+        List<Object[]> clientInfoList = pgClientInfoRepo.findClientInfoByAgentAndDateRange(startDate, endDate, groupCode, branchCode, unitCode, agentNumber, userType);
 
         if (clientInfoList.isEmpty()) {
             throw new ValueNotExistException("No client information found for the specified criteria.");
@@ -42,6 +45,10 @@ public class CLIENTINFOSERVICE {
 
         return clientInfoList;
     }
+
+
+
+
 
 
 

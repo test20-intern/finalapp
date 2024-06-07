@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @RestController
@@ -33,12 +34,12 @@ public class LoanReceiptController {
     ) {
         try {
             List<LOANRECEIPTREQUEST> result = loanReceiptsService.getLoanReceiptDetailsByPolicyNo(POLICY_NO,userType);
-
+            AtomicInteger counter = new AtomicInteger(1);
             // Convert the result to pass with field names and an incrementing "id"
             List<Map<String, Object>> formattedResult = result.stream()
                     .map(item -> {
                         Map<String, Object> formattedItem = new HashMap<>();
-                        formattedItem.put("id", generateIncrementingId()); // Incrementing "id"
+                        formattedItem.put("id", counter.getAndIncrement());  // Incrementing "id"
                         formattedItem.put("POLICY_NO", item.getPOLICY_NO());
                         formattedItem.put("LOAN_NO", item.getLOAN_NO());
                         formattedItem.put("RECEIPT_NO", item.getRECEIPT_NO());

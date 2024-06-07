@@ -1,6 +1,5 @@
 package com.example.salesBackend.Controller;
 
-import com.example.salesBackend.Exceptions.BadRequestRuntimeException;
 import com.example.salesBackend.Exceptions.ValueNotExistException;
 import com.example.salesBackend.Service.POLICYINFOSERVICE;
 import com.example.salesBackend.util.AppResponse;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @RestController
@@ -30,18 +30,21 @@ public class PolicyInfoController {
             @RequestParam(required = false) String NIC,
             @RequestParam(required = false) String NAME,
             @RequestParam(required = false) String CLIENT_NO,
-            @RequestParam String AGNTNUM,
+            @RequestParam(required = false) String GroupCode,
+            @RequestParam(required = false) String BranchCode,
+            @RequestParam(required = false) String UnitCode,
+            @RequestParam(required = false) String AGNTNUM,
             @RequestParam String userType
     ) {
         try {
             List<Object[]> result;
 
-            if (AGNTNUM != null && (POLICY_NO == null && NIC == null && NAME == null && CLIENT_NO == null)) {
+            if ( (POLICY_NO == null && NIC == null && NAME == null && CLIENT_NO == null)) {
                 // If AGNTNUM is provided without any other search parameters, use getPolicyDetailsWithClientName
-                result = policyInfoService.getPolicyDetailsWithClientName(AGNTNUM,userType);
+                result = policyInfoService.getPolicyDetailsWithAgent(GroupCode,BranchCode,UnitCode,AGNTNUM,userType);
             } else {
                 // Use getPolicyDetailsWithSearchParams if any other search parameters are provided along with AGNTNUM
-                result = policyInfoService.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO, AGNTNUM,userType);
+                result = policyInfoService.getPolicyDetailsWithSearchParams(POLICY_NO, NIC, NAME, CLIENT_NO,GroupCode,BranchCode,UnitCode, AGNTNUM,userType);
             }
 
             // If no data is found for the given search parameters, throw ValueNotExistException
@@ -49,11 +52,14 @@ public class PolicyInfoController {
                 throw new ValueNotExistException("No data found for the provided search parameters");
             }
 
+            AtomicInteger counter = new AtomicInteger(1);
+
+
             // Convert the result to pass with field names and an incrementing "id".
             List<Map<String, Object>> formattedResult = result.stream()
                     .map(item -> {
                         Map<String, Object> formattedItem = new HashMap<>();
-                        formattedItem.put("id", generateIncrementingId()); // Incrementing "id"
+                        formattedItem.put("id", counter.getAndIncrement()); // Incrementing "id"
                         formattedItem.put("POLICY_NO", item[0]);
                         formattedItem.put("NAME", item[1]);
                         formattedItem.put("PREMIUM", item[2]);
@@ -89,12 +95,12 @@ public class PolicyInfoController {
             if (result == null || result.isEmpty()) {
                 throw new ValueNotExistException("No policy columns found for the provided POLICY_NO: " + POLICY_NO);
             }
-
+            AtomicInteger counter = new AtomicInteger(1);
             // Convert the result to pass with field names and an incrementing "id".
             List<Map<String, Object>> formattedResult = result.stream()
                     .map(item -> {
                         Map<String, Object> formattedItem = new HashMap<>();
-                        formattedItem.put("id", generateIncrementingId());
+                        formattedItem.put("id", counter.getAndIncrement());
                         formattedItem.put("POLICY_NO", item[0]);
                         formattedItem.put("PREMIUM", item[1]);
                         formattedItem.put("TOTAL_DUE", item[2]);
