@@ -79,45 +79,51 @@ public class DiaryController {
 
 
 
-    @PostMapping("/saveDialyDiary")
+    @PostMapping("/saveDailyDiary")
     public ResponseEntity<DailySchedule> saveDailyDiary(@RequestBody DailySchedule dailySchedule) {
         try {
             DailySchedule savedDailySchedule = dailyScheduleService.saveDailySchedule(dailySchedule);
             return new ResponseEntity<>(savedDailySchedule, HttpStatus.CREATED);
-
-        } catch (RuntimeException e) {
-            return new ResponseEntity<DailySchedule>((MultiValueMap<String, String>) AppResponse.error(null, "400", "Bad Request", "BadRequest",
-                    "Bad request received: " + e.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return new ResponseEntity<DailySchedule>((MultiValueMap<String, String>) AppResponse.error(null, "500", "Internal Server Error", "Saving is not complete",
-                    "Error getting daily schedule: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
 
-    @GetMapping("/getDailyDiary")
-    public ResponseEntity<List<DailySchedule>> getDailyDiary(@RequestParam String agntnum) {
-        List<DailySchedule> dailySchedules = dailyScheduleService.getDailySchedulesByagntnum(agntnum);
-        return new ResponseEntity<>(dailySchedules, HttpStatus.OK);
-    }
-
-    @PutMapping("/updateDailyDiary")
-    public ResponseEntity<String> updateDailyDiary(
-            @RequestParam("agntnum") String agntnum,
-            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
-            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
-            @RequestParam("newTitle") String newTitle) {
-
-        dailyScheduleService.updateDailyDiary(agntnum, startDate, endDate, newTitle);
-        return new ResponseEntity<>("Daily diary updated successfully", HttpStatus.OK);
+    @GetMapping("/events/{agntnum}")
+    public ResponseEntity<List<DailySchedule>> getEventsByAgntnum(@PathVariable String agntnum) {
+        try {
+            List<DailySchedule> events = dailyScheduleService.getDailySchedulesByAgntnum(agntnum);
+            return new ResponseEntity<>(events, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<DailySchedule> updateDailySchedule(@PathVariable Long id, @RequestBody DailySchedule dailySchedule) {
+        try {
+            DailySchedule updatedDailySchedule = dailyScheduleService.updateDailySchedule(id, dailySchedule);
+            if (updatedDailySchedule != null) {
+                return new ResponseEntity<>(updatedDailySchedule, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
-
-
-
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<HttpStatus> deleteDailySchedule(@PathVariable Long id) {
+        try {
+            dailyScheduleService.deleteDailySchedule(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 }

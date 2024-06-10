@@ -21,5 +21,5 @@ public class DailySchedule {
     private LocalDateTime endDate;
     private String TITLE;
     private String STATUS;
-    private Boolean AllDay ;
+    private Boolean AllDay;
 }
