@@ -6,6 +6,7 @@ import com.example.salesBackend.Entity.EventsTitle;
 import com.example.salesBackend.Exceptions.ValueNotExistException;
 import com.example.salesBackend.Service.ClientCityService;
 //import com.example.salesBackend.Service.DailyScheduleService;
+import com.example.salesBackend.Service.ClientDetailsForDiary;
 import com.example.salesBackend.Service.DailyScheduleService;
 import com.example.salesBackend.Service.EventsTitleService;
 import com.example.salesBackend.util.AppResponse;
@@ -34,8 +35,12 @@ public class DiaryController {
     private ClientCityService clientCityService;
 
     @Autowired
+    private ClientDetailsForDiary clientDetailService;
+
+    @Autowired
     private DailyScheduleService dailyScheduleService;
 
+    //----------------starts getting details to sidebar from database.-----------------------
     // Endpoint to get all events
     @GetMapping("/eventNames")
     public List<EventsTitle> getAllEvents() {
@@ -43,6 +48,7 @@ public class DiaryController {
         return eventsTitleService.getAllEvents();
     }
 
+    //get client cities for agent number
     @GetMapping("/clientCities")
     public ResponseEntity<?> getClientCities(
             @RequestParam(required = false) String groupCode,
@@ -77,8 +83,36 @@ public class DiaryController {
         }
     }
 
+    @GetMapping("/clientCitiesAndNamesForDiary")
+    public ResponseEntity<?> getClientCitiesAndNamesForDiary(
+
+            @RequestParam(required = true) String agntnum,
+            @RequestParam(required = true) String city) {
+
+        try {
+            List<Object[]> clientCitiesAndNamesForDiary = clientDetailService.getClientCitiesAndNamesForDiary(agntnum, city);
+            if (clientCitiesAndNamesForDiary.isEmpty()) {
+                throw new ValueNotExistException("No cities found for the provided agent number: " + agntnum);
+            }
+            
+            return new ResponseEntity<>(clientCitiesAndNamesForDiary, HttpStatus.OK);
+        } catch (ValueNotExistException e) {
+            return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "ClientsNotFound",
+                    "No client  found for the provided agent number: " + agntnum), HttpStatus.NOT_FOUND);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(AppResponse.error(null, "400", "Bad Request", "BadRequest",
+                    "Bad request received: " + e.getMessage()), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(AppResponse.error(null, "500", "Internal Server Error", "GetClientNamesOperationFailed",
+                    "Error getting clients: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
+
+
+
+ // ---------------starts CRUD operations for diary events ( grid )---------------------------
     @PostMapping("/saveDailyDiary")
     public ResponseEntity<DailySchedule> saveDailyDiary(@RequestBody DailySchedule dailySchedule) {
         try {

@@ -57,7 +57,18 @@ List<Object[]> findClientInfoByAgentAndDateRange(
             @Param("City") String City,
             @Param("userType") String userType);
 
+    @Query(nativeQuery = true, value = "EXEC SalesApp_Select_ClientList  " +
+            "@agntnum = :agntnum, " +
+            "@City= :City")
+    List<Object[]> findClientCityAndNameByAgentNumberForDiary(
+            @Param("agntnum") String agntnum,
+            @Param("City") String City);
+
+
+
 }
+
+
 
 
 

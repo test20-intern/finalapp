@@ -6,16 +6,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 @Service
-public class ClientCityService {
+public class ClientDetailsForDiary {
+
     @Autowired
     private PG_CLIENTINFOREPO pgClientInfoRepo;
-
-    public List<Object[]> getClientCities(String groupCode, String branchCode, String unitCode, String agntnum, String city, String userType) {
-        return pgClientInfoRepo.findClientCityByAgentNumber(groupCode, branchCode, unitCode, agntnum, city, userType);
+    public List<Object[]> getClientCitiesAndNamesForDiary(String agntnum, String city) {
+        return pgClientInfoRepo.findClientCityAndNameByAgentNumberForDiary( agntnum, city);
     }
-
-
 
 }
