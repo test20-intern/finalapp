@@ -92,9 +92,9 @@ public class DiaryController {
         try {
             List<Object[]> clientCitiesAndNamesForDiary = clientDetailService.getClientCitiesAndNamesForDiary(agntnum, city);
             if (clientCitiesAndNamesForDiary.isEmpty()) {
-                throw new ValueNotExistException("No cities found for the provided agent number: " + agntnum);
+                throw new ValueNotExistException("No clients found for the provided agent number: " + agntnum);
             }
-            
+
             return new ResponseEntity<>(clientCitiesAndNamesForDiary, HttpStatus.OK);
         } catch (ValueNotExistException e) {
             return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "ClientsNotFound",
