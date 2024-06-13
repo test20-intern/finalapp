@@ -4,11 +4,8 @@ package com.example.salesBackend.Controller;
 import com.example.salesBackend.Entity.DailySchedule;
 import com.example.salesBackend.Entity.EventsTitle;
 import com.example.salesBackend.Exceptions.ValueNotExistException;
-import com.example.salesBackend.Service.ClientCityService;
+import com.example.salesBackend.Service.*;
 //import com.example.salesBackend.Service.DailyScheduleService;
-import com.example.salesBackend.Service.ClientDetailsForDiary;
-import com.example.salesBackend.Service.DailyScheduleService;
-import com.example.salesBackend.Service.EventsTitleService;
 import com.example.salesBackend.util.AppResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -36,6 +33,9 @@ public class DiaryController {
 
     @Autowired
     private ClientDetailsForDiary clientDetailService;
+
+    @Autowired
+    private ProspectDetailService prospectDetailService;
 
     @Autowired
     private DailyScheduleService dailyScheduleService;
@@ -107,6 +107,32 @@ public class DiaryController {
                     "Error getting clients: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/suspectDetails")
+    public ResponseEntity<?> getSuspectsByAgentNumberForDiary(
+
+            @RequestParam(required = true) String agntnum) {
+
+        try {
+            List<Object[]> ClientCitiesAndNamesForDiary = prospectDetailService.getSuspectsByAgentNumberForDiary(agntnum);
+            if (ClientCitiesAndNamesForDiary.isEmpty()) {
+                throw new ValueNotExistException("No clients found for the provided agent number: " + agntnum);
+            }
+
+            return new ResponseEntity<>(ClientCitiesAndNamesForDiary, HttpStatus.OK);
+        } catch (ValueNotExistException e) {
+            return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "ClientsNotFound",
+                    "No suspect found for the provided agent number: " + agntnum), HttpStatus.NOT_FOUND);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(AppResponse.error(null, "400", "Bad Request", "BadRequest",
+                    "Bad request received: " + e.getMessage()), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(AppResponse.error(null, "500", "Internal Server Error", "GetSuspectsOperationFailed",
+                    "Error getting clients: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 
 
 
