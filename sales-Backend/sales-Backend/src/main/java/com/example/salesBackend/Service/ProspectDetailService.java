@@ -16,4 +16,8 @@ public class ProspectDetailService {
         return prospectDetailRepo.findSuspectsByAgentNumberForDiary( agntnum);
     }
 
+    public List<Object[]> getProspectsByAgentNumberForDiary(String agntnum) {
+        return prospectDetailRepo.findProspectsByAgentNumberForDiary( agntnum);
+    }
+
 }

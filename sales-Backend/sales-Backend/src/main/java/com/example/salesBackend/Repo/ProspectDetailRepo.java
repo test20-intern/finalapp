@@ -14,4 +14,10 @@ public interface ProspectDetailRepo extends JpaRepository<salesappprospectdetail
     List<Object[]> findSuspectsByAgentNumberForDiary(
             @Param("agntnum") String agntnum
            );
+
+    @Query(nativeQuery = true, value = "EXEC SalesApp_Select_ProspectList  " +
+            "@agntnum = :agntnum " )
+    List<Object[]> findProspectsByAgentNumberForDiary(
+            @Param("agntnum") String agntnum
+    );
 }

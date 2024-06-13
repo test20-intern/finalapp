@@ -114,12 +114,12 @@ public class DiaryController {
             @RequestParam(required = true) String agntnum) {
 
         try {
-            List<Object[]> ClientCitiesAndNamesForDiary = prospectDetailService.getSuspectsByAgentNumberForDiary(agntnum);
-            if (ClientCitiesAndNamesForDiary.isEmpty()) {
+            List<Object[]> SuspectNamesForDiary = prospectDetailService.getSuspectsByAgentNumberForDiary(agntnum);
+            if (SuspectNamesForDiary.isEmpty()) {
                 throw new ValueNotExistException("No clients found for the provided agent number: " + agntnum);
             }
 
-            return new ResponseEntity<>(ClientCitiesAndNamesForDiary, HttpStatus.OK);
+            return new ResponseEntity<>(SuspectNamesForDiary, HttpStatus.OK);
         } catch (ValueNotExistException e) {
             return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "ClientsNotFound",
                     "No suspect found for the provided agent number: " + agntnum), HttpStatus.NOT_FOUND);
@@ -128,6 +128,30 @@ public class DiaryController {
                     "Bad request received: " + e.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(AppResponse.error(null, "500", "Internal Server Error", "GetSuspectsOperationFailed",
+                    "Error getting clients: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/prospectDetails")
+    public ResponseEntity<?> getProspectsByAgentNumberForDiary(
+
+            @RequestParam(required = true) String agntnum) {
+
+        try {
+            List<Object[]> ProspectsNamesForDiary = prospectDetailService.getProspectsByAgentNumberForDiary(agntnum);
+            if (ProspectsNamesForDiary.isEmpty()) {
+                throw new ValueNotExistException("No clients found for the provided agent number: " + agntnum);
+            }
+
+            return new ResponseEntity<>(ProspectsNamesForDiary, HttpStatus.OK);
+        } catch (ValueNotExistException e) {
+            return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "ClientsNotFound",
+                    "No prospect found for the provided agent number: " + agntnum), HttpStatus.NOT_FOUND);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(AppResponse.error(null, "400", "Bad Request", "BadRequest",
+                    "Bad request received: " + e.getMessage()), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(AppResponse.error(null, "500", "Internal Server Error", "GetProspectsOperationFailed",
                     "Error getting clients: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
