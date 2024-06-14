@@ -16,9 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @CrossOrigin
@@ -107,17 +105,25 @@ public class DashboardController {
 
 
     @GetMapping("/TodayEventsFromDiary")
-    public ResponseEntity<?> getTodayEvents(
-
-            @RequestParam(required = true) String agntnum) {
-
+    public ResponseEntity<?> getTodayEvents(@RequestParam(required = true) String agntnum) {
         try {
-            List<Object[]> TodayEvents = dailyScheduleService.getTodayEvents(agntnum);
-            if (TodayEvents.isEmpty()) {
+            List<Object[]> todayEvents = dailyScheduleService.getTodayEvents(agntnum);
+            if (todayEvents.isEmpty()) {
                 throw new ValueNotExistException("No events found for the provided agent number today: " + agntnum);
             }
 
-            return new ResponseEntity<>(TodayEvents, HttpStatus.OK);
+            List<Map<String, Object>> formattedEvents = new ArrayList<>();
+            for (Object[] event : todayEvents) {
+                Map<String, Object> eventMap = new HashMap<>();
+                eventMap.put("title", event[0]);
+                eventMap.put("all_day", event[1]);
+                eventMap.put("start_date", event[2]);
+                eventMap.put("end_date", event[3]);
+
+                formattedEvents.add(eventMap);
+            }
+
+            return new ResponseEntity<>(formattedEvents, HttpStatus.OK);
         } catch (ValueNotExistException e) {
             return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "EventsNotFound",
                     "No events found for the provided agent number: " + agntnum), HttpStatus.NOT_FOUND);
@@ -129,6 +135,7 @@ public class DashboardController {
                     "Error getting clients: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 
 
