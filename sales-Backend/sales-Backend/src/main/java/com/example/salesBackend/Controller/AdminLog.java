@@ -15,15 +15,15 @@ public class AdminLog {
     private AdminLogService adminLogService;
 
     @GetMapping("/adminLogging")
-    public ResponseEntity<String> getAdminAccess(
-            @RequestParam(required = true) String UserType,
+    public ResponseEntity<Boolean> getAdminAccess(
+
             @RequestParam(required = true) String agntnum
     ) {
-        String result = adminLogService.getAdminAccess(UserType, agntnum);
+        String result = adminLogService.getAdminAccess(agntnum);
         if ("NO ACCESS".equals(result)) {
-            return new ResponseEntity<>("NO ACCESS", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<Boolean>(false, HttpStatus.FORBIDDEN);
         } else {
-            return new ResponseEntity<>("GIVE ACCESS" , HttpStatus.OK);
+            return new ResponseEntity<Boolean>(true , HttpStatus.OK);
         }
     }
 }

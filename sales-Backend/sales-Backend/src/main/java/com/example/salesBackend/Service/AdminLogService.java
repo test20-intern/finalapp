@@ -9,7 +9,7 @@ public class AdminLogService {
     @Autowired
     private AdminLogRepo adminLogRepo;
 
-    public String getAdminAccess(String UserType, String agntnum) {
-        return adminLogRepo.getAdminAccess(UserType, agntnum);
+    public String getAdminAccess( String agntnum) {
+        return adminLogRepo.getAdminAccess( agntnum);
     }
 }

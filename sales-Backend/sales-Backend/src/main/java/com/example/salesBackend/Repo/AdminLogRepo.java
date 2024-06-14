@@ -13,7 +13,7 @@ public interface AdminLogRepo extends JpaRepository<SalesAppUser,String> {
 
     @Query(nativeQuery = true, value = "EXEC SalesApp_Select_AdminAccess @userType=:userType, @agntnum=:agntnum")
     String getAdminAccess(
-            @Param("userType") String userType,
+
             @Param("agntnum") String agntnum
     );
 
