@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface AdminLogRepo extends JpaRepository<SalesAppUser,String> {
 
-    @Query(nativeQuery = true, value = "EXEC SalesApp_Select_AdminAccess @userType=:userType, @agntnum=:agntnum")
+    @Query(nativeQuery = true, value = "EXEC SalesApp_Select_AdminAccess  @agntnum=:agntnum")
     String getAdminAccess(
 
             @Param("agntnum") String agntnum
