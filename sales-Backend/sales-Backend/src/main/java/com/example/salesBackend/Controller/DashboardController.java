@@ -7,10 +7,7 @@ import com.example.salesBackend.Dto.Response.SalesPerformanceDTO;
 import com.example.salesBackend.Dto.Response.TotalAmountsForEachDay;
 
 import com.example.salesBackend.Exceptions.ValueNotExistException;
-import com.example.salesBackend.Service.CLIENTINFOSERVICE;
-import com.example.salesBackend.Service.POLICYINFOSERVICE;
-import com.example.salesBackend.Service.RECEIPTSSERVICE;
-import com.example.salesBackend.Service.SalesPerformanceService;
+import com.example.salesBackend.Service.*;
 import com.example.salesBackend.util.AppResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,6 +33,9 @@ public class DashboardController {
 
     @Autowired
     private SalesPerformanceService salesPerformanceService;
+
+    @Autowired
+    private DailyScheduleService dailyScheduleService;
 
 
 
@@ -105,6 +105,30 @@ public class DashboardController {
         return salesPerformanceService.getSalesPerformance(groupCode, branchCode, unitCode, agntnum, userType);
     }
 
+
+    @GetMapping("/TodayEventsFromDiary")
+    public ResponseEntity<?> getTodayEvents(
+
+            @RequestParam(required = true) String agntnum) {
+
+        try {
+            List<Object[]> TodayEvents = dailyScheduleService.getTodayEvents(agntnum);
+            if (TodayEvents.isEmpty()) {
+                throw new ValueNotExistException("No events found for the provided agent number today: " + agntnum);
+            }
+
+            return new ResponseEntity<>(TodayEvents, HttpStatus.OK);
+        } catch (ValueNotExistException e) {
+            return new ResponseEntity<>(AppResponse.error(null, "404", "Not Found", "EventsNotFound",
+                    "No events found for the provided agent number: " + agntnum), HttpStatus.NOT_FOUND);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(AppResponse.error(null, "400", "Bad Request", "BadRequest",
+                    "Bad request received: " + e.getMessage()), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(AppResponse.error(null, "500", "Internal Server Error", "GetEventsForTodayOperationFailed",
+                    "Error getting clients: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 

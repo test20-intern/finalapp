@@ -17,17 +17,13 @@ import java.util.Optional;
 public interface DailyScheduleRepository extends JpaRepository<DailySchedule, Long> {
     List<DailySchedule> findByAgntnum(String agntnum);
 
-//    List<DailySchedule> findByagntnum(String agntnum);
-//
-//
-//    @Modifying
-//    @Query(value = "EXEC SalesApp_Update_DailyScheduleTitle @agntnum = :agntnum, @startDate= :startDate, @endDate= :endDate, @newTitle= :newTitle", nativeQuery = true)
-//    int updateDailySchedule(
-//            @Param("agntnum") String agntnum,
-//            @Param("startDate") LocalDateTime startDate,
-//            @Param("endDate") LocalDateTime endDate,
-//            @Param("newTitle") String newTitle
-//    );
+    @Query(nativeQuery = true, value = "EXEC SalesApp_Select_TodayEvents  " +
+            "@agntnum = :agntnum " )
+    List<Object[]> findTodayEvents(
+            @Param("agntnum") String agntnum
+    );
+
+
 
 
 }

@@ -56,29 +56,10 @@ public class DailyScheduleService {
     }
 
 
+    public List<Object[]> getTodayEvents(String agntnum) {
+        return dailyScheduleRepository.findTodayEvents( agntnum);
+    }
 
-//    public DailySchedule saveDailySchedule(DailySchedule dailySchedule) {
-//        return dailyScheduleRepository.save(dailySchedule);
-//    }
-//
-//    public List<DailySchedule> getDailySchedulesByagntnum(String agntnum) {
-//        return dailyScheduleRepository.findByagntnum(agntnum);
-//    }
-//
-//
-//
-//    @Transactional
-//    public void updateDailyDiary(String agntnum, LocalDateTime startDate, LocalDateTime endDate, String newTitle) {
-//        try {
-//            int rowsAffected = dailyScheduleRepository.updateDailySchedule(agntnum, startDate, endDate, newTitle);
-//            if (rowsAffected == 0) {
-//                throw new RuntimeException("No rows updated");
-//            }
-//        } catch (Exception e) {
-//
-//            throw new RuntimeException("Failed to update daily diary", e);
-//        }
-//    }
 
 
 
