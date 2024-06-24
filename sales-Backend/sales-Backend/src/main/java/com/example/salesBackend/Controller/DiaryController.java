@@ -112,7 +112,7 @@ public class DiaryController {
     public ResponseEntity<?> getSuspectsByAgentNumberForDiary(
 
             @RequestParam(required = true) String agntnum,
-            @RequestParam(required = true) String city
+            @RequestParam (required = false)String city
     )
     {
 
@@ -139,7 +139,7 @@ public class DiaryController {
     public ResponseEntity<?> getProspectsByAgentNumberForDiary(
 
             @RequestParam(required = true) String agntnum,
-            @RequestParam(required = true) String city
+            @RequestParam(required = false) String city
             ) {
 
         try {
