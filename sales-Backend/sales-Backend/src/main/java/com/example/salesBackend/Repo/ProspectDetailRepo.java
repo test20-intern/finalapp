@@ -9,15 +9,15 @@ import java.util.List;
 
 public interface ProspectDetailRepo extends JpaRepository<salesappprospectdetail,String> {
 
-    @Query(nativeQuery = true, value = "EXEC SalesApp_Select_SuspectList  " +
-            "@agntnum = :agntnum " )
+    @Query(nativeQuery = true, value = "EXEC SalesApp_Select_SuspectList  @agntnum = :agntnum, @city=:city")
     List<Object[]> findSuspectsByAgentNumberForDiary(
-            @Param("agntnum") String agntnum
+            @Param("agntnum") String agntnum,
+            @Param("city") String city
            );
 
-    @Query(nativeQuery = true, value = "EXEC SalesApp_Select_ProspectList  " +
-            "@agntnum = :agntnum " )
+    @Query(nativeQuery = true, value = "EXEC SalesApp_Select_ProspectList  @agntnum = :agntnum ,@city=:city" )
     List<Object[]> findProspectsByAgentNumberForDiary(
-            @Param("agntnum") String agntnum
+            @Param("agntnum") String agntnum,
+            @Param("city") String city
     );
 }

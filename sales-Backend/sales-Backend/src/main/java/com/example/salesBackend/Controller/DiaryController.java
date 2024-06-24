@@ -111,10 +111,13 @@ public class DiaryController {
     @GetMapping("/suspectDetails")
     public ResponseEntity<?> getSuspectsByAgentNumberForDiary(
 
-            @RequestParam(required = true) String agntnum) {
+            @RequestParam(required = true) String agntnum,
+            @RequestParam(required = true) String city
+    )
+    {
 
         try {
-            List<Object[]> SuspectNamesForDiary = prospectDetailService.getSuspectsByAgentNumberForDiary(agntnum);
+            List<Object[]> SuspectNamesForDiary = prospectDetailService.getSuspectsByAgentNumberForDiary(agntnum,city);
             if (SuspectNamesForDiary.isEmpty()) {
                 throw new ValueNotExistException("No clients found for the provided agent number: " + agntnum);
             }
@@ -135,10 +138,12 @@ public class DiaryController {
     @GetMapping("/prospectDetails")
     public ResponseEntity<?> getProspectsByAgentNumberForDiary(
 
-            @RequestParam(required = true) String agntnum) {
+            @RequestParam(required = true) String agntnum,
+            @RequestParam(required = true) String city
+            ) {
 
         try {
-            List<Object[]> ProspectsNamesForDiary = prospectDetailService.getProspectsByAgentNumberForDiary(agntnum);
+            List<Object[]> ProspectsNamesForDiary = prospectDetailService.getProspectsByAgentNumberForDiary(agntnum,city);
             if (ProspectsNamesForDiary.isEmpty()) {
                 throw new ValueNotExistException("No clients found for the provided agent number: " + agntnum);
             }

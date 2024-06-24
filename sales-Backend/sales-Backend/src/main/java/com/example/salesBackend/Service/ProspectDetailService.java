@@ -12,12 +12,12 @@ public class ProspectDetailService {
     @Autowired
     private ProspectDetailRepo prospectDetailRepo;
 
-    public List<Object[]> getSuspectsByAgentNumberForDiary(String agntnum) {
-        return prospectDetailRepo.findSuspectsByAgentNumberForDiary( agntnum);
+    public List<Object[]> getSuspectsByAgentNumberForDiary(String agntnum,String city) {
+        return prospectDetailRepo.findSuspectsByAgentNumberForDiary( agntnum,city);
     }
 
-    public List<Object[]> getProspectsByAgentNumberForDiary(String agntnum) {
-        return prospectDetailRepo.findProspectsByAgentNumberForDiary( agntnum);
+    public List<Object[]> getProspectsByAgentNumberForDiary(String agntnum,String city) {
+        return prospectDetailRepo.findProspectsByAgentNumberForDiary( agntnum, city);
     }
 
 }
