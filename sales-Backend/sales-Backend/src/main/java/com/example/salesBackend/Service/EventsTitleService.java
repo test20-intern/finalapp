@@ -18,4 +18,6 @@ public class EventsTitleService {
         return eventsTitleRepo.findByStatus(statusValue.ACTIVE.sts());
     }
 
+    
+
 }

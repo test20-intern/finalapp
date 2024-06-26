@@ -23,11 +23,14 @@ public class salesappprospectdetail {
     private String Add_1;
     private String Add_2;
     private String Add_City;
+    @Column(columnDefinition = "DATETIME")
     private Date DOB;
     private String NIC;
     private String Marital_Status;
     private String Occupation;
+    @Column(columnDefinition = "DATETIME")
     private Date LastUpdated;
+    @Column(columnDefinition = "DATETIME")
     private Date enteredDate;
     private String lastUpdateUser;
     private String enteredUser;

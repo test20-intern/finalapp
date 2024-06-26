@@ -19,8 +19,10 @@ public class SalesAppUser {
     private String empId;
     private String name;
     private String status;
+    @Column(columnDefinition = "DATETIME")
     private LocalDate createDate;
     private String createUser;
+    @Column(columnDefinition = "DATETIME")
     private LocalDate updateDate;
     private String updateUser;
 

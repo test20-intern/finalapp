@@ -17,7 +17,9 @@ public class DailySchedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long RECORD_ID;
     private String agntnum;
+    @Column(columnDefinition = "DATETIME")
     private LocalDateTime startDate;
+    @Column(columnDefinition = "DATETIME")
     private LocalDateTime endDate;
     private String TITLE;
     private String STATUS;
