@@ -30,9 +30,4 @@ public class salesappprospectdetail {
     private String Occupation;
     @Column(columnDefinition = "DATETIME")
     private Date LastUpdated;
-    @Column(columnDefinition = "DATETIME")
-    private Date enteredDate;
-    private String lastUpdateUser;
-    private String enteredUser;
-
 }
